@@ -1,4 +1,25 @@
 {
-  "private": true,
-  "workspaces": ["jec-engine"]
+	"private": true,
+	"workspaces": [ "jec-client-cli", "jec-cli-interface", "jec-config-fetcher", "jec-engine", "jec-jask", "jec-pure-cli", "jec-server" ],
+	"eslintConfig": {
+		"extends": "codogo"
+	},
+	"babel": {
+		"presets": [
+			"env",
+			"flow"
+		],
+		"plugins": [
+			"preval",
+			[
+				"transform-object-rest-spread",
+				{
+					"useBuiltIns": true
+				}
+			]
+		]
+	},
+	"scripts": {
+		"publish-all": "for x in jec-* ; yarn publish $x ; done"
+	}
 }
