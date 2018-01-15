@@ -25,11 +25,16 @@ An ecosystem of tools for storing generic stuctured data with various differnt v
 ## API
 ### Data Provided
 
-+ `type`: 
-+ `config`:
-+ `data`:
-	+ Builtin: 
-	+ User: 
++ `apps`: The apps registered with this JEC store, their `UUID`s, runtime hooks, and meta data about them.
++ `config`: A map of config values that should be tracked by JEC; things like `note sort order`, `tasking scoring function`.
++ `type`: A deep object specifying the types of all props in any data object stored in JEC. JEC suports the following types: `String | Boolean | Number | DateTime | Object | Array`.
++ `data`: The actual data objects stored in JEC, each object has props of 3 types:
+	+ Builtin: The default props that are present in any instance of JEC, these include:
+		+ created
+		+ updated
+		+ project
+		+ tags
+	+ User: user defined props, 
 	+ App:
 
 ## Packages
