@@ -1,6 +1,9 @@
 {
 	"private": true,
 	"workspaces": [ "jec-client-cli", "jec-cli-interface", "jec-config-fetcher", "jec-engine", "jec-jask", "jec-pure-cli", "jec-server" ],
+	"files": [
+		"lib"
+	],
 	"eslintConfig": {
 		"extends": "codogo"
 	},

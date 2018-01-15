@@ -22,9 +22,14 @@ type GeneticObjectElement = {
 	[string]: string | number | boolean | GeneticObjectElement,
 };
 
+type RecusiveTypeDefinition = {
+	[string]: "Number" | "String" | "DateTime" | "Boolean" | "Link" | RecusiveTypeDefinition,
+};
+
 type JecChainLink = {
 	state: GeneticObjectElement,
 	lookup: GeneticObjectElement,
+	types: RecusiveTypeDefinition,
 	action?: JecAction,
 };
 
@@ -34,6 +39,7 @@ let chain: JecChain = [
 	{
 		state: {},
 		lookup: {},
+		types: {},
 	},
 ];
 
