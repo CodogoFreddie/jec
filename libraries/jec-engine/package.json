@@ -1,6 +1,6 @@
 {
 	"name": "jec-engine",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "A Javascript ExoCortex",
 	"main": "lib/index.js",
 	"repository": "git@github.com:CodogoFreddie/jec.git",
