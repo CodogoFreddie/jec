@@ -1,16 +1,5 @@
 {
 	"private": true,
-	"workspaces": [
-		"libraries/jec-client-cli",
-		"libraries/jec-config-fetcher",
-		"libraries/jec-engine",
-		"libraries/jec-pure-cli",
-		"runnables/jec-jask",
-		"runnables/jec-server"
-	],
-	"files": [
-		"lib"
-	],
 	"eslintConfig": {
 		"extends": "codogo"
 	},
@@ -28,5 +17,8 @@
 				}
 			]
 		]
+	},
+	"devDependencies": {
+		"lerna": "^2.7.1"
 	}
 }
