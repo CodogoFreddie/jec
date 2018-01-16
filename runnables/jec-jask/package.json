@@ -20,6 +20,10 @@
     "prettier": "^1.10.2"
   },
   "dependencies": {
+    "jec-cli-interface": "^0.0.1",
+    "jec-config-fetcher": "^0.0.1",
+    "jec-engine": "^0.0.1",
+    "jec-pure-cli": "^0.0.1",
     "ramda": "^0.25.0"
   }
 }

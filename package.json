@@ -1,6 +1,6 @@
 {
 	"private": true,
-	"workspaces": [ "jec-client-cli", "jec-cli-interface", "jec-config-fetcher", "jec-engine", "jec-jask", "jec-pure-cli", "jec-server" ],
+	"workspaces": [ "libraries/jec-client-cli", "libraries/jec-cli-interface", "libraries/jec-config-fetcher", "libraries/jec-engine", "libraries/jec-pure-cli", "runnables/jec-jask", "runnables/jec-server" ],
 	"files": [
 		"lib"
 	],

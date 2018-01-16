@@ -1,18 +1,25 @@
 import fs from "fs";
-import R from "ramda";
+import * as R from "ramda";
 
-const dotfilePath = `${require("os").homedir()}/.jaskrc.js`;
+const dotfilePath = `${require("os").homedir()}/.jecrc.js`;
 let config = null;
+const noop = () => {};
 
-export default () =>
+export default (listener = noop) =>
 	config
-		? Promise.resolve(config)
+		? ( () => {
+			listener(`read config from ${dotfilePath}`);
+			Promise.resolve(config);
+		})()
 		: new Promise(done => {
 			try {
+				listener(`trying to read config from ${dotfilePath}`);
 				config = require(dotfilePath);
+				listener(`read config from ${dotfilePath}`);
 				done(config);
 			} catch (e) {
 				if (e.code === "MODULE_NOT_FOUND") {
+					listener(`failed, creating new config at ${dotfilePath}`);
 					const possible =
 							"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 					const generateKey = () =>
@@ -29,9 +36,10 @@ export default () =>
 					fs.writeFile(
 						dotfilePath,
 						`module.exports = {
-	dataFolder: \`${require("os").homedir()}/.jaskActions\`,
+	dataFolder: \`${require("os").homedir()}/.jecActions\`,
 	server: {
 		port: 9000,
+		address: "http:localhost",
 		key: "${generateKey()}",
 	},
 }`,
