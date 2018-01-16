@@ -6,23 +6,25 @@ for package in $( jq ".workspaces[]" -cr package.json ) ; do
 		echo
 		echo
 		echo "Publishing $package"
-		yarn upgrade-interactive --latest
+
+		yarn install
 		rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 
-		yarn format
+		yarn upgrade --latest --pattern "jec-"
 		rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 
-		yarn build
-		rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
+		#yarn format
+		#rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 
-		yarn version --no-git-tag-version --new-version $1
-		rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
+		#yarn build
+		#rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 
-		yarn publish
-		rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
+		#npm version $1
+		#rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
+
+		#npm publish
+		#rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 	popd
-
-	yarn upgrade --latest
 done
 
 git commit -am "release($1)"

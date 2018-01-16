@@ -2,7 +2,6 @@
 	"private": true,
 	"workspaces": [
 		"libraries/jec-client-cli",
-		"libraries/jec-cli-interface",
 		"libraries/jec-config-fetcher",
 		"libraries/jec-engine",
 		"libraries/jec-pure-cli",

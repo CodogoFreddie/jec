@@ -1,6 +1,6 @@
 {
 	"name": "jec-config-fetcher",
-	"version": "0.0.1",
+	"version": "0.0.5",
 	"description": "For reading the .jecrc.js config file that is used to configure all command line JEC tools",
 	"main": "lib/index.js",
 	"license": "MIT",
