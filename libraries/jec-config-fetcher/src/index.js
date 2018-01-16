@@ -7,7 +7,7 @@ const noop = () => {};
 
 export default (listener = noop) =>
 	config
-		? ( () => {
+		? (() => {
 			listener(`read config from ${dotfilePath}`);
 			Promise.resolve(config);
 		})()
@@ -19,7 +19,9 @@ export default (listener = noop) =>
 				done(config);
 			} catch (e) {
 				if (e.code === "MODULE_NOT_FOUND") {
-					listener(`failed, creating new config at ${dotfilePath}`);
+					listener(
+						`failed, creating new config at ${dotfilePath}`,
+					);
 					const possible =
 							"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 					const generateKey = () =>

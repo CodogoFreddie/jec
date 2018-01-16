@@ -8,10 +8,8 @@
 	],
 	"license": "MIT",
 	"scripts": {
-		"build": "NODE_ENV=production babel src --out-dir lib",
-		"format": "react-scripts format",
-		"precommit": "yarn format && git add -u && yarn build",
-		"watch": "NODE_ENV=production babel --source-maps inline --watch src --out-dir lib"
+		"build": "exit 0;",
+		"format": "exit 0;"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",

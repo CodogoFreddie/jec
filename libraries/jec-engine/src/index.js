@@ -1,7 +1,9 @@
 import genUUID from "uuid/v4";
 import * as R from "ramda";
 
-import { insertAction, insertActions,
+import {
+	insertAction,
+	insertActions,
 	getState as getFullState,
 	getConfig as getFullConfig,
 } from "./chain";
@@ -49,7 +51,7 @@ const actionifyObject = obj => {
 
 			acc.push({
 				type: "obj",
-				path: [ ...path, key, ],
+				path: [...path, key,],
 				value,
 			});
 		});

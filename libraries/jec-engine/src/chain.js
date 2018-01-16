@@ -46,7 +46,11 @@ const applyAction = (state: any, action: JecAction): any => {
 
 export const insertAction = (action: JecAction) => {
 	const insertIndex = R.findIndex(
-		R.pipe(R.path(["action", "meta", "time",]), R.defaultTo(0), R.lt(action.meta.time)),
+		R.pipe(
+			R.path(["action", "meta", "time",]),
+			R.defaultTo(0),
+			R.lt(action.meta.time),
+		),
 		stateChain,
 	);
 
@@ -75,23 +79,22 @@ export const insertActions = (actions: Array<JecAction>) => {
 };
 
 const map = R.addIndex(R.map);
-export const getState = (): JecState => R.pipe(
-	R.last,
-	R.prop("state"),
-	R.omit([ "config" ]),
-	R.toPairs,
-	R.sortBy(R.nth(0)),
-	map( ([uuid, rest,], id) => ([
-		uuid,
-		{
-			...rest,
-			id,
-		}
-	])),
-	R.fromPairs,
-)(stateChain);
+export const getState = (): JecState =>
+	R.pipe(
+		R.last,
+		R.prop("state"),
+		R.omit(["config",]),
+		R.toPairs,
+		R.sortBy(R.nth(0)),
+		map(([uuid, rest,], id) => [
+			uuid,
+			{
+				...rest,
+				id,
+			},
+		]),
+		R.fromPairs,
+	)(stateChain);
 
-export const getConfig = (): any => R.pipe(
-	R.last,
-	R.path([ "state", "config", ]),
-)(stateChain);
+export const getConfig = (): any =>
+	R.pipe(R.last, R.path(["state", "config",]))(stateChain);

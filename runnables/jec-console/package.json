@@ -1,8 +1,8 @@
 {
 	"name": "jec-console",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "A general purpose jec explorer",
-	"main": "lib/index.js",
+	"main": "./index.js",
 	"bin": {
 		"jec": "./index.js"
 	},
