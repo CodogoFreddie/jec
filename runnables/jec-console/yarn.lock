@@ -4170,6 +4170,12 @@ jec-config-fetcher@^0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/jec-config-fetcher/-/jec-config-fetcher-0.0.1.tgz#4f47cc07004611ed83472faedb2299d984522175"
 
+jec-config-fetcher@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/jec-config-fetcher/-/jec-config-fetcher-0.0.9.tgz#f2dce6f05495f937a3cf0c2f3980679e5b19a277"
+  dependencies:
+    ramda "^0.25.0"
+
 jec-engine@^0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/jec-engine/-/jec-engine-0.0.2.tgz#9174324b48cbfc98d5f9cf19e7cd46688a490986"
