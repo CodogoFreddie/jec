@@ -1,0 +1,17 @@
+{
+  "lerna": "2.7.1",
+  "packages": [
+    "libraries/*",
+    "runnables/*"
+  ],
+  "npmClient": "yarn",
+  "version": "0.0.9",
+  "commands": {
+    "bootstrap": {
+      "npmClient": "yarn"
+    },
+    "add": {
+      "npmClient": "yarn"
+    }
+  }
+}

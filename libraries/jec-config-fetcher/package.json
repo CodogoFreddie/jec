@@ -1,6 +1,6 @@
 {
 	"name": "jec-config-fetcher",
-	"version": "0.0.6",
+	"version": "0.0.9",
 	"description": "For reading the .jecrc.js config file that is used to configure all command line JEC tools",
 	"main": "lib/index.js",
 	"license": "MIT",
@@ -10,9 +10,7 @@
 	"scripts": {
 		"build": "NODE_ENV=production babel src --out-dir lib",
 		"format": "react-scripts format",
-		"precommit": "yarn format && git add -u && yarn build",
-		"watch": "NODE_ENV=production babel --source-maps inline --watch src --out-dir lib",
-		"watch-parcel": "parcel index.src.js"
+		"watch": "NODE_ENV=production babel --source-maps inline --watch src --out-dir lib"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",

@@ -1,6 +1,6 @@
 {
 	"name": "jec-server",
-	"version": "0.0.1",
+	"version": "0.0.9",
 	"description": "Stateful server for handling JEC queries, persists all actions to disk",
 	"main": "index.js",
 	"license": "MIT",
