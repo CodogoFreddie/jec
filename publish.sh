@@ -7,19 +7,19 @@ for package in $( jq ".workspaces[]" -cr package.json ) ; do
 		echo
 		echo "Publishing $package"
 
-		yarn format
+		#yarn format
+		#rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
+
+		#yarn build
+		#rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
+
+		echo "yarn version --no-git-tag-version --new-version $1"
 		rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 
-		yarn build
-		rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
-
-		yarn version --no-git-tag-version --new-version $1!
-		rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
-
-		yarn publish
+		echo "yarn publish"
 		rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 	popd
 done
 
-git commit -am \"release($1)\"
-git tag add \"v$1\"
+git commit -am "release($1)"
+git tag add "v$1"
