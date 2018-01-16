@@ -45,7 +45,7 @@ const actionifyObject = obj => {
 
 			acc.push({
 				type: "obj",
-				path,
+				path: [ ...path, key, ],
 				value,
 			});
 		});
