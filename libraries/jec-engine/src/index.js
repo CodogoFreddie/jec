@@ -1,7 +1,10 @@
 import genUUID from "uuid/v4";
 import * as R from "ramda";
 
-import { insertAction, insertActions, getState as getFullState, } from "./chain";
+import { insertAction, insertActions,
+	getState as getFullState,
+	getConfig as getFullConfig,
+} from "./chain";
 
 let listActionsHandler = () => {};
 let readActionHandler = () => {};
@@ -24,6 +27,7 @@ export const initalise = () =>
 		.then(insertActions);
 
 export const getState = () => getFullState();
+export const getConfig = () => getFullConfig();
 
 const actionifyObject = obj => {
 	const acc = [];
@@ -57,8 +61,8 @@ const actionifyObject = obj => {
 };
 
 const applyAction = action => {
-	writeActionHandler(action);
 	insertAction(action);
+	return writeActionHandler(action);
 };
 
 export const insertState = ({ obj, state, }) => {
@@ -77,7 +81,7 @@ export const insertState = ({ obj, state, }) => {
 		mutations,
 	};
 
-	applyAction(action);
+	return applyAction(action);
 };
 
 export const removeState = ({ obj, state, }) => {
@@ -104,5 +108,5 @@ export const removeState = ({ obj, state, }) => {
 		mutations,
 	};
 
-	applyAction(action);
+	return applyAction(action);
 };

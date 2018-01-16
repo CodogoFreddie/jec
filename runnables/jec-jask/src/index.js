@@ -1,12 +1,12 @@
 import * as R from "ramda";
+import genUUID from "uuid/v4";
 import startPure from "jec-pure-cli";
 
-startPure(console.log).then( ({ getState, insertState, removeState, }) => {
+startPure(console.log).then( ({ getState, getConfig, insertState, removeState, }) => {
 	const state = getState();
-
-:xa
-	if(!R.path([ "config", "jask", ], state)){
-		console.log("no jask config detected!");
+	const config = getConfig();
+	if(!config || !config.jask){
+		console.log("no jask config detected! generating new config");
 		insertState({
 			obj: "config",
 			state: {
@@ -27,5 +27,19 @@ startPure(console.log).then( ({ getState, insertState, removeState, }) => {
 		});
 	}
 
+	//insertState({
+		//obj: genUUID(),
+		//state: {
+			//description: "this is the description",
+			//due: 12345,
+			//tags: [
+				//"testing",
+				//"trial",
+				//"jask",
+			//]
+		//}
+	//});
+
 	console.log( getState());
+	console.log(getConfig());
 });

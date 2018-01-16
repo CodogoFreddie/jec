@@ -1,5 +1,5 @@
 import fetchConfig from "jec-config-fetcher";
-import { setPersistHandlers, initalise, getState, insertState, removeState, } from "jec-engine";
+import { setPersistHandlers, initalise, getState, getConfig, insertState, removeState, } from "jec-engine";
 import jsonfile from "jsonfile";
 import mkdir from "make-dir";
 import recursive from "recursive-readdir";
@@ -40,10 +40,10 @@ export default listener => fetchConfig(listener).then( config => {
 		},
 	});
 
-	initalise();
+	return initalise();
 }).then( () => ({
 	getState,
 	insertState,
 	removeState,
-})
-);
+	getConfig,
+}));
