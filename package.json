@@ -29,8 +29,5 @@
 				}
 			]
 		]
-	},
-	"scripts": {
-		"publish-all": "for x in jec-* ; yarn publish $x ; done"
 	}
 }
