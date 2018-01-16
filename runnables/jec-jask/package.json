@@ -29,7 +29,6 @@
 		"prettier": "^1.10.2"
 	},
 	"dependencies": {
-		"jec-cli-interface": "^0.0.5",
 		"jec-config-fetcher": "^0.0.5",
 		"jec-engine": "^0.0.5",
 		"jec-pure-cli": "^0.0.5",

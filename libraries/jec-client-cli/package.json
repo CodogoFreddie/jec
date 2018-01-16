@@ -1,6 +1,6 @@
 {
 	"name": "jec-client-cli",
-	"version": "0.0.5",
+	"version": "0.0.7",
 	"description": "Client JEC querying implementation for CLI tools, querys local or remote server for data",
 	"main": "index.js",
 	"license": "MIT",
