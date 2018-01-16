@@ -1,6 +1,6 @@
 {
   "name": "jec-pure-cli",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Pure JEC querying implementation for CLI tools, reads from file system on each run",
   "main": "lib/index.js",
   "files": [
