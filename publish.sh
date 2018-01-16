@@ -19,6 +19,8 @@ for package in $( jq ".workspaces[]" -cr package.json ) ; do
 		echo "yarn publish"
 		rc=$?; if [[ $rc != 0 ]]; then exit $rc; fi
 	popd
+
+	yarn upgrade --latest
 done
 
 git commit -am "release($1)"
