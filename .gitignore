@@ -60,3 +60,4 @@ typings/
 /lib
 .cache
 yarn-error.log
+lerna-debug.log
