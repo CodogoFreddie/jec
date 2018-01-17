@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import genUUID from "uuid/v4";
+import generateUUID from "uuid/v4";
 import produceUUID from "uuid/v3";
 
 import startPure from "jec-pure-cli";
@@ -42,6 +42,37 @@ const createConfigIfNeeded = opperators => {
 
 const hashToUUID = x => produceUUID(x, "1b671a64-40d5-491e-99b0-da01ff1f3341");
 
+const actionifyObject = obj => {
+	const acc = [];
+
+	const recursiveDecent = (path, obj) => {
+		R.toPairs(obj).forEach(([key, value,]) => {
+			if (value instanceof Array) {
+				return value.forEach(elem =>
+					acc.push({
+						type: "arr",
+						path: [...path, key,],
+						value: elem,
+					}),
+				);
+			}
+			if (typeof value === "object") {
+				return recursiveDecent([...path, key,], value);
+			}
+
+			acc.push({
+				type: "obj",
+				path: [...path, key,],
+				value,
+			});
+		});
+	};
+
+	recursiveDecent([], obj);
+
+	return acc;
+};
+
 const input = { 
 	action: {
 		meta: {
@@ -75,6 +106,47 @@ const derivedActions = R.when(
 				R.assocPath([ "newAction", "meta", "obj", ]),
 			),
 			hashToUUID
+		),
+
+		R.over(
+			R.lens(
+				R.path(["action", "meta", "time",]),
+				R.assocPath([ "newAction", "meta", "time", ]),
+			),
+			R.inc,
+		),
+
+		R.over(
+			R.lens(
+				R.always(null),
+				R.assocPath([ "newAction", "meta", "action", ]),
+			),
+			generateUUID
+		),
+
+		R.over(
+			R.lens(
+				R.path([ "obj" , ]),
+				R.assocPath([ "newAction", "mutations", ]),
+			),
+			R.pipe(
+				actionifyObject,
+				R.reject(R.pathEq( ["path", 0,], "uuid" )),
+
+				R.map(R.over(
+					R.lensProp("type"),
+					R.cond([
+						[
+							R.equals("obj"),
+							R.always("assoc"),
+						],
+						[
+							R.equals("arr"),
+							R.always("add"),
+						],
+					]),
+				)),
+			)
 		),
 
 		R.prop("newAction"),
