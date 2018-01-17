@@ -1,5 +1,3 @@
-import * as R from "ramda";
-import genUUID from "uuid/v4";
 import startPure from "jec-pure-cli";
 
 const createConfigIfNeeded = opperators => {
@@ -33,7 +31,7 @@ const createConfigIfNeeded = opperators => {
 
 startPure(console.log)
 	.then(createConfigIfNeeded)
-	.then(({ getState, getConfig, insertState, removeState, }) => {
+	.then(({ getState, getConfig, }) => {
 		console.log(getState());
 		console.log(getConfig());
 	});
