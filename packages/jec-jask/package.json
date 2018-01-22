@@ -1,6 +1,6 @@
 {
 	"name": "jec-jask",
-	"version": "0.0.10",
+	"version": "0.0.11",
 	"description": "Task managing tool for use with JEC engine",
 	"main": "lib/index.js",
 	"files": [
