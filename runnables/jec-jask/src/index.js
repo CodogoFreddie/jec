@@ -42,6 +42,7 @@ const createConfigIfNeeded = opperators => {
 
 const hashToUUID = x => produceUUID(x, "1b671a64-40d5-491e-99b0-da01ff1f3341");
 
+
 const actionifyObject = obj => {
 	const acc = [];
 
@@ -105,6 +106,7 @@ const derivedActions = R.when(
 				R.path(["obj", "uuid",]),
 				R.assocPath([ "newAction", "meta", "obj", ]),
 			),
+//need to make sure that we always hash the UUID of the old object, and nothing else!!! that's the only property old the old object that can't change from under us!!!
 			hashToUUID
 		),
 
