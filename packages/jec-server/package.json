@@ -25,6 +25,7 @@
 		"prettier": "^1.10.2"
 	},
 	"dependencies": {
+		"jec-action-helpers": "^0.0.11",
 		"ramda": "^0.25.0"
 	}
 }
