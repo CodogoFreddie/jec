@@ -74,4 +74,5 @@ const input = {
 };
 
 
-console.log(JSON.stringify(recurOnDoneMiddleware, null, ));
+//console.log(recurOnDoneMiddleware);
+console.log(JSON.stringify(mutationifyObject(recurOnDoneMiddleware), null, 2));

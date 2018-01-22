@@ -43,18 +43,29 @@ export const reifyFunction = new Proxy(
 		})
 	}
 );
+export const reifyUncalledFunction = new Proxy(
+	{},
+	{
+		get: (target, op) => ({
+			op,
+		}),
+	}
+);
 
 export const realiseFunction = functionSources => {
 	const functionSource = functionSources.reduce(R.merge, {});
+
 	const recursiveRealiser = (node) => {
-		if(node.op && node.args){
+		if(node.op){
 			return functionSource[op](
-				...args.map(recursiveRealiser)
+				...(node.args || []).map(recursiveRealiser)
 			)
 		}
 		else {
-			 return node;
+			return node;
 		}
 	};
+
+	return recursiveRealiser;
 };
 
