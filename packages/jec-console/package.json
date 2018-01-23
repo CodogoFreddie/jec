@@ -1,14 +1,21 @@
 {
-	"name": "jec-client-cli",
-	"version": "0.0.10",
-	"description": "Client JEC querying implementation for CLI tools, querys local or remote server for data",
-	"main": "index.js",
-	"license": "MIT",
+	"name": "jec-console",
+	"version": "0.0.13",
+	"description": "A general purpose jec explorer",
+	"main": "./index.js",
+	"bin": {
+		"jec": "./index.js"
+	},
+	"files": [
+		"lib",
+		"index.js"
+	],
 	"scripts": {
 		"build": "NODE_ENV=production babel src --out-dir lib",
 		"format": "react-scripts format",
 		"watch": "NODE_ENV=production babel --source-maps inline --watch src --out-dir lib"
 	},
+	"license": "MIT",
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
 		"babel-plugin-node-source-map-support": "^0.0.1",
@@ -25,6 +32,10 @@
 		"prettier": "^1.10.2"
 	},
 	"dependencies": {
+		"jec-action-helpers": "^0.0.11",
+		"jec-config-fetcher": "^0.0.11",
+		"jec-engine": "^0.0.2",
+		"jec-pure-cli": "^0.0.2",
 		"ramda": "^0.25.0"
 	}
 }

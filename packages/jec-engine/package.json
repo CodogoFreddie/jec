@@ -1,8 +1,10 @@
 {
-	"name": "jec-jask",
-	"version": "0.0.10",
-	"description": "Task managing tool for use with JEC engine",
+	"name": "jec-engine",
+	"version": "0.0.11",
+	"description": "A Javascript ExoCortex",
 	"main": "lib/index.js",
+	"repository": "git@github.com:CodogoFreddie/jec.git",
+	"author": "Freddie Ridell <freddie@codogo.io>",
 	"files": [
 		"lib"
 	],
@@ -28,10 +30,8 @@
 		"prettier": "^1.10.2"
 	},
 	"dependencies": {
-		"jec-config-fetcher": "^0.0.5",
-		"jec-engine": "^0.0.5",
-		"jec-pure-cli": "^0.0.5",
+		"jec-action-helpers": "^0.0.11",
 		"ramda": "^0.25.0",
-		"uuid": "^3.2.1"
+		"uuid": "^3.1.0"
 	}
 }

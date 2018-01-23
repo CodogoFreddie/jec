@@ -1,10 +1,12 @@
 {
-	"name": "jec-console",
-	"version": "0.0.10",
-	"description": "A general purpose jec explorer",
-	"main": "./index.js",
-	"bin": {
-		"jec": "./index.js"
+	"name": "jec-jask",
+	"version": "0.0.11",
+	"description": "Task managing tool for use with JEC engine",
+	"main": "lib/index.js",
+	"jec": {
+		"name": "Jask",
+		"uuid": "07743c63-e7c5-4c01-93ac-bde921e6ba2b",
+		"cli": "jask"
 	},
 	"files": [
 		"lib"
@@ -31,9 +33,11 @@
 		"prettier": "^1.10.2"
 	},
 	"dependencies": {
-		"jec-config-fetcher": "^0.0.10",
-		"jec-engine": "^0.0.2",
-		"jec-pure-cli": "^0.0.2",
-		"ramda": "^0.25.0"
+		"jec-action-helpers": "^0.0.11",
+		"jec-config-fetcher": "^0.0.5",
+		"jec-engine": "^0.0.5",
+		"jec-pure-cli": "^0.0.5",
+		"ramda": "^0.25.0",
+		"uuid": "^3.2.1"
 	}
 }
