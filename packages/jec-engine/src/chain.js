@@ -28,8 +28,10 @@ type JecState = {
 
 type JecStateChain = Array<JecState>;
 
+//the state singleton, contains a history of all previous states
 let stateChain: JecStateChain = [{ state: {}, },];
 
+//reducer for applying actions
 const applyAction = (state: any, action: JecAction): any => {
 	const mutationFunctions = action.mutations.map(({ type, path, value, }) =>
 		R.over(
@@ -44,6 +46,7 @@ const applyAction = (state: any, action: JecAction): any => {
 	return mutationFunctions.reduce((state, fn) => fn(state), state);
 };
 
+//inserts an aciton into the chain, and rebuilds the current state
 export const insertAction = (action: JecAction) => {
 	const insertIndex = R.findIndex(
 		R.pipe(
@@ -53,6 +56,8 @@ export const insertAction = (action: JecAction) => {
 		),
 		stateChain,
 	);
+
+	console.log("this is an action", action);
 
 	stateChain = R.insert(
 		insertIndex,
@@ -74,10 +79,12 @@ export const insertAction = (action: JecAction) => {
 	);
 };
 
+//insert many actions
 export const insertActions = (actions: Array<JecAction>) => {
 	R.sortBy(R.path(["meta", "time",]), actions).forEach(insertAction);
 };
 
+//get the head state in a usable way
 const map = R.addIndex(R.map);
 export const getState = (): JecState =>
 	R.pipe(

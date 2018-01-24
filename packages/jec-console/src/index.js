@@ -15,6 +15,9 @@ startPure().then(({ getState, insertState, }) => {
 $ jec :
 	print all object UUIDs
 
+$ jec add :
+	create a new jec object, and return the uuid
+
 $ jec cff750ef-2c9c-41dc-8811-3741c6e80313 :
 	print the data associated with cff750ef-2c9c-41dc-8811-3741c6e80313
 

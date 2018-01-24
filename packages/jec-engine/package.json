@@ -23,15 +23,15 @@
 		"babel-preset-env": "^1.6.1",
 		"babel-preset-flow": "^6.23.0",
 		"codogo-react-scripts": "^1.0.14-delta.84",
-		"eslint": "^4.15.0",
+		"eslint": "^4.16.0",
 		"eslint-config-codogo": "^2.1.1",
 		"flow-bin": "^0.63.1",
-		"parcel-bundler": "^1.4.1",
+		"parcel-bundler": "^1.5.0",
 		"prettier": "^1.10.2"
 	},
 	"dependencies": {
 		"jec-action-helpers": "^0.0.11",
 		"ramda": "^0.25.0",
-		"uuid": "^3.1.0"
+		"uuid": "^3.2.1"
 	}
 }
