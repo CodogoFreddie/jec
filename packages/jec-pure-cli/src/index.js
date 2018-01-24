@@ -12,12 +12,9 @@ import mkdir from "make-dir";
 import recursive from "recursive-readdir";
 import * as R from "ramda";
 
-console.log("fooo");
-
 export default listener =>
 	fetchConfig(listener)
 		.then(config => {
-			console.log("here");
 			setPersistHandlers({
 				listActions: () =>
 					new Promise(done => {

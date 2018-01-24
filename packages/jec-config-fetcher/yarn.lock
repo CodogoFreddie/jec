@@ -4206,12 +4206,6 @@ istanbul-reports@^1.1.3:
   dependencies:
     handlebars "^4.0.3"
 
-jec-action-helpers@^0.0.11:
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/jec-action-helpers/-/jec-action-helpers-0.0.11.tgz#6c5c27e72730fa22be9739d8dde0c9db1c63b8ce"
-  dependencies:
-    ramda "^0.25.0"
-
 jest-changed-files@^20.0.3:
   version "20.0.3"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-20.0.3.tgz#9394d5cc65c438406149bef1bf4d52b68e03e3f8"

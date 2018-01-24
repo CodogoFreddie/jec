@@ -4218,6 +4218,13 @@ jec-config-fetcher@^0.0.11:
   dependencies:
     ramda "^0.25.0"
 
+jec-engine@^0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/jec-engine/-/jec-engine-0.0.11.tgz#89ff339664674cc45c4e4292d7bc56e46ec14c54"
+  dependencies:
+    ramda "^0.25.0"
+    uuid "^3.1.0"
+
 jest-changed-files@^20.0.3:
   version "20.0.3"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-20.0.3.tgz#9394d5cc65c438406149bef1bf4d52b68e03e3f8"

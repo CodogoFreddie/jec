@@ -7,6 +7,7 @@ import {
 const packageJSON = require("../package.json");
 
 export default {
+	isAfterware: true,
 	name: "Recur On Done",
 	app: packageJSON.jec.uuid,
 	version: packageJSON.version,
@@ -14,14 +15,14 @@ export default {
 
 	function: R.ifElse(
 		R.both(
-			R.complement(R.path([ "before", "done", ])),
-			R.path([ "after", "done", ]),
+			R.complement(R.path(["before", "done",])),
+			R.path(["after", "done",]),
 		),
 		R.pipe(
 			R.over(
 				R.lens(
 					R.path(["action", "meta", "obj",]),
-					R.assocPath([ "newAction", "meta", "obj", ]),
+					R.assocPath(["newAction", "meta", "obj",]),
 				),
 				E.hashToUUID,
 			),
@@ -29,7 +30,7 @@ export default {
 			R.over(
 				R.lens(
 					R.path(["action", "meta", "time",]),
-					R.assocPath([ "newAction", "meta", "time", ]),
+					R.assocPath(["newAction", "meta", "time",]),
 				),
 				E.inc,
 			),
@@ -37,55 +38,43 @@ export default {
 			R.over(
 				R.lens(
 					R.path(["action", "meta", "obj",]),
-					R.assocPath([ "newAction", "meta", "action", ]),
+					R.assocPath(["newAction", "meta", "action",]),
 				),
-				R.pipe(
-					R.split(""),
-					R.append("_"),
-					R.join(""),
-					E.hashToUUID
-				),
+				R.pipe(R.split(""), R.append("_"), R.join(""), E.hashToUUID),
 			),
 
 			R.over(
 				R.lens(
-					R.path(["action", "meta", "action", ]),
-					R.assocPath([ "newAction", "meta", "childOfAction", ]),
+					R.path(["action", "meta", "action",]),
+					R.assocPath(["newAction", "meta", "childOfAction",]),
 				),
-				E.identity
+				E.identity,
 			),
 
 			R.over(
 				R.lens(
-					R.path([ "after", ]),
-					R.assocPath([ "newAction", "mutations", ]),
+					R.path(["after",]),
+					R.assocPath(["newAction", "mutations",]),
 				),
 				R.pipe(
 					E.mutationifyObject,
-					R.reject(R.pathEq( ["path", 0,], "uuid" )),
+					R.reject(R.pathEq(["path", 0,], "uuid")),
 
-					R.map(R.over(
-						R.lensProp("type"),
-						R.cond([
-							[
-								R.equals("after"),
-								R.always("assoc"),
-							],
-							[
-								R.equals("arr"),
-								R.always("add"),
-							],
-						]),
-					)),
-					R.reject(
-						R.pathEq(["path", 0], "done")
+					R.map(
+						R.over(
+							R.lensProp("type"),
+							R.cond([
+								[R.equals("after"), R.always("assoc"),],
+								[R.equals("arr"), R.always("add"),],
+							]),
+						),
 					),
-				)
+					R.reject(R.pathEq(["path", 0,], "done")),
+				),
 			),
 
 			R.prop("newAction"),
-
 		),
 		R.always([]),
-	)
+	),
 };
