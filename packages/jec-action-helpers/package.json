@@ -24,10 +24,11 @@
 		"eslint": "^4.15.0",
 		"eslint-config-codogo": "^2.1.1",
 		"flow-bin": "^0.63.1",
-		"parcel-bundler": "^1.4.1",
+		"parcel-bundler": "^1.5.0",
 		"prettier": "^1.10.2"
 	},
 	"dependencies": {
+		"jec-engine": "^0.0.11",
 		"ramda": "^0.25.0"
 	}
 }

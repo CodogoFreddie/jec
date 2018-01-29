@@ -1,5 +1,10 @@
 // @flow
 import * as R from "ramda";
+import {
+	hashToUUID,
+	mutationifyObject,
+	realiseFunction,
+} from "jec-action-helpers";
 
 type JecType = "String" | "Number" | "DateTime" | "Boolean" | "Link";
 type RecursiveJecType = {
@@ -28,8 +33,10 @@ type JecState = {
 
 type JecStateChain = Array<JecState>;
 
+//the state singleton, contains a history of all previous states
 let stateChain: JecStateChain = [{ state: {}, },];
 
+//reducer for applying actions
 const applyAction = (state: any, action: JecAction): any => {
 	const mutationFunctions = action.mutations.map(({ type, path, value, }) =>
 		R.over(
@@ -44,6 +51,15 @@ const applyAction = (state: any, action: JecAction): any => {
 	return mutationFunctions.reduce((state, fn) => fn(state), state);
 };
 
+const afterwareRealiser = realiseFunction([
+	R,
+	{
+		hashToUUID,
+		mutationifyObject,
+	},
+]);
+
+//inserts an aciton into the chain, and rebuilds the current state
 export const insertAction = (action: JecAction) => {
 	const insertIndex = R.findIndex(
 		R.pipe(
@@ -72,12 +88,55 @@ export const insertAction = (action: JecAction) => {
 		R.head(stateChain),
 		R.tail(stateChain),
 	);
+
+	action.mutations.map(R.prop("path")).forEach(path => {
+		if (
+			R.path(["config", "afterware", ...path,], R.last(stateChain).state)
+		) {
+			console.log(`this is afterware for path [ ${path.join(", ")} ]`);
+
+			const newActions = R.pipe(
+				R.last,
+				R.path(["state", "config", "afterware", ...path,]),
+				R.values,
+				R.filter(R.prop("isAfterware")),
+				R.map(
+					R.pipe(
+						R.prop("function"),
+						afterwareRealiser,
+						afterwareFunction => (
+							console.log({
+								action,
+								before: R.nth(insertIndex - 1, stateChain)
+									.state[action.meta.obj],
+								after: R.nth(insertIndex, stateChain).state[
+									action.meta.obj
+								],
+							}),
+							afterwareFunction({
+								action,
+								before: R.nth(insertIndex - 1, stateChain)
+									.state[action.meta.obj],
+								after: R.nth(insertIndex, stateChain).state[
+									action.meta.obj
+								],
+							})
+						),
+					),
+				),
+			)(stateChain);
+
+			console.log(newActions);
+		}
+	});
 };
 
+//insert many actions
 export const insertActions = (actions: Array<JecAction>) => {
 	R.sortBy(R.path(["meta", "time",]), actions).forEach(insertAction);
 };
 
+//get the head state in a usable way
 const map = R.addIndex(R.map);
 export const getState = (): JecState =>
 	R.pipe(

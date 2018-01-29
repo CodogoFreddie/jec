@@ -20,5 +20,8 @@
 	},
 	"devDependencies": {
 		"lerna": "^2.7.1"
+	},
+	"scripts": {
+		"watch": "lerna run --parallel watch"
 	}
 }

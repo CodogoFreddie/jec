@@ -25,7 +25,6 @@ export const setPersistHandlers = ({
 export const initalise = () =>
 	listActionsHandler()
 		.then(actions => Promise.all(actions.map(readActionHandler)))
-		.then(R.sortBy(R.path(["meta", "timestamp",])))
 		.then(insertActions);
 
 export const getState = () => getFullState();
