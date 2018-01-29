@@ -7,6 +7,7 @@ An ecosystem of tools for storing generic stuctured data with various differnt v
 <!-- vim-markdown-toc GFM -->
 * [Idea](#idea)
 	* [Apps](#apps)
+		* [Possible Future Apps:](#possible-future-apps)
 * [API](#api)
 	* [Data Provided](#data-provided)
 * [Packages](#packages)
@@ -35,6 +36,10 @@ I'm currently only roadmapping for 3 apps:
 + jask: todo list
 + jist: a shopping list
 + jote: a notes app
+
+#### Possible Future Apps:
++ jello: a trello clone
++ jal: a calender
 
 If I tried to make a tool that works for everything on the first go I think I'd litterally go mad.
 

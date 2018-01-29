@@ -28,6 +28,7 @@
 		"prettier": "^1.10.2"
 	},
 	"dependencies": {
+		"codogo-scripts": "^3.0.2",
 		"jec-action-helpers": "^0.0.11",
 		"jec-engine": "^0.0.11",
 		"ramda": "^0.25.0"
