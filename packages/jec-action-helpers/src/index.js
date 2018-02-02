@@ -32,8 +32,15 @@ export const mutationifyObject = obj => {
 
 	recursiveDecent([], obj);
 
+	console.log( acc);
 	return acc;
 };
+
+export const callArray = ([...x]) => (
+	console.log("in", x),
+	console.log("out", R.call(...x)),
+	R.call(...x)
+);
 
 export const reifyFunction = new Proxy(
 	{},
@@ -64,6 +71,8 @@ export const realiseFunction = functionSources => {
 					...(node.args || []).map(recursiveRealiser),
 				)
 				: functionSource[node.op];
+		} else if(Array.isArray(node)){
+			return node.map(recursiveRealiser);
 		} else {
 			return node;
 		}

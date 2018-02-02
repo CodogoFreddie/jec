@@ -1,13 +1,13 @@
-import * as R from "ramda";
+//import * as R from "ramda";
 //import generateUUID from "uuid/v4";
-import produceUUID from "uuid/v3";
-import {
-	hashToUUID,
-	mutationifyObject,
-	reifyFunction,
-	realiseFunction,
-} from "jec-action-helpers";
-import startPure from "jec-pure-cli";
+//import produceUUID from "uuid/v3";
+//import {
+	//hashToUUID,
+	//mutationifyObject,
+	//reifyFunction,
+	//realiseFunction,
+//} from "jec-action-helpers";
+//import startPure from "jec-pure-cli";
 
 import recurOnDoneMiddleware from "./recurOnDoneMiddleware";
 const packageJSON = require("../package.json");
@@ -44,20 +44,20 @@ const createConfigIfNeeded = opperators => {
 const createRecurOnDoneMiddlewareIfNeeded = opperators => {
 	const config = opperators.getConfig();
 
-	if (
-		R.pathEq(
-			["afterware", "done", recurOnDoneMiddleware.uuid, "version",],
-			packageJSON.version,
-			config,
-		)
-	) {
-		return opperators;
-	} else {
-		if (R.path(["afterware", "done",], config)) {
-			console.log("outdated recurOnDoneMiddleware, updateing");
-		} else {
-			console.log("no recurOnDoneMiddleware, installing");
-		}
+	//if (
+		//R.pathEq(
+			//["afterware", "done", recurOnDoneMiddleware.uuid, "version",],
+			//packageJSON.version,
+			//config,
+		//)
+	//) {
+		//return opperators;
+	//} else {
+		//if (R.path(["afterware", "done",], config)) {
+			//console.log("outdated recurOnDoneMiddleware, updateing");
+		//} else {
+			//console.log("no recurOnDoneMiddleware, installing");
+		//}
 
 		return opperators
 			.insertState({
@@ -71,44 +71,66 @@ const createRecurOnDoneMiddlewareIfNeeded = opperators => {
 				},
 			})
 			.then(() => opperators);
-	}
+	//}
 };
 
-startPure(console.log)
-	.then(createConfigIfNeeded)
-	.then(createRecurOnDoneMiddlewareIfNeeded)
-	.then(({ getState, getConfig, }) => {
-		//console.log(getState());
-		console.log(getConfig().afterware);
-	})
-	.catch(console.error);
+//startPure(console.log)
+	//.then(createConfigIfNeeded)
+	//.then( opperators => {
+		//const newUUID = generateUUID();
 
-//const input = {
-//action: {
-//meta: {
-//time: 123,
-//action: "actionid",
-//obj: "objid",
-//},
-//mutations: [
-//{
-//type: "assoc",
-//path: [ "done", ],
-//value: 123,
-//}
-//],
-//},
-//before: {
-//description: "this is the description",
-//tags: [
-//"tag1", "tag2",
-//],
-//},
-//after: {
-//description: "this is the description",
-//done: 123,
-//tags: [
-//"tag1", "tag2",
-//],
-//},
-//};
+		//return opperators.insertState({
+			//obj: newUUID,
+			//state: {
+				//description: "a thing to do",
+				//due: "2018-02-01T10:17:00.165Z",
+				//recur: {
+					//op: "addDays",
+					//args: [
+						//1,
+					//]
+				//},
+			//}
+		//}).then( () => opperators.insertState({
+			//obj: newUUID,
+			//state: {
+				//done: "2018-02-01T11:17:00.165Z",
+			//}
+		//})).then( () => opperators);
+	//})
+	//.then(createRecurOnDoneMiddlewareIfNeeded)
+	//.then(({ getState, getConfig, }) => {
+		//console.log(getState());
+		//console.log(getConfig().afterware);
+	//})
+	//.catch(console.error);
+
+////const input = {
+////action: {
+////meta: {
+////time: 123,
+////action: "actionid",
+////obj: "objid",
+////},
+////mutations: [
+////{
+////type: "assoc",
+////path: [ "done", ],
+////value: 123,
+////}
+////],
+////},
+////before: {
+////description: "this is the description",
+////tags: [
+////"tag1", "tag2",
+////],
+////},
+////after: {
+////description: "this is the description",
+////done: 123,
+////tags: [
+////"tag1", "tag2",
+////],
+////},
+////};
