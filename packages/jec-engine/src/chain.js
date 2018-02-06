@@ -1,5 +1,7 @@
 // @flow
 import * as R from "ramda";
+import dateFns from "date-fns/fp";
+import { inspect, } from "util";
 import {
 	hashToUUID,
 	mutationifyObject,
@@ -53,6 +55,7 @@ const applyAction = (state: any, action: JecAction): any => {
 
 const afterwareRealiser = realiseFunction([
 	R,
+	dateFns,
 	{
 		hashToUUID,
 		mutationifyObject,
@@ -105,14 +108,6 @@ export const insertAction = (action: JecAction) => {
 						R.prop("function"),
 						afterwareRealiser,
 						afterwareFunction => (
-							console.log({
-								action,
-								before: R.nth(insertIndex - 1, stateChain)
-									.state[action.meta.obj],
-								after: R.nth(insertIndex, stateChain).state[
-									action.meta.obj
-								],
-							}),
 							afterwareFunction({
 								action,
 								before: R.nth(insertIndex - 1, stateChain)
@@ -126,7 +121,7 @@ export const insertAction = (action: JecAction) => {
 				),
 			)(stateChain);
 
-			console.log(newActions);
+			console.log("newActions", inspect(newActions, {depth: null, }));
 		}
 	});
 };
