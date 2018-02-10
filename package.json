@@ -5,20 +5,11 @@
 	},
 	"babel": {
 		"presets": [
-			"env",
-			"flow"
-		],
-		"plugins": [
-			"preval",
-			[
-				"transform-object-rest-spread",
-				{
-					"useBuiltIns": true
-				}
-			]
+			"codogo"
 		]
 	},
 	"devDependencies": {
+		"babel-preset-codogo": "^3.0.5",
 		"lerna": "^2.7.1"
 	},
 	"scripts": {

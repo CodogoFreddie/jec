@@ -8,6 +8,12 @@ import {
 	realiseFunction,
 } from "jec-action-helpers";
 
+import {
+	shouldGenerateRecurrenceFunction,
+	generateRecurrenceFunction,
+	generateRecurrenceMutations,
+} from "./dateUpdaters";
+
 type JecType = "String" | "Number" | "DateTime" | "Boolean" | "Link";
 type RecursiveJecType = {
 	[string]: JecType | Array<RecursiveJecType> | RecursiveJecType,
@@ -66,9 +72,8 @@ const afterwareRealiser = realiseFunction([
 export const insertAction = (action: JecAction) => {
 	const insertIndex = R.findIndex(
 		R.pipe(
-			R.path(["action", "meta", "time",]),
-			R.defaultTo(0),
-			R.lt(action.meta.time),
+			R.pathOr(0, ["action", "meta", "time",]),
+			R.gt(R.__, action.meta.time),
 		),
 		stateChain,
 	);
@@ -81,6 +86,30 @@ export const insertAction = (action: JecAction) => {
 		stateChain,
 	);
 
+	//special opperation,
+	//if this action sets the done property, we check the recur property
+	//if this object has recur, we insert extra mutations to update due, wait, etc
+	//this is used to create objects that recur.
+	//due, wait, recur, are special fields that conform to this special behaviour
+	if(shouldGenerateRecurrenceFunction({ action,  }) ){
+		stateChain = R.over(
+			R.lensIndex(insertIndex),
+			R.over(
+				R.lensPath(["action", "mutations", ]),
+				R.pipe(
+					R.concat(
+						R.__,
+						generateRecurrenceMutations({
+							action,
+							state: R.nth(insertIndex - 1, stateChain).state,
+						})
+					)
+				)
+			),
+			stateChain,
+		);
+	}
+
 	stateChain = R.scan(
 		({ state: previousState, }, { action: currentAction, }) => {
 			return {
@@ -91,44 +120,14 @@ export const insertAction = (action: JecAction) => {
 		R.head(stateChain),
 		R.tail(stateChain),
 	);
-
-	action.mutations.map(R.prop("path")).forEach(path => {
-		if (
-			R.path(["config", "afterware", ...path,], R.last(stateChain).state)
-		) {
-			console.log(`this is afterware for path [ ${path.join(", ")} ]`);
-
-			const newActions = R.pipe(
-				R.last,
-				R.path(["state", "config", "afterware", ...path,]),
-				R.values,
-				R.filter(R.prop("isAfterware")),
-				R.map(
-					R.pipe(
-						R.prop("function"),
-						afterwareRealiser,
-						afterwareFunction => (
-							afterwareFunction({
-								action,
-								before: R.nth(insertIndex - 1, stateChain)
-									.state[action.meta.obj],
-								after: R.nth(insertIndex, stateChain).state[
-									action.meta.obj
-								],
-							})
-						),
-					),
-				),
-			)(stateChain);
-
-			console.log("newActions", inspect(newActions, {depth: null, }));
-		}
-	});
 };
 
 //insert many actions
 export const insertActions = (actions: Array<JecAction>) => {
-	R.sortBy(R.path(["meta", "time",]), actions).forEach(insertAction);
+	R.sortBy(
+	({ meta: { time, action, } }) => "" + time + action,
+		actions
+).forEach(insertAction);
 };
 
 //get the head state in a usable way

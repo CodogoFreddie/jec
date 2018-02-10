@@ -1,16 +1,17 @@
 import fetchConfig from "jec-config-fetcher";
+import jsonfile from "jsonfile";
+import mkdir from "make-dir";
+import recursive from "recursive-readdir";
+import * as R from "ramda";
+
 import {
 	setPersistHandlers,
 	initalise,
 	getState,
 	getConfig,
-	insertState,
-	removeState,
+	insertAction,
+	insertActions,
 } from "jec-engine";
-import jsonfile from "jsonfile";
-import mkdir from "make-dir";
-import recursive from "recursive-readdir";
-import * as R from "ramda";
 
 export default listener =>
 	fetchConfig(listener)
@@ -59,7 +60,7 @@ export default listener =>
 		})
 		.then(() => ({
 			getState,
-			insertState,
-			removeState,
 			getConfig,
+			insertAction,
+			insertActions,
 		}));

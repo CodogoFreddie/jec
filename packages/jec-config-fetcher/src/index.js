@@ -41,7 +41,7 @@ export default (listener = noop) =>
 	dataFolder: \`${require("os").homedir()}/.jecActions\`,
 	server: {
 		port: 9000,
-		address: "http:localhost",
+		address: "http://localhost",
 		key: "${generateKey()}",
 	},
 }`,

@@ -2,8 +2,8 @@ import genUUID from "uuid/v4";
 import * as R from "ramda";
 
 import {
-	insertAction,
-	insertActions,
+	insertAction as insertActionToChain,
+	insertActions as insertActionsToChain,
 	getState as getFullState,
 	getConfig as getFullConfig,
 } from "./chain";
@@ -25,7 +25,7 @@ export const setPersistHandlers = ({
 export const initalise = () =>
 	listActionsHandler()
 		.then(actions => Promise.all(actions.map(readActionHandler)))
-		.then(insertActions);
+		.then(insertActionsToChain);
 
 export const getState = () => getFullState();
 export const getConfig = () => getFullConfig();
@@ -61,53 +61,15 @@ const actionifyObject = obj => {
 	return acc;
 };
 
-const applyAction = action => {
-	insertAction(action);
+export const insertAction = action => {
+	insertActionToChain(action);
 	return writeActionHandler(action);
 };
 
-export const insertState = ({ obj, state, }) => {
-	const mutations = actionifyObject(state).map(
-		R.over(
-			R.lensProp("type"),
-			type => (type === "obj" && "assoc") || (type === "arr" && "add"),
-		),
-	);
-	const action: JecAction = {
-		meta: {
-			time: new Date().getTime(),
-			obj,
-			action: genUUID(),
-		},
-		mutations,
-	};
-
-	return applyAction(action);
+export const insertActions = actions => {
+	insertActionsToChain(actions);
+	return Promise.all(actions.map( action => 
+		writeActionHandler(action)
+	));
 };
 
-export const removeState = ({ obj, state, }) => {
-	const mutations = actionifyObject(state)
-		.map(
-			R.over(
-				R.lensProp("type"),
-				type =>
-					(type === "obj" && "assoc") || (type === "arr" && "remove"),
-			),
-		)
-		.map(({ type, value, ...rest }) => ({
-			...rest,
-			type,
-			value: type === "assoc" ? null : value,
-		}));
-
-	const action: JecAction = {
-		meta: {
-			time: new Date().getTime(),
-			obj,
-			action: genUUID(),
-		},
-		mutations,
-	};
-
-	return applyAction(action);
-};

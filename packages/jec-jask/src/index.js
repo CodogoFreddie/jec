@@ -1,15 +1,15 @@
-//import * as R from "ramda";
-//import generateUUID from "uuid/v4";
-//import produceUUID from "uuid/v3";
-//import {
-	//hashToUUID,
-	//mutationifyObject,
-	//reifyFunction,
-	//realiseFunction,
-//} from "jec-action-helpers";
-//import startPure from "jec-pure-cli";
+import * as R from "ramda";
+import generateUUID from "uuid/v4";
+import produceUUID from "uuid/v3";
+import {
+	hashToUUID,
+	mutationifyObject,
+	reifyFunction,
+	realiseFunction,
+	createInsertStateAction,
+} from "jec-action-helpers";
+import startPure from "jec-pure-cli";
 
-import recurOnDoneMiddleware from "./recurOnDoneMiddleware";
 const packageJSON = require("../package.json");
 
 const createConfigIfNeeded = opperators => {
@@ -17,7 +17,7 @@ const createConfigIfNeeded = opperators => {
 	if (!config || !config.jask) {
 		console.log("no jask config detected! generating new config");
 		return opperators
-			.insertState({
+			.insertAction(createInsertStateAction({
 				obj: "config",
 				state: {
 					jask: {
@@ -34,76 +34,51 @@ const createConfigIfNeeded = opperators => {
 						],
 					},
 				},
-			})
+			}))
 			.then(() => opperators);
 	} else {
 		return opperators;
 	}
 };
 
-const createRecurOnDoneMiddlewareIfNeeded = opperators => {
-	const config = opperators.getConfig();
+startPure(console.log)
+	.then(createConfigIfNeeded)
+	.then( ({ getState, getConfig, insertActions, }) => {
+		const newUUID = generateUUID();
 
-	//if (
-		//R.pathEq(
-			//["afterware", "done", recurOnDoneMiddleware.uuid, "version",],
-			//packageJSON.version,
-			//config,
-		//)
-	//) {
-		//return opperators;
-	//} else {
-		//if (R.path(["afterware", "done",], config)) {
-			//console.log("outdated recurOnDoneMiddleware, updateing");
-		//} else {
-			//console.log("no recurOnDoneMiddleware, installing");
-		//}
-
-		return opperators
-			.insertState({
-				obj: "config",
+		const actions = [
+			createInsertStateAction({
+				obj: newUUID,
 				state: {
-					afterware: {
-						done: {
-							[recurOnDoneMiddleware.uuid]: recurOnDoneMiddleware,
-						},
+					description: "a thing to do",
+					due: "2018-02-01T10:17:00.165Z",
+					recur: {
+						op: "addDays",
+						n: 1,
 					},
-				},
-			})
-			.then(() => opperators);
-	//}
-};
+				}
+			}),
+			R.over(
+				R.lensPath([ "meta" ,"time", ]),
+				R.inc,
+				createInsertStateAction({
+					obj: newUUID,
+					state: {
+						done: "2018-02-01T11:17:00.165Z",
+					}
+				})
+			),
+		];
 
-//startPure(console.log)
-	//.then(createConfigIfNeeded)
-	//.then( opperators => {
-		//const newUUID = generateUUID();
+		//return insertActions(actions)
+		//.then( () => {
 
-		//return opperators.insertState({
-			//obj: newUUID,
-			//state: {
-				//description: "a thing to do",
-				//due: "2018-02-01T10:17:00.165Z",
-				//recur: {
-					//op: "addDays",
-					//args: [
-						//1,
-					//]
-				//},
-			//}
-		//}).then( () => opperators.insertState({
-			//obj: newUUID,
-			//state: {
-				//done: "2018-02-01T11:17:00.165Z",
-			//}
-		//})).then( () => opperators);
-	//})
-	//.then(createRecurOnDoneMiddlewareIfNeeded)
-	//.then(({ getState, getConfig, }) => {
-		//console.log(getState());
-		//console.log(getConfig().afterware);
-	//})
-	//.catch(console.error);
+		console.log("\n\nThis is the state:");
+		console.log(getState());
+
+		//});
+	})
+	.catch(console.error);
 
 ////const input = {
 ////action: {

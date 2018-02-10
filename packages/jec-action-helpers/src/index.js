@@ -1,3 +1,4 @@
+import generateUUID from "uuid/v4";
 import produceUUID from "uuid/v3";
 import * as R from "ramda";
 
@@ -31,52 +32,51 @@ export const mutationifyObject = obj => {
 	};
 
 	recursiveDecent([], obj);
-
 	console.log( acc);
 	return acc;
 };
 
-export const callArray = ([...x]) => (
-	console.log("in", x),
-	console.log("out", R.call(...x)),
-	R.call(...x)
-);
+export const createInsertStateAction = ({ obj, state, }) => {
+	const mutations = mutationifyObject(state).map(
+		R.over(
+			R.lensProp("type"),
+			type => (type === "obj" && "assoc") || (type === "arr" && "add"),
+		),
+	);
+	const action = {
+		meta: {
+			time: new Date().getTime(),
+			obj,
+			action: generateUUID(),
+		},
+		mutations,
+	};
+	return action;
+};
 
-export const reifyFunction = new Proxy(
-	{},
-	{
-		get: (target, op) => (...args) => ({
-			op,
-			args,
-		}),
-	},
-);
+export const createRemoveStateAction = ({ obj, state, }) => {
+	const mutations = mutationifyObject(state)
+		.map(
+			R.over(
+				R.lensProp("type"),
+				type =>
+					(type === "obj" && "assoc") || (type === "arr" && "remove"),
+			),
+		)
+		.map(({ type, value, ...rest }) => ({
+			...rest,
+			type,
+			value: type === "assoc" ? null : value,
+		}));
 
-export const reifyUncalledFunction = new Proxy(
-	{},
-	{
-		get: (target, op) => ({
-			op,
-		}),
-	},
-);
-
-export const realiseFunction = functionSources => {
-	const functionSource = functionSources.reduce(R.merge, {});
-
-	const recursiveRealiser = node => {
-		if (node.op) {
-			return node.args
-				? functionSource[node.op](
-					...(node.args || []).map(recursiveRealiser),
-				)
-				: functionSource[node.op];
-		} else if(Array.isArray(node)){
-			return node.map(recursiveRealiser);
-		} else {
-			return node;
-		}
+	const action = {
+		meta: {
+			time: new Date().getTime(),
+			obj,
+			action: generateUUID(),
+		},
+		mutations,
 	};
 
-	return recursiveRealiser;
+	return Action;
 };
