@@ -5,7 +5,6 @@ import { inspect, } from "util";
 import {
 	hashToUUID,
 	mutationifyObject,
-	realiseFunction,
 } from "jec-action-helpers";
 
 import {
@@ -59,15 +58,6 @@ const applyAction = (state: any, action: JecAction): any => {
 	return mutationFunctions.reduce((state, fn) => fn(state), state);
 };
 
-const afterwareRealiser = realiseFunction([
-	R,
-	dateFns,
-	{
-		hashToUUID,
-		mutationifyObject,
-	},
-]);
-
 //inserts an aciton into the chain, and rebuilds the current state
 export const insertAction = (action: JecAction) => {
 	const insertIndex = R.findIndex(
@@ -92,6 +82,11 @@ export const insertAction = (action: JecAction) => {
 	//this is used to create objects that recur.
 	//due, wait, recur, are special fields that conform to this special behaviour
 	if(shouldGenerateRecurrenceFunction({ action,  }) ){
+		const newMutations = generateRecurrenceMutations({
+			action,
+			state: R.nth(insertIndex - 1, stateChain).state,
+		});
+
 		stateChain = R.over(
 			R.lensIndex(insertIndex),
 			R.over(
@@ -99,10 +94,7 @@ export const insertAction = (action: JecAction) => {
 				R.pipe(
 					R.concat(
 						R.__,
-						generateRecurrenceMutations({
-							action,
-							state: R.nth(insertIndex - 1, stateChain).state,
-						})
+						newMutations,
 					)
 				)
 			),
@@ -125,9 +117,9 @@ export const insertAction = (action: JecAction) => {
 //insert many actions
 export const insertActions = (actions: Array<JecAction>) => {
 	R.sortBy(
-	({ meta: { time, action, } }) => "" + time + action,
+		({ meta: { time, action, } }) => "" + time + action,
 		actions
-).forEach(insertAction);
+	).forEach(insertAction);
 };
 
 //get the head state in a usable way

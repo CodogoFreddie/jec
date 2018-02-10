@@ -32,8 +32,8 @@ export const mutationifyObject = obj => {
 	};
 
 	recursiveDecent([], obj);
-	console.log( acc);
-	return acc;
+
+	return R.reverse(acc);
 };
 
 export const createInsertStateAction = ({ obj, state, }) => {

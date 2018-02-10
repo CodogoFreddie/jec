@@ -2484,6 +2484,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
+date-fns@^2.0.0-alpha.7:
+  version "2.0.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.0.0-alpha.7.tgz#245ad16f95764eababfb2c0a41fd5d033c20e57a"
+
 date-now@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
@@ -4410,6 +4414,39 @@ isomorphic-fetch@^2.1.1:
 isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
+
+jec-action-helpers@^0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/jec-action-helpers/-/jec-action-helpers-0.0.11.tgz#6c5c27e72730fa22be9739d8dde0c9db1c63b8ce"
+  dependencies:
+    ramda "^0.25.0"
+
+jec-config-fetcher@^0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/jec-config-fetcher/-/jec-config-fetcher-0.0.11.tgz#bfe54928e7e4c18fabf1c0e767712a97c8907ce9"
+  dependencies:
+    ramda "^0.25.0"
+
+jec-config-fetcher@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/jec-config-fetcher/-/jec-config-fetcher-0.0.5.tgz#02d08e1c4c0d0bb69b8d1e295feeae4a3b92f015"
+  dependencies:
+    ramda "^0.25.0"
+
+jec-engine@^0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/jec-engine/-/jec-engine-0.0.11.tgz#89ff339664674cc45c4e4292d7bc56e46ec14c54"
+  dependencies:
+    ramda "^0.25.0"
+    uuid "^3.1.0"
+
+jec-pure-cli@^0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/jec-pure-cli/-/jec-pure-cli-0.0.11.tgz#a20b6309f7042626012574ae9e650d6e4911315e"
+  dependencies:
+    jec-config-fetcher "^0.0.5"
+    ramda "^0.25.0"
+    uuid "^3.1.0"
 
 js-base64@^2.1.9:
   version "2.4.0"
@@ -7325,7 +7362,7 @@ uuid@^3.0.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.2.0.tgz#19a63e22b3b32a0ba23984a4f384836465e24949"
 
-uuid@^3.0.1, uuid@^3.2.1:
+uuid@^3.0.1, uuid@^3.1.0, uuid@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.2.1.tgz#12c528bb9d58d0b9265d9a2f6f0fe8be17ff1f14"
 
@@ -7558,6 +7595,13 @@ window-size@0.1.0:
 window-size@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.2.0.tgz#b4315bb4214a3d7058ebeee892e13fa24d98b075"
+
+window-size@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/window-size/-/window-size-1.1.0.tgz#3b402d3244f35561db2c9761ad9d1e5286b07a2d"
+  dependencies:
+    define-property "^1.0.0"
+    is-number "^3.0.0"
 
 wordwrap@0.0.2:
   version "0.0.2"

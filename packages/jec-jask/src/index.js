@@ -1,45 +1,20 @@
 import * as R from "ramda";
 import generateUUID from "uuid/v4";
 import produceUUID from "uuid/v3";
+import startPure from "jec-pure-cli";
+
 import {
 	hashToUUID,
 	mutationifyObject,
-	reifyFunction,
-	realiseFunction,
 	createInsertStateAction,
 } from "jec-action-helpers";
-import startPure from "jec-pure-cli";
+
+import createConfigIfNeeded from "./createConfigIfNeeded";
+import render from "./render";
 
 const packageJSON = require("../package.json");
 
-const createConfigIfNeeded = opperators => {
-	const config = opperators.getConfig();
-	if (!config || !config.jask) {
-		console.log("no jask config detected! generating new config");
-		return opperators
-			.insertAction(createInsertStateAction({
-				obj: "config",
-				state: {
-					jask: {
-						headers: [
-							"score",
-							"id",
-							"description",
-							"due",
-							"tags",
-							"priority",
-							"project",
-							"depends",
-							"recur",
-						],
-					},
-				},
-			}))
-			.then(() => opperators);
-	} else {
-		return opperators;
-	}
-};
+const [_, __, ...args] = process.argv;
 
 startPure(console.log)
 	.then(createConfigIfNeeded)
@@ -73,8 +48,7 @@ startPure(console.log)
 		//return insertActions(actions)
 		//.then( () => {
 
-		console.log("\n\nThis is the state:");
-		console.log(getState());
+		console.log(render(getConfig())(getState()));
 
 		//});
 	})

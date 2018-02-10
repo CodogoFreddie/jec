@@ -26,11 +26,13 @@
 	},
 	"dependencies": {
 		"codogo-scripts": "^3.0.2",
+		"date-fns": "^2.0.0-alpha.7",
 		"jec-action-helpers": "^0.0.11",
 		"jec-config-fetcher": "^0.0.11",
 		"jec-engine": "^0.0.11",
 		"jec-pure-cli": "^0.0.11",
 		"ramda": "^0.25.0",
-		"uuid": "^3.2.1"
+		"uuid": "^3.2.1",
+		"window-size": "^1.1.0"
 	}
 }
