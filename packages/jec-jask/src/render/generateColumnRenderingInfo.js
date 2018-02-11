@@ -6,9 +6,7 @@ const measureColumnWidths = config =>
 			...columnWidths,
 			...R.pipe(
 				R.toPairs,
-				R.filter(([key,]) =>
-					R.contains(key, config.jask.headers),
-				),
+				R.filter(([key,]) => R.contains(key, config.jask.headers)),
 				R.map(([key, value,]) => [
 					key,
 					Math.max(
@@ -34,7 +32,7 @@ export default config =>
 				length,
 			})),
 			R.sortBy(({ label, }) =>
-				R.findIndex(R.equals(label), config.jask.headers)
+				R.findIndex(R.equals(label), config.jask.headers),
 			),
 		),
 	);

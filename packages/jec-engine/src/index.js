@@ -28,6 +28,14 @@ export const initalise = () =>
 		.then(insertActionsToChain);
 
 export const getState = () => getFullState();
+export const getStateArr = () => R.pipe(
+	R.toPairs,
+	R.map( ([ uuid, rest, ]) => ({
+		uuid,
+		...rest,
+	})),
+)(getFullState());
+
 export const getConfig = () => getFullConfig();
 
 const actionifyObject = obj => {

@@ -8,6 +8,7 @@ import {
 	setPersistHandlers,
 	initalise,
 	getState,
+	getStateArr,
 	getConfig,
 	insertAction,
 	insertActions,
@@ -60,6 +61,7 @@ export default listener =>
 		})
 		.then(() => ({
 			getState,
+			getStateArr,
 			getConfig,
 			insertAction,
 			insertActions,

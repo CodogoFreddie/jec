@@ -1,4 +1,5 @@
 import * as R from "ramda";
+import df from "date-fns/fp";
 import generateUUID from "uuid/v4";
 import produceUUID from "uuid/v3";
 import startPure from "jec-pure-cli";
@@ -11,75 +12,42 @@ import {
 
 import createConfigIfNeeded from "./createConfigIfNeeded";
 import render from "./render";
-
-const packageJSON = require("../package.json");
+import parseArgsList from "./parseArgsList";
+import filterJec from "./filterJec";
+import createMutationFromModify from "./createMutationFromModify";
 
 const [_, __, ...args] = process.argv;
 
 startPure(console.log)
 	.then(createConfigIfNeeded)
-	.then( ({ getState, getConfig, insertActions, }) => {
+	.then( ({ getState, getStateArr, getConfig, insertAction, insertActions, }) => {
 		const newUUID = generateUUID();
 
-		const actions = [
-			createInsertStateAction({
-				obj: newUUID,
-				state: {
-					description: "a thing to do",
-					due: "2018-02-01T10:17:00.165Z",
-					recur: {
-						op: "addDays",
-						n: 1,
-					},
-				}
-			}),
-			R.over(
-				R.lensPath([ "meta" ,"time", ]),
-				R.inc,
-				createInsertStateAction({
-					obj: newUUID,
-					state: {
-						done: "2018-02-01T11:17:00.165Z",
-					}
-				})
-			),
-		];
+		//insertAction(
+			//createInsertStateAction({
+				//obj: "c7dddb78-58d4-4a6d-9872-87a6b2334afb",
+				//state: {
+					//tags: [
+						//"bad",
+					//]
+				//}
+			//})
+		//);
 
-		//return insertActions(actions)
-		//.then( () => {
+		const { filter, keyword, modify, } = parseArgsList(args);
 
-		console.log(render(getConfig())(getState()));
+		const filteringFunction = filterJec(filter);
 
-		//});
+		const filteredUUIDs = filteringFunction(getStateArr());
+
+		const mutation = createMutationFromModify(modify);
+
+		console.log(modify, mutation);
+
+		const renderer = render(getConfig());
+		console.log(renderer( getStateArr().filter(
+			({ uuid, }) => filteredUUIDs.includes(uuid)
+		)));
+
 	})
 	.catch(console.error);
-
-////const input = {
-////action: {
-////meta: {
-////time: 123,
-////action: "actionid",
-////obj: "objid",
-////},
-////mutations: [
-////{
-////type: "assoc",
-////path: [ "done", ],
-////value: 123,
-////}
-////],
-////},
-////before: {
-////description: "this is the description",
-////tags: [
-////"tag1", "tag2",
-////],
-////},
-////after: {
-////description: "this is the description",
-////done: 123,
-////tags: [
-////"tag1", "tag2",
-////],
-////},
-////};
