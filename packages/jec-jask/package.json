@@ -3,6 +3,9 @@
 	"version": "0.0.11",
 	"description": "Task managing tool for use with JEC engine",
 	"main": "lib/index.js",
+	"eslintConfig": {
+		"extends": "codogo"
+	},
 	"jec": {
 		"name": "Jask",
 		"uuid": "07743c63-e7c5-4c01-93ac-bde921e6ba2b",

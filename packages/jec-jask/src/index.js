@@ -1,14 +1,5 @@
-import * as R from "ramda";
-import df from "date-fns/fp";
 import generateUUID from "uuid/v4";
-import produceUUID from "uuid/v3";
 import startPure from "jec-pure-cli";
-
-import {
-	hashToUUID,
-	mutationifyObject,
-	createInsertStateAction,
-} from "jec-action-helpers";
 
 import createConfigIfNeeded from "./createConfigIfNeeded";
 import render from "./render";
@@ -20,19 +11,23 @@ const [_, __, ...args] = process.argv;
 
 startPure(console.log)
 	.then(createConfigIfNeeded)
-	.then( ({ getState, getStateArr, getConfig, insertAction, insertActions, }) => {
-		const newUUID = generateUUID();
-
-		const { filter, keyword, modifiers, filterPresent, modifiersPresent, } = parseArgsList(args);
+	.then(({ getStateArr, getConfig, insertActions, }) => {
+		const {
+			filter,
+			//keyword,
+			modifiers,
+			filterPresent,
+			modifiersPresent,
+		} = parseArgsList(args);
 
 		const filteringFunction = filterJec(filter);
 
 		const filteredUUIDs = filteringFunction(getStateArr());
 
-		if(filterPresent, modifiersPresent){
+		if ((filterPresent, modifiersPresent)) {
 			const mutations = createMutationFromModify(modifiers);
 
-			const actions = filteredUUIDs.map( obj => ({
+			const actions = filteredUUIDs.map(obj => ({
 				meta: {
 					time: new Date().getTime(),
 					obj,
@@ -45,9 +40,12 @@ startPure(console.log)
 		}
 
 		const renderer = render(getConfig());
-		console.log(renderer( getStateArr().filter(
-			({ uuid, }) => filteredUUIDs.includes(uuid)
-		)));
-
+		console.log(
+			renderer(
+				getStateArr().filter(({ uuid, }) =>
+					filteredUUIDs.includes(uuid),
+				),
+			),
+		);
 	})
 	.catch(console.error);

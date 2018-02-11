@@ -1,15 +1,8 @@
 // @flow
 import * as R from "ramda";
-import dateFns from "date-fns/fp";
-import { inspect, } from "util";
-import {
-	hashToUUID,
-	mutationifyObject,
-} from "jec-action-helpers";
 
 import {
 	shouldGenerateRecurrenceFunction,
-	generateRecurrenceFunction,
 	generateRecurrenceMutations,
 } from "./dateUpdaters";
 
@@ -81,7 +74,7 @@ export const insertAction = (action: JecAction) => {
 	//if this object has recur, we insert extra mutations to update due, wait, etc
 	//this is used to create objects that recur.
 	//due, wait, recur, are special fields that conform to this special behaviour
-	if(shouldGenerateRecurrenceFunction({ action,  }) ){
+	if (shouldGenerateRecurrenceFunction({ action, })) {
 		const newMutations = generateRecurrenceMutations({
 			action,
 			state: R.nth(insertIndex - 1, stateChain).state,
@@ -90,13 +83,8 @@ export const insertAction = (action: JecAction) => {
 		stateChain = R.over(
 			R.lensIndex(insertIndex),
 			R.over(
-				R.lensPath(["action", "mutations", ]),
-				R.pipe(
-					R.concat(
-						R.__,
-						newMutations,
-					)
-				)
+				R.lensPath(["action", "mutations",]),
+				R.pipe(R.concat(R.__, newMutations)),
 			),
 			stateChain,
 		);
@@ -117,8 +105,8 @@ export const insertAction = (action: JecAction) => {
 //insert many actions
 export const insertActions = (actions: Array<JecAction>) => {
 	R.sortBy(
-		({ meta: { time, action, } }) => "" + time + action,
-		actions
+		({ meta: { time, action, }, }) => "" + time + action,
+		actions,
 	).forEach(insertAction);
 };
 

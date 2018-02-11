@@ -1,10 +1,6 @@
 import R from "ramda";
 import chalk from "chalk";
 
-const getFullRenderedWidth = columnWidths =>
-	columnWidths.length +
-	R.reduce((x, { length, }) => x + length, 0, columnWidths);
-
 const padString = (string = "", length) =>
 	string + R.times(R.always(""), length - ("" + string).length + 1).join(" ");
 

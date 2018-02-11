@@ -4,6 +4,9 @@
 	"description": "Stateful server for handling JEC queries, persists all actions to disk",
 	"main": "index.js",
 	"license": "MIT",
+	"eslintConfig": {
+		"extends": "codogo"
+	},
 	"scripts": {
 		"build": "NODE_ENV=production codogo-scripts build",
 		"format": "codogo-scripts format",

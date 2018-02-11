@@ -5,6 +5,9 @@
 	"main": "lib/index.js",
 	"repository": "git@github.com:CodogoFreddie/jec.git",
 	"author": "Freddie Ridell <freddie@codogo.io>",
+	"eslintConfig": {
+		"extends": "codogo"
+	},
 	"files": [
 		"lib"
 	],

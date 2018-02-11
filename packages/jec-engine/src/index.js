@@ -1,4 +1,3 @@
-import genUUID from "uuid/v4";
 import * as R from "ramda";
 
 import {
@@ -28,46 +27,16 @@ export const initalise = () =>
 		.then(insertActionsToChain);
 
 export const getState = () => getFullState();
-export const getStateArr = () => R.pipe(
-	R.toPairs,
-	R.map( ([ uuid, rest, ]) => ({
-		uuid,
-		...rest,
-	})),
-)(getFullState());
+export const getStateArr = () =>
+	R.pipe(
+		R.toPairs,
+		R.map(([uuid, rest,]) => ({
+			uuid,
+			...rest,
+		})),
+	)(getFullState());
 
 export const getConfig = () => getFullConfig();
-
-const actionifyObject = obj => {
-	const acc = [];
-
-	const recursiveDecent = (path, obj) => {
-		R.toPairs(obj).forEach(([key, value,]) => {
-			if (value instanceof Array) {
-				return value.forEach(elem =>
-					acc.push({
-						type: "arr",
-						path: [...path, key,],
-						value: elem,
-					}),
-				);
-			}
-			if (typeof value === "object") {
-				return recursiveDecent([...path, key,], value);
-			}
-
-			acc.push({
-				type: "obj",
-				path: [...path, key,],
-				value,
-			});
-		});
-	};
-
-	recursiveDecent([], obj);
-
-	return acc;
-};
 
 export const insertAction = action => {
 	insertActionToChain(action);
@@ -76,8 +45,5 @@ export const insertAction = action => {
 
 export const insertActions = actions => {
 	insertActionsToChain(actions);
-	return Promise.all(actions.map( action => 
-		writeActionHandler(action)
-	));
+	return Promise.all(actions.map(action => writeActionHandler(action)));
 };
-

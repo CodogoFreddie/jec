@@ -5,16 +5,16 @@ import jsonfile from "jsonfile";
 import recursive from "recursive-readdir";
 import R from "ramda";
 
-const bailIfBadAuthKey = ({ req, res, }) => {
-		if (req.headers.authorization !== key) {
-			return res
-				.status(401)
-				.send('{err:401, msg: "not authorised, please provide key"}');
-		}
+const bailIfBadAuthKey = ({ key, req, res, }) => {
+	if (req.headers.authorization !== key) {
+		return res
+			.status(401)
+			.send('{err:401, msg: "not authorised, please provide key"}');
+	}
 	return false;
-}
+};
 
-getConfig().then(config => {
+fetchConfig().then(config => {
 	const { dataFolder, server: { port, key, }, } = config;
 
 	const getAllEventsIdents = () =>
@@ -51,7 +51,7 @@ getConfig().then(config => {
 
 	app.options("/", cors());
 	app.get("/", cors(), (req, res) => {
-		if(!bailIfBadAuthKey({ req, res, })){
+		if (!bailIfBadAuthKey({ key, req, res, })) {
 			return;
 		}
 
@@ -61,7 +61,7 @@ getConfig().then(config => {
 
 	app.options("/:key", cors());
 	app.get("/:key", cors(), (req, res) => {
-		if(!bailIfBadAuthKey({ req, res, })){
+		if (!bailIfBadAuthKey({ key, req, res, })) {
 			return;
 		}
 
