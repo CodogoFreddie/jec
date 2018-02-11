@@ -23,26 +23,26 @@ startPure(console.log)
 	.then( ({ getState, getStateArr, getConfig, insertAction, insertActions, }) => {
 		const newUUID = generateUUID();
 
-		//insertAction(
-			//createInsertStateAction({
-				//obj: "c7dddb78-58d4-4a6d-9872-87a6b2334afb",
-				//state: {
-					//tags: [
-						//"bad",
-					//]
-				//}
-			//})
-		//);
-
-		const { filter, keyword, modify, } = parseArgsList(args);
+		const { filter, keyword, modifiers, filterPresent, modifiersPresent, } = parseArgsList(args);
 
 		const filteringFunction = filterJec(filter);
 
 		const filteredUUIDs = filteringFunction(getStateArr());
 
-		const mutation = createMutationFromModify(modify);
+		if(filterPresent, modifiersPresent){
+			const mutations = createMutationFromModify(modifiers);
 
-		console.log(modify, mutation);
+			const actions = filteredUUIDs.map( obj => ({
+				meta: {
+					time: new Date().getTime(),
+					obj,
+					action: generateUUID(),
+				},
+				mutations,
+			}));
+
+			insertActions(actions);
+		}
 
 		const renderer = render(getConfig());
 		console.log(renderer( getStateArr().filter(

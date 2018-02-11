@@ -78,5 +78,5 @@ export const createRemoveStateAction = ({ obj, state, }) => {
 		mutations,
 	};
 
-	return Action;
+	return action;
 };
