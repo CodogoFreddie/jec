@@ -5,7 +5,7 @@ import {
 	createRemoveStateAction,
 } from "jec-action-helpers";
 
-import { parseDate, } from "./parseDateShorthands";
+import { parseDate, parseRecur, } from "./parseDateShorthands";
 
 const getAndFormatAddativeTags = R.pipe(
 	R.filter(R.test(/^\+/)),
@@ -19,6 +19,7 @@ const cleanNewState = R.pipe(
 		tags: getAndFormatAddativeTags,
 		due: parseAndStringifyDate,
 		wait: parseAndStringifyDate,
+		recur: parseRecur,
 	}),
 	R.filter(Boolean),
 );
@@ -38,6 +39,10 @@ export default ({ description, tags, props, }) => {
 	const removeTags = {
 		tags: getAndFormatSubtractiveTags(tags),
 	};
+
+	console.log({
+		newState,
+	});
 
 	return [
 		...createInsertStateAction({
