@@ -7,9 +7,10 @@ import R from "ramda";
 
 const bailIfBadAuthKey = ({ key, req, res, }) => {
 	if (req.headers.authorization !== key) {
-		return res
+		res
 			.status(401)
 			.send('{err:401, msg: "not authorised, please provide key"}');
+		return true;
 	}
 	return false;
 };
@@ -41,7 +42,6 @@ fetchConfig().then(config => {
 			jsonfile.readFile(
 				dataFolder + "/" + path.replace("_", "/"),
 				(err, dat) => {
-					console.log({ err, dat, });
 					return done(dat);
 				},
 			),
@@ -51,7 +51,7 @@ fetchConfig().then(config => {
 
 	app.options("/", cors());
 	app.get("/", cors(), (req, res) => {
-		if (!bailIfBadAuthKey({ key, req, res, })) {
+		if (bailIfBadAuthKey({ key, req, res, })) {
 			return;
 		}
 
@@ -61,7 +61,7 @@ fetchConfig().then(config => {
 
 	app.options("/:key", cors());
 	app.get("/:key", cors(), (req, res) => {
-		if (!bailIfBadAuthKey({ key, req, res, })) {
+		if (bailIfBadAuthKey({ key, req, res, })) {
 			return;
 		}
 
