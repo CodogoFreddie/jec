@@ -11,8 +11,12 @@
 		"uuid": "07743c63-e7c5-4c01-93ac-bde921e6ba2b",
 		"cli": "jask"
 	},
+	"bin": {
+		"jask": "./index.js"
+	},
 	"files": [
-		"lib"
+		"lib",
+		"index.js"
 	],
 	"scripts": {
 		"build": "NODE_ENV=production codogo-scripts build",

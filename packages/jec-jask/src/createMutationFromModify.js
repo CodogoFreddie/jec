@@ -20,6 +20,7 @@ const cleanNewState = R.pipe(
 		due: parseAndStringifyDate,
 		wait: parseAndStringifyDate,
 	}),
+	R.filter(Boolean),
 );
 
 const getAndFormatSubtractiveTags = R.pipe(
@@ -29,7 +30,7 @@ const getAndFormatSubtractiveTags = R.pipe(
 
 export default ({ description, tags, props, }) => {
 	const newState = cleanNewState({
-		description,
+		description: description.length ? description : undefined,
 		tags,
 		...props,
 	});

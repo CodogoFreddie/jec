@@ -1,6 +1,8 @@
 import generateUUID from "uuid/v4";
 import startPure from "jec-pure-cli";
 
+import { createInsertStateAction, } from "jec-action-helpers";
+
 import createConfigIfNeeded from "./createConfigIfNeeded";
 import render from "./render";
 import parseArgsList from "./parseArgsList";
@@ -11,41 +13,83 @@ const [_, __, ...args] = process.argv;
 
 startPure(console.log)
 	.then(createConfigIfNeeded)
-	.then(({ getStateArr, getConfig, insertActions, }) => {
-		const {
-			filter,
-			//keyword,
-			modifiers,
-			filterPresent,
-			modifiersPresent,
-		} = parseArgsList(args);
+	.then(
+		({ getState, getStateArr, getConfig, insertAction, insertActions, }) => {
+			const { filter, keyword, modifiers, filterPresent, } = parseArgsList(
+				args,
+			);
 
-		const filteringFunction = filterJec(filter);
+			//const filteredUUIDs = filteringFunction(getStateArr());
 
-		const filteredUUIDs = filteringFunction(getStateArr());
+			console.log(keyword);
 
-		if ((filterPresent, modifiersPresent)) {
-			const mutations = createMutationFromModify(modifiers);
+			const filteringFunction = filterJec(filter);
+			const filteredUUIDs = filteringFunction(getStateArr());
+			const renderer = render(getConfig());
 
-			const actions = filteredUUIDs.map(obj => ({
-				meta: {
-					time: new Date().getTime(),
-					obj,
-					action: generateUUID(),
-				},
-				mutations,
-			}));
+			if (keyword === "add") {
+				const newTaskUUID = generateUUID();
 
-			insertActions(actions);
-		}
+				insertAction({
+					meta: {
+						time: new Date().getTime(),
+						obj: newTaskUUID,
+						action: generateUUID(),
+					},
+					mutations: createMutationFromModify(modifiers),
+				});
 
-		const renderer = render(getConfig());
-		console.log(
-			renderer(
-				getStateArr().filter(({ uuid, }) =>
-					filteredUUIDs.includes(uuid),
+				return console.log(
+					renderer([
+						{
+							uuid: newTaskUUID,
+							...getState()[newTaskUUID],
+						},
+					]),
+				);
+			}
+
+			//the following actions modify jec.
+			//therefore we need to be filtering which objects we're going to modify
+			if (filterPresent) {
+				if (keyword === "modify") {
+					const mutations = createMutationFromModify(modifiers);
+
+					const actions = filteredUUIDs.map(obj => ({
+						meta: {
+							time: new Date().getTime(),
+							obj,
+							action: generateUUID(),
+						},
+						mutations,
+					}));
+
+					insertActions(actions);
+				}
+
+				//these keywords simply put the current date into their respective props
+				const simpleTimeSettingKeywords = ["done", "start", "stop",];
+				if (simpleTimeSettingKeywords.includes(keyword)) {
+					const actions = filteredUUIDs.map(obj =>
+						createInsertStateAction({
+							obj,
+							state: {
+								[keyword]: new Date().toISOString(),
+							},
+						}),
+					);
+
+					insertActions(actions);
+				}
+			}
+
+			console.log(
+				renderer(
+					getStateArr().filter(({ uuid, }) =>
+						filteredUUIDs.includes(uuid),
+					),
 				),
-			),
-		);
-	})
+			);
+		},
+	)
 	.catch(console.error);

@@ -9,9 +9,7 @@ const filterTasks = R.filter(({ due, done, }) => !done || due > done);
 
 const addRenderingMetaToTasks = () => {
 	const giveScore = R.pipe(({ //uuid,
-		due, //start,
-		//stop,
-		//created,
+		due, //created, //stop, //start,
 		//updated,
 		//done,
 		//tags,
