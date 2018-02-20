@@ -1,5 +1,7 @@
 import { Card, Flex, } from "./toolbox";
 
+const  Description = ({ children, }) =>
+	!!children && <Flex> Description: {children} </Flex>;
 const Project = ({ children, }) =>
 	!!children && <Flex> Project: {children} </Flex>;
 const Due = ({ children, }) => !!children && <Flex> Due: {children} </Flex>;
@@ -10,8 +12,9 @@ const Tags = ({ children, }) =>
 export default ({ tasks, }) => (
 	<Flex>
 		{tasks.map(
-			({ uuid, description, due, tags, project, wait, priority, }) => (
-				<Card key = { uuid } title = { description } uuid = { uuid }>
+			({ uuid, description, due, tags, id, project, wait, priority, }) => (
+				<Card key = { uuid } title = { id } uuid = { uuid }>
+					<Description>{description}</Description>
 					<Project>{project}</Project>
 					<Tags>{tags}</Tags>
 					<Due>{due}</Due>
