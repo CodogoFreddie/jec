@@ -1,6 +1,6 @@
 {
 	"name": "jec-jask-client-web",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "The react web client for the jec-jask tool",
 	"main": "lib/index.js",
 	"eslintConfig": {
@@ -26,8 +26,8 @@
 	},
 	"dependencies": {
 		"date-fns": "^2.0.0-alpha.7",
-		"jec-engine": "^0.1.0",
-		"jec-jask": "^0.1.0",
+		"jec-engine": "^0.1.1",
+		"jec-jask": "^0.1.1",
 		"polished": "^1.9.2",
 		"ramda": "^0.25.0",
 		"react": "^16.2.0",

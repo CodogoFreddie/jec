@@ -1,6 +1,6 @@
 {
 	"name": "jec-config-fetcher",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "For reading the .jecrc.js config file that is used to configure all command line JEC tools",
 	"main": "lib/index.js",
 	"license": "MIT",
@@ -21,8 +21,8 @@
 		"prettier": "^1.10.2"
 	},
 	"dependencies": {
-		"jec-action-helpers": "^0.1.0",
-		"jec-engine": "^0.1.0",
+		"jec-action-helpers": "^0.1.1",
+		"jec-engine": "^0.1.1",
 		"ramda": "^0.25.0"
 	}
 }

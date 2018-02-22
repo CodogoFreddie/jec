@@ -1,6 +1,6 @@
 {
 	"name": "jec-jask",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Task managing tool for use with JEC engine",
 	"main": "lib/index.js",
 	"eslintConfig": {
@@ -36,10 +36,10 @@
 		"chrono": "^1.0.5",
 		"chrono-node": "^1.3.5",
 		"date-fns": "^2.0.0-alpha.7",
-		"jec-action-helpers": "^0.1.0",
-		"jec-config-fetcher": "^0.1.0",
-		"jec-engine": "^0.1.0",
-		"jec-pure-cli": "^0.1.0",
+		"jec-action-helpers": "^0.1.1",
+		"jec-config-fetcher": "^0.1.1",
+		"jec-engine": "^0.1.1",
+		"jec-pure-cli": "^0.1.1",
 		"ramda": "^0.25.0",
 		"uuid": "^3.2.1",
 		"window-size": "^1.1.0"

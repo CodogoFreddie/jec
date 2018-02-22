@@ -1,6 +1,6 @@
 {
 	"name": "jec-server",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Stateful server for handling JEC queries, persists all actions to disk",
 	"main": "index.js",
 	"license": "MIT",
@@ -23,9 +23,9 @@
 	"dependencies": {
 		"cors": "^2.8.4",
 		"express": "^4.16.2",
-		"jec-action-helpers": "^0.1.0",
-		"jec-config-fetcher": "^0.1.0",
-		"jec-engine": "^0.1.0",
+		"jec-action-helpers": "^0.1.1",
+		"jec-config-fetcher": "^0.1.1",
+		"jec-engine": "^0.1.1",
 		"jsonfile": "^4.0.0",
 		"ramda": "^0.25.0",
 		"recursive-readdir": "^2.2.1"

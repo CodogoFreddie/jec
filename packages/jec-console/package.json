@@ -1,6 +1,6 @@
 {
 	"name": "jec-console",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "A general purpose jec explorer",
 	"main": "./index.js",
 	"bin": {
@@ -25,10 +25,10 @@
 		"prettier": "^1.10.2"
 	},
 	"dependencies": {
-		"jec-action-helpers": "^0.1.0",
-		"jec-config-fetcher": "^0.1.0",
-		"jec-engine": "^0.1.0",
-		"jec-pure-cli": "^0.1.0",
+		"jec-action-helpers": "^0.1.1",
+		"jec-config-fetcher": "^0.1.1",
+		"jec-engine": "^0.1.1",
+		"jec-pure-cli": "^0.1.1",
 		"ramda": "^0.25.0"
 	}
 }
