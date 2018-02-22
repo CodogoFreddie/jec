@@ -1,6 +1,6 @@
 {
 	"name": "jec-action-helpers",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "A collection of helper functions for interacting with / generating jec actions",
 	"main": "lib/index.js",
 	"license": "MIT",
@@ -21,7 +21,7 @@
 		"prettier": "^1.10.2"
 	},
 	"dependencies": {
-		"jec-engine": "^0.1.1",
+		"jec-engine": "^0.1.2",
 		"ramda": "^0.25.0"
 	}
 }

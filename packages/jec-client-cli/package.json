@@ -1,6 +1,6 @@
 {
 	"name": "jec-client-cli",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Client JEC querying implementation for CLI tools, querys local or remote server for data",
 	"main": "index.js",
 	"license": "MIT",
@@ -18,8 +18,8 @@
 		"prettier": "^1.10.2"
 	},
 	"dependencies": {
-		"jec-action-helpers": "^0.1.1",
-		"jec-engine": "^0.1.1",
+		"jec-action-helpers": "^0.1.2",
+		"jec-engine": "^0.1.2",
 		"ramda": "^0.25.0"
 	}
 }
