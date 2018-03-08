@@ -1,7 +1,7 @@
 {
-  "name": "jec-jask",
+  "name": "jec-jask-cli",
   "version": "0.0.1",
-  "description": "task processor for jec",
+  "description": "cli interface for jec-jask",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +10,11 @@
     "type": "git",
     "url": "git+ssh://git@github.com/CodogoFreddie/jec.git"
   },
+  "keywords": [
+    "jec",
+    "jask",
+    "cli"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
