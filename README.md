@@ -5,18 +5,16 @@ An ecosystem of tools for storing generic stuctured data with various differnt v
 ---
 
 <!-- vim-markdown-toc GFM -->
+
 * [Idea](#idea)
 	* [Apps](#apps)
 		* [Possible Future Apps:](#possible-future-apps)
 * [API](#api)
-	* [Data Provided](#data-provided)
 * [Packages](#packages)
-	* [jec-engine](#jec-engine)
-	* [jec-config-fetcher](#jec-config-fetcher)
-	* [jec-server](#jec-server)
-	* [jec-pure-cli](#jec-pure-cli)
-	* [jec-client-cli](#jec-client-cli)
+	* [jec-core](#jec-core)
 	* [jec-jask](#jec-jask)
+	* [jec-jask-cli](#jec-jask-cli)
+	* [jec-jask-web](#jec-jask-web)
 
 <!-- vim-markdown-toc -->
 
@@ -44,38 +42,18 @@ I'm currently only roadmapping for 3 apps:
 If I tried to make a tool that works for everything on the first go I think I'd litterally go mad.
 
 ## API
-### Data Provided
+You identity is a dat hash, you use it to gain access to your workspaces, workspaces can be shared
 
-+ `apps`: The apps registered with this JEC store, their `UUID`s, runtime hooks, and meta data about them.
-+ `config`: A map of config values that should be tracked by JEC; things like `note sort order`, `tasking scoring function`.
-+ `type`: A deep object specifying the types of all props in any data object stored in JEC. JEC suports the following types: `String | Boolean | Number | DateTime | Object | Array`.
-+ `data`: The actual data objects stored in JEC, each object has props of 3 types:
-	+ Builtin: The default props that are present in any instance of JEC, these include:
-		+ created
-		+ updated
-		+ project
-		+ tags
-	+ User: user defined props, 
-	+ App:
+All data is pulled in through the dat network, all global config is stored in your user dat
 
 ## Packages
 
-### jec-engine
-The core logic and processing of the JEC system.
-This is a tool that accepts a stream of JEC compliant actions, and calculates the total state of a JEC instance. It also provides a querying language for reading data, and generating new actions.
-
-### jec-config-fetcher
-A package for reading the .jecrc.js config file that is used to configure all command line JEC tools
-
-### jec-server
-An HTTP server to wrap a running [`jec-engine`](#jec-engine) instance.
-
-### jec-pure-cli
-This CLI provider queries the filesystem for all actions, and reconstructs the full state on each run. This is simple, but ineficient
-
-### jec-client-cli
-This CLI provider queries a [`jec-server`](#jec-server) on each run. The server can stay active between queries, meaning that each query can be run much faster. This does however, require running a server.
+### jec-core
+Does the main data getting and stuff
 
 ### jec-jask
-The first JEC enabled tool, which is a simple ToDo list manager.
+Wrapps [`jec-core`][jecCore] to pull the data and config in and shape it into a more to-do list shape
 
+### jec-jask-cli
+
+### jec-jask-web
