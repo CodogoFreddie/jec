@@ -1,7 +1,7 @@
 {
-  "name": "jec-jask-web",
+  "name": "jec-server",
   "version": "0.0.1",
-  "description": "provides PWA interface for jec-jask",
+  "description": "A server to act as an always up node of a jec swarm",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,9 +12,7 @@
   },
   "keywords": [
     "jec",
-    "jask",
-    "react",
-    "pwa"
+    "server"
   ],
   "author": "",
   "license": "ISC",
@@ -23,6 +21,6 @@
   },
   "homepage": "https://github.com/CodogoFreddie/jec#readme",
   "dependencies": {
-    "jec-jask": "^0.0.1"
+    "jec-core": "^0.0.1"
   }
 }

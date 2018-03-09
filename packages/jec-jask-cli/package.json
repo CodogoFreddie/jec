@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/CodogoFreddie/jec/issues"
   },
-  "homepage": "https://github.com/CodogoFreddie/jec#readme"
+  "homepage": "https://github.com/CodogoFreddie/jec#readme",
+  "dependencies": {
+    "jec-jask": "^0.0.1"
+  }
 }
