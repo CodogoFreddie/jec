@@ -1,26 +1,37 @@
 {
-  "name": "jec-server",
-  "version": "0.0.1",
-  "description": "A server to act as an always up node of a jec swarm",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/CodogoFreddie/jec.git"
-  },
-  "keywords": [
-    "jec",
-    "server"
-  ],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/CodogoFreddie/jec/issues"
-  },
-  "homepage": "https://github.com/CodogoFreddie/jec#readme",
-  "dependencies": {
-    "jec-core": "^0.0.1"
-  }
+	"name": "jec-server",
+	"version": "0.0.1",
+	"description": "A server to act as an always up node of a jec swarm",
+	"main": "index.js",
+	"eslint": {
+		"extends": "codogo"
+	},
+	"scripts": {
+		"watch": "codogo-scripts watch",
+		"build": "codog-scripts build",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/CodogoFreddie/jec.git"
+	},
+	"keywords": [
+		"jec",
+		"server"
+	],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/CodogoFreddie/jec/issues"
+	},
+	"homepage": "https://github.com/CodogoFreddie/jec#readme",
+	"dependencies": {
+		"codogo-scripts": "^3.2.9",
+		"jec-core": "^0.0.1"
+	},
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"eslint": "^4.18.2",
+		"prettier": "^1.11.1"
+	}
 }

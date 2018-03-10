@@ -1,22 +1,39 @@
 {
-  "name": "jec-core",
-  "version": "0.0.1",
-  "description": "The core fetcher and wrapper for the jec store",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/CodogoFreddie/jec.git"
-  },
-  "keywords": [
-    "jec"
-  ],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/CodogoFreddie/jec/issues"
-  },
-  "homepage": "https://github.com/CodogoFreddie/jec#readme"
+	"name": "jec-core",
+	"version": "0.0.1",
+	"description": "The core fetcher and wrapper for the jec store",
+	"main": "index.js",
+	"eslint": {
+		"extends": "codogo"
+	},
+	"scripts": {
+		"watch": "codogo-scripts watch",
+		"build": "codog-scripts build",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/CodogoFreddie/jec.git"
+	},
+	"keywords": [
+		"jec"
+	],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/CodogoFreddie/jec/issues"
+	},
+	"homepage": "https://github.com/CodogoFreddie/jec#readme",
+	"dependencies": {
+		"codogo-scripts": "^3.2.9",
+		"hypermerge": "^0.3.4",
+		"random-access-file": "^2.0.1",
+		"random-access-idb": "^1.0.4",
+		"random-access-memory": "^2.4.0"
+	},
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"eslint": "^4.18.2",
+		"prettier": "^1.11.1"
+	}
 }
