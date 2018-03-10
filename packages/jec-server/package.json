@@ -3,13 +3,23 @@
 	"version": "0.0.1",
 	"description": "A server to act as an always up node of a jec swarm",
 	"main": "index.js",
-	"eslint": {
+	"eslintConfig": {
 		"extends": "codogo"
 	},
+	"babel": {
+		"presets": [
+			"codogo",
+			[
+				"env",
+				{
+					"modules": "commonjs"
+				}
+			]
+		]
+	},
 	"scripts": {
-		"watch": "codogo-scripts watch",
-		"build": "codog-scripts build",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"watch": "NODE_ENV=production codogo-scripts watch",
+		"build": "NODE_ENV=production codogo-scripts build"
 	},
 	"repository": {
 		"type": "git",
@@ -26,8 +36,10 @@
 	},
 	"homepage": "https://github.com/CodogoFreddie/jec#readme",
 	"dependencies": {
-		"codogo-scripts": "^3.2.9",
-		"jec-core": "^0.0.1"
+		"codogo-scripts": "3.0.6",
+		"jec-core": "^0.0.1",
+		"ramda": "^0.25.0",
+		"random-access-memory": "^2.4.0"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",

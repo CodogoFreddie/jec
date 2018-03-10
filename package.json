@@ -15,5 +15,10 @@
 	"scripts": {
 		"watch": "lerna run --parallel watch",
 		"build": "lerna run build"
+	},
+	"dependencies": {
+		"autobind-decorator": "^2.1.0",
+		"eslint": "^4.18.2",
+		"scuttlebot": "^10.5.2"
 	}
 }

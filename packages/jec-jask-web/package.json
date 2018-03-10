@@ -28,8 +28,10 @@
 	},
 	"homepage": "https://github.com/CodogoFreddie/jec#readme",
 	"dependencies": {
-		"codogo-scripts": "^3.2.9",
-		"jec-jask": "^0.0.1"
+		"codogo-scripts": "3.0.6",
+		"jec-jask": "^0.0.1",
+		"ramda": "^0.25.0",
+		"random-access-memory": "^2.4.0"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",

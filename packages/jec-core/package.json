@@ -2,9 +2,20 @@
 	"name": "jec-core",
 	"version": "0.0.1",
 	"description": "The core fetcher and wrapper for the jec store",
-	"main": "index.js",
-	"eslint": {
+	"main": "lib/index.js",
+	"eslintConfig": {
 		"extends": "codogo"
+	},
+	"babel": {
+		"presets": [
+			"codogo",
+			[
+				"env",
+				{
+					"modules": "commonjs"
+				}
+			]
+		]
 	},
 	"scripts": {
 		"watch": "codogo-scripts watch",
@@ -25,8 +36,10 @@
 	},
 	"homepage": "https://github.com/CodogoFreddie/jec#readme",
 	"dependencies": {
-		"codogo-scripts": "^3.2.9",
+		"codogo-scripts": "3.0.6",
+		"hyperdb": "^2.1.1",
 		"hypermerge": "^0.3.4",
+		"ramda": "^0.25.0",
 		"random-access-file": "^2.0.1",
 		"random-access-idb": "^1.0.4",
 		"random-access-memory": "^2.4.0"
