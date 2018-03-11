@@ -7,14 +7,15 @@ An ecosystem of tools for storing generic stuctured data with various differnt v
 <!-- vim-markdown-toc GFM -->
 
 * [Idea](#idea)
-	* [Apps](#apps)
-		* [Possible Future Apps:](#possible-future-apps)
+   * [Apps](#apps)
+      * [Possible Future Apps:](#possible-future-apps)
 * [API](#api)
 * [Packages](#packages)
-	* [jec-core](#jec-core)
-	* [jec-jask](#jec-jask)
-	* [jec-jask-cli](#jec-jask-cli)
-	* [jec-jask-web](#jec-jask-web)
+   * [redux-scuttlebot](#redux-scuttlebot)
+   * [jec-core](#jec-core)
+   * [jec-jask](#jec-jask)
+   * [jec-jask-cli](#jec-jask-cli)
+   * [jec-jask-web](#jec-jask-web)
 
 <!-- vim-markdown-toc -->
 
@@ -48,12 +49,18 @@ All data is pulled in through the dat network, all global config is stored in yo
 
 ## Packages
 
+### redux-scuttlebot
+[repo][reduxScuttlebot]
+A general pourpose set of middleware, sagas, reducers and actions for publishing redux actions to scuttlebot. This is the technology that underpins [jec-core](#jec-core) 
+
 ### jec-core
-Does the main data getting and stuff
+Provides an simple way to initalise and setup a redux store with [redux-scuttlebot](#redux-scuttlebot) that can be consumed by jec based apps.
 
 ### jec-jask
-Wrapps [`jec-core`][jecCore] to pull the data and config in and shape it into a more to-do list shape
+Wraps [`jec-core`](#jec-core) to pull the data and config in and shape it into a more to-do list shape
 
 ### jec-jask-cli
 
 ### jec-jask-web
+
+[reduxScuttlebot]: packages/redux-scuttlebot
