@@ -1,66 +1,50 @@
-import hyperdb from "hyperdb"
-import uuid from "uuid/v4";
-import * as R from "ramda";
+import { createStore, applyMiddleware, combineReducers, } from "redux";
+import createReduxScuttlebot from "redux-scuttlebot"
+import createSagaMiddleware from 'redux-saga'
 
-import onPeerJoined from "./onPeerJoined";
-import joinSwarm from "./joinSwarm";
+import * as reducers from './reducers'
+import sagas from './sagas'
 
-import onRootReady from "./onRootReady";
+const sagaMiddleware = createSagaMiddleware()
 
-class Jec {
-	constructor(storage, rootKey){
-		this.rootKey = rootKey;
-		this.listener = () => {};
-		this.state = { };
+const { 
+	scuttlebotMiddleware,
+	scuttlebotReducers,
+	scuttlebotSagas,
+} = createReduxScuttlebot({
+	listenToActionTypes: [
+		"SET_TEST_STATE",
+	],
+});
 
-		if(!this.rootKey){
-			this.rootKey = uuid();
-		}
+const reducer = combineReducers({
+	...reducers,
+	...scuttlebotReducers,
+});
 
-		this.dbRoot = hyperdb(storage, this.rootKey);
-
-		this.dbRoot.on("ready", () => {
-			this.dbRoot.watch("/", (...args) => {
-				console.log(args);
-				//this.dbRoot.get("/name", (err, nodes) => {
-					//nodes.forEach( (node, i) => {
-						//console.log(i, node.value.toString("utf8"))
-					//})
-				//})
-			})
-
-			console.log("ready");
-			this.dbRoot.put("/name", "this is my name", () => {
-				this.dbRoot.put("/name", "this is my quest", () => {
-					this.dbRoot.get("/name", (err, nodes) => {
-						nodes.forEach( (node, i) => {
-							console.log(i, node.value.toString("utf8"))
-						})
-					})
-				})
-			})
-		});
-	}
-
-	//setState({ config, data, }){
-	//if(config){
-	//this.state = R.merge(
-	//this.state,
-	//{ config }
-	//);
-	//}
-
-	//this.listener(this.state);
-	//}
-
-	//createNewWorkspace(){
-	//console.log(`creating new workspace`);
-	//this.hm.create();
-	//}
-
-	onUpdate(listener){
-		this.listener = listener;
-	}
+function* saga(){
+	yield* scuttlebotSagas;
+	yield* sagas;
 }
 
-export default Jec;
+const store = createStore(
+	reducer,
+	applyMiddleware(sagaMiddleware, scuttlebotMiddleware)
+)
+
+sagaMiddleware.run(saga);
+
+console.log(store.getState());
+
+store.dispatch({
+	type: "SET_TEST_STATE",
+	value: "new test state",
+});
+
+console.log(store.getState());
+
+store.dispatch({
+	type: "NOOP",
+});
+
+console.log(store.getState());
