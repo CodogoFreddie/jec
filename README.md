@@ -11,8 +11,7 @@ An ecosystem of tools for storing generic stuctured data with various differnt v
       * [Possible Future Apps:](#possible-future-apps)
 * [API](#api)
 * [Packages](#packages)
-   * [redux-scuttlebot](#redux-scuttlebot)
-   * [jec-core](#jec-core)
+   * [redux-distrubute](#redux-distrubute)
    * [jec-jask](#jec-jask)
    * [jec-jask-cli](#jec-jask-cli)
    * [jec-jask-web](#jec-jask-web)
@@ -49,12 +48,9 @@ All data is pulled in through the dat network, all global config is stored in yo
 
 ## Packages
 
-### redux-scuttlebot
-[repo][reduxScuttlebot]
-A general pourpose set of middleware, sagas, reducers and actions for publishing redux actions to scuttlebot. This is the technology that underpins [jec-core](#jec-core) 
-
-### jec-core
-Provides an simple way to initalise and setup a redux store with [redux-scuttlebot](#redux-scuttlebot) that can be consumed by jec based apps.
+### redux-distrubute
+> [repo][reduxDistribute]
+Not enteirly sure what form this libray will take, but it will be used to extend a redux store with functionality to allow allow actions pushed into it to be distributed to peers
 
 ### jec-jask
 Wraps [`jec-core`](#jec-core) to pull the data and config in and shape it into a more to-do list shape
@@ -63,4 +59,4 @@ Wraps [`jec-core`](#jec-core) to pull the data and config in and shape it into a
 
 ### jec-jask-web
 
-[reduxScuttlebot]: packages/redux-scuttlebot
+[reduxDistribute]: packages/redux-distribute

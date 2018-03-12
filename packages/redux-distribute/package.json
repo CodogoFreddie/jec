@@ -1,0 +1,23 @@
+{
+  "name": "redux-distribute",
+  "version": "0.0.1",
+  "description": "redux enhancer ro saving actions a distributable data",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/CodogoFreddie/jec.git"
+  },
+  "keywords": [
+    "jec",
+    "redux"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CodogoFreddie/jec/issues"
+  },
+  "homepage": "https://github.com/CodogoFreddie/jec#readme"
+}
