@@ -4,9 +4,15 @@ import createMiddleware from "./createMiddleware";
 
 const createReduxDistribute ({
 	listenToActions,
+	listAllActions,
+	writeAction,
+	readAction,
 }) => ({
 	saga: createSaga({
 		listenToActions,
+		listAllActions,
+		writeAction,
+		readAction,
 	}),
 	reducer: createReducer({
 		listenToActions,

@@ -1,7 +1,6 @@
 const createSaga = ({
 	listenToActions,
 }) => {
-
 	function* rootSaga(){
 
 	}

@@ -18,11 +18,17 @@
 	"keywords": [
 		"jec",
 		"redux"
-  ],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-	  "url": "https://github.com/CodogoFreddie/jec/issues"
-  },
-  "homepage": "https://github.com/CodogoFreddie/jec#readme"
+	],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/CodogoFreddie/jec/issues"
+	},
+	"homepage": "https://github.com/CodogoFreddie/jec#readme",
+	"dependencies": {
+		"redux": "^3.7.2",
+		"redux-persist": "^5.9.1",
+		"redux-persist-node-storage": "^2.0.0",
+		"redux-saga": "^0.16.0"
+	}
 }

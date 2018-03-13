@@ -30,7 +30,11 @@
 		"codogo-scripts": "3.0.6",
 		"jec-jask": "^0.0.1",
 		"ramda": "^0.25.0",
-		"random-access-memory": "^2.4.0"
+		"random-access-memory": "^2.4.0",
+		"redux": "^3.7.2",
+		"redux-persist": "^5.9.1",
+		"redux-persist-node-storage": "^2.0.0",
+		"redux-saga": "^0.16.0"
 	},
 	"devDependencies": {
 		"babel-cli": "^6.26.0",
