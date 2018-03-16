@@ -1,8 +1,10 @@
+// @flow
+
 import createSaga from "./createSaga";
 import createReducer from "./createReducer";
 import createMiddleware from "./createMiddleware";
 
-const createReduxDistribute ({
+const createReduxDistribute = ({
 	listenToActions,
 	listAllActions,
 	writeAction,

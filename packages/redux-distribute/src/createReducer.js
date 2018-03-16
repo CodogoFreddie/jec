@@ -5,12 +5,17 @@ const sort = R.sortBy(R.identity);
 
 const createReduer = ({
 	listenToActions,
-}) => combineReducers({
+}) => ({
 	actions: (state = [], { type, timestamp, salt, }) => {
-		if(!listenToActions || listenToActions.includes(action.type)){
-			return R.sort( [
+
+		if(
+			(!listenToActions || listenToActions.includes(type))
+			&&
+			(type && timestamp && salt)
+		){
+			return R.sortBy(R.identity, [
 				...state,
-				timestamp + type + salt,
+				`${timestamp}_${type}_${salt}`,
 			]);
 		} else {
 			return state;

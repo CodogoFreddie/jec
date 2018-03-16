@@ -4,9 +4,9 @@ const createMiddleware = ({
 	listenToActions,
 }) => store => next => action => {
 	const actionWithTimeAndSalt = {
-		...action,
-		timeStamp: new Date().getISOTime(),
+		timestamp: new Date().toISOString(),
 		salt: getSalt(),
+		...action,
 	}
 
 	next(actionWithTimeAndSalt);
