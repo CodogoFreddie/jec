@@ -3,13 +3,13 @@ import * as R from "ramda";
 
 import type { Descriptions, ID, } from "../storeType";
 
-type SetDescriptionAction = {
+export type SetDescriptionAction = {
 	type: "SET_DESCRIPTION",
 	id: ID,
 	description: string,
 }
 
-type ClearDescriptionAction = {
+export type ClearDescriptionAction = {
 	type: "CLEAR_DESCRIPTION",
 	id: ID,
 }

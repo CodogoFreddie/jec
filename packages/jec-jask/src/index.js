@@ -8,7 +8,10 @@ import { persistStore, persistReducer, } from 'redux-persist'
 import { AsyncNodeStorage } from 'redux-persist-node-storage'
 
 import type { ReduxState, } from "./storeType";
+
 import * as reducers from "./reducers";
+import type { JecJaskActionTypes } from "./reducers";
+export JecJaskActionTypes
 
 //type listAllActionsType = (any) => any
 //type writeActionType = (any) => any
