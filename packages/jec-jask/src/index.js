@@ -1,28 +1,32 @@
 // @flow
 
 import * as R from "ramda";
-import createReduxDistribute from "redux-distribute";
+
 import { createStore, applyMiddleware, combineReducers, } from 'redux'
+import type { Store as ReduxStore, Dispatch as ReduxDispatch, } from 'redux';
+
+import createReduxDistribute from "redux-distribute";
 import createSagaMiddleware from 'redux-saga'
 import { persistStore, persistReducer, } from 'redux-persist'
 import { AsyncNodeStorage } from 'redux-persist-node-storage'
 
-import type { ReduxState, } from "./storeType";
-
 import * as reducers from "./reducers";
-import type { JecJaskActionTypes } from "./reducers";
-export JecJaskActionTypes
+import type { Action as Action_, } from "./reducers";
+export type Action = Action_
 
-//type listAllActionsType = (any) => any
-//type writeActionType = (any) => any
-//type readActionType = (any) => any
+import type { State as State_, } from "./storeType";
+export type State = State_ 
 
-const generateJecJaskStore = (
-	//listAllActions: listAllActionsType,
-	//writeAction: writeActionType,
-	//readAction: readActionType,
-) => {
+export type GetState = () => State;
+export type Dispatch = (Action) => any
 
+export type Store = {
+	getState: GetState,
+	dispatch: Dispatch,
+}
+
+export type CreateJecJaskStore = () => Store
+const createJecJaskStore: CreateJecJaskStore = () => {
 	const cacheFolder = process.env.JEC_JASK_CACHE_FOLDER || `${require('os').homedir()}/.jecJaskCache`;
 	const reducer = combineReducers(reducers);
 
@@ -34,6 +38,7 @@ const generateJecJaskStore = (
 
 	const store = createStore(
 		persistedReducer,
+		applyMiddleware( store => next => action => { console.log("action", action); next(action) } ),
 	)
 
 	persistStore(store)
@@ -41,18 +46,4 @@ const generateJecJaskStore = (
 	return store
 }
 
-export default generateJecJaskStore;
-//const {
-//saga: distSaga,
-//reducer: distReducer,
-//middleware: distMiddleware,
-//} = createReduxDistribute({
-//listAllActions,
-//writeAction,
-//readAction,
-//});
-//function* saga(){
-//yield* distSaga()
-//}
-//const sagaMiddleware = createSagaMiddleware()
-//sagaMiddleware.run(saga)
+export default createJecJaskStore;

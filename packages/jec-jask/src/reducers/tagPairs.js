@@ -1,31 +1,48 @@
 // @flow
 import * as R from "ramda";
 
-import type { Due, ID, } from "../storeType";
-
-type SetDueAction = {
-	type: "SET_DUE_DATE",
-	id: ID,
-	dueDate: string,
+type TagPair = {
+	objId: string,
+	tag: string,
 }
 
-type ClearDueAction = {
-	type: "CLEAR_DUE_DATE",
-	id: ID,
+type TagPairs = Array<TagPair>
+
+export type AddTagPairAction = {
+	type: "ADD_TAG_TO_OBJ",
+	objId: string,
+	tag: string,
 }
 
-type Actions = SetDueAction | ClearDueAction
+export type RemoveTagPairAction = {
+	type: "REMOVE_TAG_FROM_OBJ",
+	objId: string,
+	tag: string,
+}
 
-const due = (state: Due, action: Actions): Due => (
-	(
-		action.type === "SET_DUE_DATE"
-		? R.assoc(
-			action.id,
-			action.dueDate
-		)
-		: R.dissoc(action.id)
-	)(state)
-)
+type Action = AddTagPairAction | RemoveTagPairAction
 
+const tagPairs = (state: TagPairs = [], action: Action) : TagPairs => {
+	switch(action.type){
+		case "ADD_TAG_TO_OBJ":
+			(action: AddTagPairAction)
+			return [
+				...state,
+				{
+					objId: action.objId,
+					tag: action.tag,
+				},
+			]
 
-export default due
+		case "REMOVE_TAG_FROM_OBJ":
+			(action: RemoveTagPairAction)
+			return state.filter( R.eqBy( ({ objId, tag, }) => objId + tag )
+			)
+
+		default:
+			(action: empty)
+			return state
+	}
+}
+
+export default tagPairs

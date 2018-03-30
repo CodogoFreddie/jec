@@ -1,31 +1,40 @@
 // @flow
 import * as R from "ramda";
 
-import type { Due, ID, } from "../storeType";
-
-type SetDueAction = {
-	type: "SET_DUE_DATE",
-	id: ID,
-	dueDate: string,
+type Priority = {
+	[string]: "H" | "M" | "L",
 }
 
-type ClearDueAction = {
-	type: "CLEAR_DUE_DATE",
-	id: ID,
+type SetPriorityAction = {
+	type: "SET_PRIORITY",
+	objId: string,
+	prioirty: Priority,
 }
 
-type Actions = SetDueAction | ClearDueAction
+type ClearPriorityAction = {
+	type: "CLEAR_PRIORITY",
+	objId: string
+}
 
-const due = (state: Due, action: Actions): Due => (
-	(
-		action.type === "SET_DUE_DATE"
-		? R.assoc(
-			action.id,
-			action.dueDate
-		)
-		: R.dissoc(action.id)
-	)(state)
-)
+type Actions = SetPriorityAction | ClearPriorityAction
 
+const prioirty = (state: Priority = {}, action: Actions): Priority => {
+	switch(action.type){
+		case "SET_PRIORITY":
+			(action: SetPriorityAction)
+			return {
+				...state,
+				[action.objId]: action.prioirty,
+			}
 
-export default due
+		case "CLEAR_PRIORITY":
+			(action: ClearPriorityAction)
+			return R.dissoc(action.objId, state)
+
+		default:
+			(action: empty)
+			return state;
+	}
+}
+
+export default prioirty

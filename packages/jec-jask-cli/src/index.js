@@ -1,14 +1,15 @@
 // @flow
 import createJecJaskStore from "jec-jask"
-import type { ReduxState } from "jec-jask"
+import type { CreateJecJaskStore, Store, State, Action, } from "jec-jask"
 
 import parseCli from "./parseCli";
+import type { DataInterfaceTypes, } from "./parseCli";
 import generateAddActions from "./generateAddActions";
 
-const store = createJecJaskStore()
+const store : Store = createJecJaskStore()
 
-type TempActionGeneratorType = (filteredUUIDs: Array<ID>, modifications: Array<DataInterfaceTypes> ) => JecJaskTypes
-const noop: TempActionGeneratorType = (_, __) => {};
+type TempActionGeneratorType = (State, filteredUUIDs: Array<string>, modifications: Array<DataInterfaceTypes> ) => Action
+const noop: TempActionGeneratorType = (_, __, ___) => {};
 
 let hasRunCliCommand = false
 store.subscribe( () => {
@@ -24,25 +25,17 @@ store.subscribe( () => {
 				modifications,
 			} = parseCli(process.argv)
 
-			const actionGenerator = ({
-				add: generateAddActions,
-				delete: noop,
-				done: noop,
-				modify: noop,
-				start: noop,
-				stop: noop,
-			})[command]
+			const actionGenerator = generateAddActions
 
 			const filteredUUIDs = [];
 
-			const actions = actionGenerator(filteredUUIDs, modifications);
+			if(modifications){
+				const actions : Array<Action>= actionGenerator(store.getState(), filteredUUIDs, modifications);
 
-			console.log(JSON.stringify({
-				filter,
-				command,
-				modifications,
-				actions,
-			}, null, 2))
+				actions.map(store.dispatch)
+
+				console.log(store.getState())
+			}
 		}
 	}
 })

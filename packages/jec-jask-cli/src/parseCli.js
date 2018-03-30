@@ -7,19 +7,18 @@ export type PlusTagType = {
 export type MinusTagType = {
 	minusTag: string,
 }
-export type KeyValueType = {
-	key: string,
-	value: string,
-}
 export type PlainType = {
 	plain: string,
+}
+export type KeyValueType = {
+	[string]: string,
 }
 export type DataInterfaceTypes = PlusTagType | MinusTagType | KeyValueType | PlainType
 
 type ParsedArgs = {
-	filter?: DataInterfaceTypes,
+	filter?: Array<DataInterfaceTypes>,
 	command: "add" | "modify" | "delete" | "start" | "stop" | "done",
-	modifications?: DataInterfaceTypes,
+	modifications?: Array<DataInterfaceTypes>,
 }
 
 type ParseDataInterfaceType = (args: string) => DataInterfaceTypes
@@ -43,8 +42,7 @@ const parseDataInterface : ParseDataInterfaceType = R.cond([
 		R.pipe(
 			R.split(":"),
 			([key, value,]) => ({
-				key,
-				value,
+				[key]: value,
 			})
 		),
 	],
@@ -60,7 +58,7 @@ const combinePlains = R.pipe(
 			if(val.plain){
 				return {
 					arr,
-					plain: `${plain} ${val.plain}`,
+					plain: plain.length ? `${plain} ${val.plain}` : val.plain,
 				}
 			}
 			else {

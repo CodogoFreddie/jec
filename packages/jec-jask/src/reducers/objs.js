@@ -1,31 +1,19 @@
 // @flow
 import * as R from "ramda";
 
-import type { Due, ID, } from "../storeType";
+import type { Action } from "./index";
 
-type SetDueAction = {
-	type: "SET_DUE_DATE",
-	id: ID,
-	dueDate: string,
-}
+type Objs = Array<string>
 
-type ClearDueAction = {
-	type: "CLEAR_DUE_DATE",
-	id: ID,
-}
-
-type Actions = SetDueAction | ClearDueAction
-
-const due = (state: Due, action: Actions): Due => (
-	(
-		action.type === "SET_DUE_DATE"
-		? R.assoc(
-			action.id,
-			action.dueDate
-		)
-		: R.dissoc(action.id)
-	)(state)
+const sanitizeObjs = R.pipe(
+	R.filter(Boolean),
+	R.uniqBy(R.identity),
+	R.sortBy(R.identity),
 )
 
+const objs = (state: Objs = [], action: Action): Objs => sanitizeObjs([
+	...state,
+	action.objId,
+])
 
-export default due
+export default objs

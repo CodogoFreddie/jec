@@ -21,17 +21,18 @@
 	},
 	"homepage": "https://github.com/CodogoFreddie/jec#readme",
 	"dependencies": {
+		"date-fns": "next",
+		"jec-jask": "^0.0.1",
 		"ramda": "^0.25.0",
-		"jec-jask": "^0.0.1"
+		"uuid": "^3.2.1"
 	},
 	"devDependencies": {
-		"codogo-scripts": "3.0.6",
 		"babel-cli": "^6.26.0",
 		"babel-plugin-transform-runtime": "^6.23.0",
 		"babel-preset-env": "^1.6.1",
 		"babel-preset-stage-3": "^6.24.1",
+		"codogo-scripts": "3.0.6",
 		"eslint": "^4.18.2",
 		"prettier": "^1.11.1"
 	}
 }
-
