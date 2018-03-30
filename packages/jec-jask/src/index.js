@@ -18,7 +18,6 @@ const generateJecJaskStore = (
 	//listAllActions: listAllActionsType,
 	//writeAction: writeActionType,
 	//readAction: readActionType,
-	persistStore: persistStoreType, 
 ) => {
 
 	const cacheFolder = process.env.JEC_JASK_CACHE_FOLDER || `${require('os').homedir()}/.jecJaskCache`;
@@ -35,6 +34,8 @@ const generateJecJaskStore = (
 	)
 
 	persistStore(store)
+
+	return store
 }
 
 export default generateJecJaskStore;

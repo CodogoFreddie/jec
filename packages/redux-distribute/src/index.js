@@ -1,4 +1,3 @@
-// @flow
 
 import createSaga from "./createSaga";
 import createReducer from "./createReducer";

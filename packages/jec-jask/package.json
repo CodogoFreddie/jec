@@ -2,7 +2,7 @@
 	"name": "jec-jask",
 	"version": "0.0.1",
 	"description": "task processor for jec",
-	"main": "index.js",
+	"main": "lib/index.js",
 	"eslint": {
 		"extends": "codogo"
 	},
