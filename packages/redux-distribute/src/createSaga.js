@@ -1,34 +1,53 @@
 import * as R from "ramda";
-import { put, select, } from "redux-saga/effects";
+import { put, call, takeEvery, fork, } from "redux-saga/effects";
 
 const createSaga = ({
 	listenToActions,
 	listAllActions,
 	readAction,
+	writeAction,
 }) => {
 
-	function* introduceActionById(id){
-		//is there already an action by this id in the store?
-
-		const ids = yield select( R.prop("actions") );
-		const isAlreadyInStore = !!ids.find( id_ => id_ === id );
-
-		if(!isAlreadyInStore){
-			const action = yield readAction(id);
-			yield put(action);
+	const getAllActions = async () => {
+		const actionPromises = []
+		for await ( const id of listAllActions() ){
+			actionPromises.push(
+				readAction(id)
+			)
 		}
+
+		const actions = Promise.all(actionPromises);
+
+		return actions;
 	}
 
-	function* rootSaga(){
-		for( const prom of listAllActions()){
-			const id = yield prom;
+	function* initalise(){
+		const allActions = yield call(getAllActions)
 
-			yield* introduceActionById(id);
+		for(const action of allActions){
+			yield put({
+				...action,
+				fromReduxDistirubteInitialLoad: true,
+			})
 		}
 
 		yield put({
 			type: "REDUX_DISTRIBUTE/DONE_INITIAL_LOAD",
+			fromReduxDistirubteInitialLoad: true,
 		});
+	}
+
+	function* persistAction(action){
+		if(action.fromReduxDistirubteInitialLoad){
+			return
+		}
+			console.log("persistAction", action);
+	}
+
+	function* rootSaga(){
+		yield fork(initalise);
+
+		yield takeEvery(listAllActions || "*", persistAction);
 	}
 
 	return rootSaga;
