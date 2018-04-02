@@ -1,9 +1,4 @@
-// @flow
 import * as R from "ramda";
-
-import type { Action } from "./index";
-
-type Objs = Array<string>
 
 const sanitizeObjs = R.pipe(
 	R.filter(Boolean),
@@ -11,7 +6,7 @@ const sanitizeObjs = R.pipe(
 	R.sortBy(R.identity),
 )
 
-const objs = (state: Objs = [], action: Action): Objs => sanitizeObjs([
+const objs = (state= [], action)=> sanitizeObjs([
 	...state,
 	action.objId,
 ])

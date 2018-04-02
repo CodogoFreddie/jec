@@ -35,3 +35,11 @@ export const parseFrom = ref =>
 	]);
 
 export default parseFrom(new Date());
+
+export const parseRecur = R.pipe(
+	R.match(/(\d)+([dwmy])/),
+	([ _, n, period, ]) => ({
+		n: parseInt(n, 10),
+		period,
+	})
+);

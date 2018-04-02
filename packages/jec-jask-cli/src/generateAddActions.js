@@ -1,60 +1,82 @@
-// @flow
 import * as R from "ramda";
 import uuid from "uuid/v4";
-import type { State, Action, } from "jec-jask"
 
-import type { DataInterfaceTypes, } from "./parseCli";
+import parseDateTime, { parseRecur, } from "./parseDateTime";
 
-import parseDateTime from "./parseDateTime";
+const parseTimeShortcutValues = [
+	R.pipe(
+		R.prop("prop"),
+		R.contains(R.__, ["due", "wait", "stop", "start", ]),
+	),
+	R.over(
+		R.lensProp("value"),
+		parseDateTime,
+	),
+];
 
-type GenerateAddActionsType = (State, filteredUUIDs: Array<string>, modifications: Array<DataInterfaceTypes> ) => Array<Action>
+const parseRecurShortcutValues = [
+	R.propEq("prop", "recur"),
+	R.over(
+		R.lensProp("value"),
+		parseRecur,
+	),
+];
 
-const generateAddActions: GenerateAddActionsType = (state, filteredUUIDs, modifications) => {
+const generateProjectActions = ({ projects, }) => [
+
+]
+
+const handlePropValueModification = state => R.pipe(
+	R.cond([
+		parseTimeShortcutValues,
+		parseRecurShortcutValues,
+		generateProjectActions(state),
+		[
+			R.T,
+			R.identity,
+		],
+	]),
+	R.over(
+		R.lensProp("type"),
+		R.defaultTo("SET_PROP"),
+	),
+)
+
+const handlePlusTagModification = ({ plusTag, }) => ({
+	type: "ADD_TAG_TO_OBJ",
+	tag: plusTag,
+})
+
+const generateAddActions = ({ state, filter, modifications, }) => {
 	const objId = uuid();
-	return modifications.map( (modification) => {
 
-		if(modification.plain){
-			return({
-				type: "SET_DESCRIPTION",
-				objId,
-				description: modification.plain,
-			})
-		}
+	const generateActions = R.pipe(
+		R.map(
+			R.pipe(
+				R.tap(console.log),
+				R.cond([
+					[
+						R.both(R.prop("prop"),R.prop("value")),
+						handlePropValueModification(state),
+					],
+					[
+						R.prop("plusTag"),
+						handlePlusTagModification,
+					],
+				])
+			),
+		),
+		//R.flatten,
+		R.filter(Boolean),
+		R.map(
+			R.assoc("objId", objId),
+		),
+	);
 
-		if(modification.plusTag){
-			return ({
-				type: "ADD_TAG_TO_OBJ",
-				objId,
-				tag: modification.plusTag,
-			})
-		}
-
-		if(modification.priority){
-			return ({
-				type: "SET_PRIORITY",
-				objId,
-				prioirty: modification.priority,
-			})
-		}
-
-		if(modification.due){
-			return ({
-				type: "SET_DUE_DATE",
-				objId,
-				due: parseDateTime(modification.due),
-			})
-		}
-
-		if(modification.wait){
-			return ({
-				type: "SET_WAIT_DATE",
-				objId,
-				wait: parseDateTime(modification.wait),
-			})
-		}
-
-		return false
-	}).filter(Boolean)
+	return {
+		actions: generateActions(modifications),
+		filterForRender: () => {},
+	}
 }
 
 export default generateAddActions;

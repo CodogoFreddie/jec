@@ -1,27 +1,5 @@
-// @flow
 import * as R from "ramda";
 
-export type PlusTagType = {
-	plusTag: string,
-} 
-export type MinusTagType = {
-	minusTag: string,
-}
-export type PlainType = {
-	plain: string,
-}
-export type KeyValueType = {
-	[string]: string,
-}
-export type DataInterfaceTypes = PlusTagType | MinusTagType | KeyValueType | PlainType
-
-type ParsedArgs = {
-	filter?: Array<DataInterfaceTypes>,
-	command: "add" | "modify" | "delete" | "start" | "stop" | "done",
-	modifications?: Array<DataInterfaceTypes>,
-}
-
-type ParseDataInterfaceType = (args: string) => DataInterfaceTypes
 const parseDataInterface : ParseDataInterfaceType = R.cond([
 	[
 		R.test(/^\+\w+/),
@@ -41,8 +19,9 @@ const parseDataInterface : ParseDataInterfaceType = R.cond([
 		R.test(/[\w ]+:[\w ]+/),
 		R.pipe(
 			R.split(":"),
-			([key, value,]) => ({
-				[key]: value,
+			([prop, value,]) => ({
+				prop,
+				value,
 			})
 		),
 	],
@@ -78,7 +57,7 @@ const combinePlains = R.pipe(
 	),
 	({ arr, plain, }) => ([
 		...arr,
-		plain.length ? { plain, } : null,
+		plain.length ? { prop: "description", value: plain, } : null,
 	]),
 	R.filter(Boolean)
 )

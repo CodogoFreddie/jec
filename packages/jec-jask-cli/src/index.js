@@ -1,15 +1,12 @@
-// @flow
 import createJecJaskStore from "jec-jask"
-import type { CreateJecJaskStore, Store, State, Action, } from "jec-jask"
+import { AsyncNodeStorage } from 'redux-persist-node-storage'
 
 import parseCli from "./parseCli";
-import type { DataInterfaceTypes, } from "./parseCli";
 import generateAddActions from "./generateAddActions";
 
-const store : Store = createJecJaskStore()
-
-type TempActionGeneratorType = (State, filteredUUIDs: Array<string>, modifications: Array<DataInterfaceTypes> ) => Action
-const noop: TempActionGeneratorType = (_, __, ___) => {};
+const store = createJecJaskStore({
+	persistStorage:new AsyncNodeStorage(cacheFolder),
+})
 
 let hasRunCliCommand = false
 store.subscribe( () => {
@@ -25,17 +22,19 @@ store.subscribe( () => {
 				modifications,
 			} = parseCli(process.argv)
 
-			const actionGenerator = generateAddActions
+			const actionGenerator = ({
+				add: generateAddActions,
+			})[command]
 
-			const filteredUUIDs = [];
+			const { actions, filterForRender, } = actionGenerator({
+				filter,
+				modifications,
+				state: store.getState(),
+			})
 
-			if(modifications){
-				const actions : Array<Action>= actionGenerator(store.getState(), filteredUUIDs, modifications);
+			actions.forEach(store.dispatch)
 
-				actions.map(store.dispatch)
-
-				console.log(store.getState())
-			}
+			console.log(JSON.stringify(store.getState(), null, 2))
 		}
 	}
 })
