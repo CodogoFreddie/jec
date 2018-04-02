@@ -1,50 +1,76 @@
 import * as R from "ramda";
-import { put, call, takeEvery, fork, } from "redux-saga/effects";
+import { purgeStoredState, PERSIST, REHYDRATE, } from "redux-persist";
+import { put, call, select, takeEvery, take, fork, } from "redux-saga/effects";
 
 const createSaga = ({
+	persistConfig,
 	listenToActions,
 	listAllActions,
 	readAction,
 	writeAction,
 }) => {
-	const getAllActions = async () => {
-		const actionPromises = [];
+	const getAllActionIds = async () => {
+		const actionIds = [];
 		for await (const id of listAllActions()) {
-			actionPromises.push(readAction(id));
+			actionIds.push(id);
 		}
-
-		const actions = Promise.all(actionPromises);
-
-		return actions;
+		return actionIds;
 	};
 
 	function* initalise() {
-		const allActions = yield call(getAllActions);
+		const allActionIds = yield call(getAllActionIds);
+		const persistedActionIds = yield select(R.prop("__distributeActions"));
 
-		for (const action of allActions) {
+		const state = yield select();
+
+		console.log({
+			state,
+			allActionIds,
+			persistedActionIds,
+		});
+
+		if (!R.equals(allActionIds, persistedActionIds)) {
+			try {
+				yield call(purgeStoredState, persistedActionIds);
+			} catch (e) {}
+
 			yield put({
-				...action,
-				fromReduxDistirubteInitialLoad: true,
+				type: "REDUX_DISTRIBUTE/PURGE_ALL_STATE",
 			});
+
+			for (const id of allActionIds) {
+				const action = yield call(readAction, id);
+
+				yield put({
+					...action,
+					fromReduxDistributedInitialLoad: true,
+				});
+			}
 		}
 
 		yield put({
 			type: "REDUX_DISTRIBUTE/DONE_INITIAL_LOAD",
-			fromReduxDistirubteInitialLoad: true,
+			fromReduxDistributedInitialLoad: true,
 		});
 	}
 
 	function* persistAction(action) {
-		if (action.fromReduxDistirubteInitialLoad) {
-			return;
+		console.log(action.type, action.fromReduxDistributedInitialLoad);
+
+		if (
+			!action.fromReduxDistributedInitialLoad &&
+			action.type !== PERSIST &&
+			action.type !== REHYDRATE &&
+			!action.type.includes("REDUX_DISTRIBUTE")
+		) {
+			yield call(writeAction, action);
 		}
-		console.log("persistAction", action);
 	}
 
 	function* rootSaga() {
-		yield fork(initalise);
+		yield takeEvery(REHYDRATE, initalise);
 
-		yield takeEvery(listAllActions || "*", persistAction);
+		yield takeEvery("*", persistAction);
 	}
 
 	return rootSaga;

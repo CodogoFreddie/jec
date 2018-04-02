@@ -7,17 +7,19 @@ const createReduxDistribute = ({
 	listAllActions,
 	writeAction,
 	readAction,
+	persistConfig,
 }) => ({
-	saga: createSaga({
+	distributeSaga: createSaga({
+		persistConfig,
 		listenToActions,
 		listAllActions,
 		writeAction,
 		readAction,
 	}),
-	reducer: createReducer({
+	distributeReducers: createReducer({
 		listenToActions,
 	}),
-	middleware: createMiddleware({
+	distributeMiddleware: createMiddleware({
 		listenToActions,
 	}),
 });

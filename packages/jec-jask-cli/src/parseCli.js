@@ -1,6 +1,6 @@
 import * as R from "ramda";
 
-const parseDataInterface: ParseDataInterfaceType = R.cond([
+const parseDataInterface = R.cond([
 	[ R.test(/^\+\w+/), R.pipe(R.replace("+", ""), R.objOf("plusTag")), ],
 	[ R.test(/^-\w+/), R.pipe(R.replace("-", ""), R.objOf("minusTag")), ],
 	[
@@ -42,8 +42,7 @@ const combinePlains = R.pipe(
 
 const commandStrings = [ "add", "modify", "delete", "start", "stop", "done", ];
 
-type ParseCliType = (args: Array<string>) => ParsedArgs;
-const parseCli: ParseCliType = R.pipe(
+const parseCli = R.pipe(
 	R.slice(2, Infinity),
 	R.splitWhen(R.contains(R.__, commandStrings)),
 	([ filter, [ command, ...modifications ], ]) => ({
