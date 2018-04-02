@@ -1,6 +1,6 @@
 {
 	"name": "redux-distribute",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "redux enhancer ro saving actions a distributable data",
 	"main": "lib/index.js",
 	"eslint": {

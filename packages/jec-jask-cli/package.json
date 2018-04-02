@@ -1,6 +1,6 @@
 {
 	"name": "jec-jask-cli",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "cli for jec-jask",
 	"main": "lib/index.js",
 	"bin": {
@@ -28,7 +28,7 @@
 		"babel-runtime": "^6.26.0",
 		"chalk": "^2.3.2",
 		"date-fns": "next",
-		"jec-jask": "^0.0.1",
+		"jec-jask": "^0.0.2",
 		"jsonfile": "^4.0.0",
 		"mkdirp": "^0.5.1",
 		"ramda": "^0.25.0",
