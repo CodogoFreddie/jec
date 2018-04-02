@@ -7,7 +7,7 @@ const measureColumnWidths = config =>
 			...R.pipe(
 				R.toPairs,
 				R.filter(([key,]) =>
-					R.contains(key, config.client.rendering.headers),
+					R.contains(key, config.headers),
 				),
 				R.map(([key, value,]) => [
 					key,
@@ -34,7 +34,7 @@ export default config =>
 				length,
 			})),
 			R.sortBy(({ label, }) =>
-				R.findIndex(R.equals(label), config.client.rendering.headers),
+				R.findIndex(R.equals(label), config.headers),
 			),
 		),
 	);

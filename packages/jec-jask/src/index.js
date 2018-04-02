@@ -8,7 +8,6 @@ import createSagaMiddleware from "redux-saga";
 import { persistStore, persistReducer, } from "redux-persist";
 
 import * as reducers from "./reducers";
-
 export * from "./collateObjects";
 
 const createJecJaskStore = ({

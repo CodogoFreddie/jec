@@ -7,6 +7,7 @@ import { AsyncNodeStorage, } from "redux-persist-node-storage";
 
 import parseCli from "./parseCli";
 import generateAddActions from "./generateAddActions";
+import render from "./render";
 
 process.on("unhandledRejection", r => console.log(r));
 
@@ -96,7 +97,27 @@ store.subscribe(() => {
 
 			actions.forEach(store.dispatch);
 
-			console.log(JSON.stringify(collateAllObjects(store.getState()), null, 2));
+			try{
+				console.log(
+			render(
+				{
+					filterTask: R.identity,
+					giveScore: R.prop("i"),
+					giveColor:  () => [],
+					headers: [
+						"description",
+						"tags",
+						"project",
+						"due",
+						"wait",
+					],
+				},
+				collateAllObjects(store.getState())
+			)
+				)
+			} catch (e){
+				console.error(e)
+			}
 		}
 	}
 });

@@ -5,18 +5,15 @@ const map = R.addIndex(R.map);
 
 const sigFig = sf => x => parseFloat(x.toPrecision(sf), 10);
 
-const filterTasks = config => R.filter(config.client.rendering.filterTask);
+const filterTasks = config => R.filter(config.filterTask);
 
 const addRenderingMetaToTasks = config => {
 	const giveScore = R.pipe(
-		config.client.rendering.giveScore({
-			now: new Date().getTime(),
-		}),
+		config.giveScore,
 		sigFig(3),
 	);
-	const giveColor = config.client.rendering.giveColor({
-		now: new Date().getTime(),
-	});
+
+	const giveColor = config.giveColor
 
 	return map((task, i) => ({
 		...task,
