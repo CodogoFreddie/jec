@@ -7,28 +7,25 @@ const createSaga = ({
 	readAction,
 	writeAction,
 }) => {
-
 	const getAllActions = async () => {
-		const actionPromises = []
-		for await ( const id of listAllActions() ){
-			actionPromises.push(
-				readAction(id)
-			)
+		const actionPromises = [];
+		for await (const id of listAllActions()) {
+			actionPromises.push(readAction(id));
 		}
 
 		const actions = Promise.all(actionPromises);
 
 		return actions;
-	}
+	};
 
-	function* initalise(){
-		const allActions = yield call(getAllActions)
+	function* initalise() {
+		const allActions = yield call(getAllActions);
 
-		for(const action of allActions){
+		for (const action of allActions) {
 			yield put({
 				...action,
 				fromReduxDistirubteInitialLoad: true,
-			})
+			});
 		}
 
 		yield put({
@@ -37,20 +34,20 @@ const createSaga = ({
 		});
 	}
 
-	function* persistAction(action){
-		if(action.fromReduxDistirubteInitialLoad){
-			return
+	function* persistAction(action) {
+		if (action.fromReduxDistirubteInitialLoad) {
+			return;
 		}
-			console.log("persistAction", action);
+		console.log("persistAction", action);
 	}
 
-	function* rootSaga(){
+	function* rootSaga() {
 		yield fork(initalise);
 
 		yield takeEvery(listAllActions || "*", persistAction);
 	}
 
 	return rootSaga;
-}
+};
 
 export default createSaga;

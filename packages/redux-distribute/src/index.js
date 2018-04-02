@@ -1,4 +1,3 @@
-
 import createSaga from "./createSaga";
 import createReducer from "./createReducer";
 import createMiddleware from "./createMiddleware";
@@ -21,6 +20,6 @@ const createReduxDistribute = ({
 	middleware: createMiddleware({
 		listenToActions,
 	}),
-})
+});
 
-export default createReduxDistribute
+export default createReduxDistribute;

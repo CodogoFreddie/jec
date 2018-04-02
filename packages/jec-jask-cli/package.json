@@ -8,6 +8,7 @@
 	},
 	"scripts": {
 		"watch": "NODE_ENV=production codogo-scripts watch",
+		"format": "NODE_ENV=production codogo-scripts format",
 		"build": "NODE_ENV=production codogo-scripts build"
 	},
 	"repository": {
@@ -24,6 +25,7 @@
 		"date-fns": "next",
 		"jec-jask": "^0.0.1",
 		"ramda": "^0.25.0",
+		"redux-persist-node-storage": "^2.0.0",
 		"uuid": "^3.2.1"
 	},
 	"devDependencies": {

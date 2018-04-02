@@ -1,23 +1,22 @@
 import * as R from "ramda";
 
-const tagPairs = (state= [], action) => {
-	switch(action.type){
-		case "ADD_TAG_TO_OBJ":
-			return [
-				...state,
-				{
-					objId: action.objId,
-					tag: action.tag,
-				},
-			]
+const tagPairs = (state = [], action) => {
+	switch (action.type) {
+	case "ADD_TAG_TO_OBJ":
+		return [
+			...state,
+			{
+				objId: action.objId,
+				tag: action.tag,
+			},
+		];
 
-		case "REMOVE_TAG_FROM_OBJ":
-			return state.filter( R.eqBy( ({ objId, tag, }) => objId + tag )
-			)
+	case "REMOVE_TAG_FROM_OBJ":
+		return state.filter(R.eqBy(({ objId, tag, }) => objId + tag));
 
-		default:
-			return state
+	default:
+		return state;
 	}
-}
+};
 
-export default tagPairs
+export default tagPairs;
