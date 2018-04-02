@@ -23,12 +23,6 @@ const createSaga = ({
 
 		const state = yield select();
 
-		console.log({
-			state,
-			allActionIds,
-			persistedActionIds,
-		});
-
 		if (!R.equals(allActionIds, persistedActionIds)) {
 			try {
 				yield call(purgeStoredState, persistedActionIds);
@@ -55,8 +49,6 @@ const createSaga = ({
 	}
 
 	function* persistAction(action) {
-		console.log(action.type, action.fromReduxDistributedInitialLoad);
-
 		if (
 			!action.fromReduxDistributedInitialLoad &&
 			action.type !== PERSIST &&

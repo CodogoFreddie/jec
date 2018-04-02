@@ -1,4 +1,4 @@
-import createJecJaskStore from "jec-jask";
+import createJecJaskStore, { collateAllObjects, } from "jec-jask";
 import * as R from "ramda";
 import jsonfile from "jsonfile";
 import mkdirp from "mkdirp";
@@ -96,7 +96,7 @@ store.subscribe(() => {
 
 			actions.forEach(store.dispatch);
 
-			console.log(JSON.stringify(store.getState(), null, 2));
+			console.log(JSON.stringify(collateAllObjects(store.getState()), null, 2));
 		}
 	}
 });

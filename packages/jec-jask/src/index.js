@@ -9,6 +9,8 @@ import { persistStore, persistReducer, } from "redux-persist";
 
 import * as reducers from "./reducers";
 
+export * from "./collateObjects";
+
 const createJecJaskStore = ({
 	listAllActions,
 	writeAction,
@@ -18,7 +20,7 @@ const createJecJaskStore = ({
 	const persistConfig = {
 		key: "root",
 		storage: persistStorage,
-		blacklist: [ "__distributeStatus", ],
+		//blacklist: [ "__distributeStatus", ],
 	};
 
 	const {
@@ -45,10 +47,10 @@ const createJecJaskStore = ({
 		applyMiddleware(
 			distributeMiddleware,
 			sagaMiddleware,
-			store => next => action => {
-				console.log("action", action.type);
-				next(action);
-			},
+			//store => next => action => {
+				//console.log("action", action.type);
+				//next(action);
+			//},
 		),
 	);
 
