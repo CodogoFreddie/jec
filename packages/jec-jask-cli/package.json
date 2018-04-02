@@ -2,7 +2,10 @@
 	"name": "jec-jask-cli",
 	"version": "0.0.1",
 	"description": "cli for jec-jask",
-	"main": "index.js",
+	"main": "lib/index.js",
+	"bin": {
+		"jask": "main.js"
+	},
 	"eslint": {
 		"extends": "codogo"
 	},
