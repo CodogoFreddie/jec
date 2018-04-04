@@ -1,76 +1,25 @@
 import createJecJaskStore, { collateAllObjects, } from "jec-jask";
 import * as R from "ramda";
-import jsonfile from "jsonfile";
-import mkdirp from "mkdirp";
-import fs from "fs";
-import { AsyncNodeStorage, } from "redux-persist-node-storage";
 
 import parseCli from "./parseCli";
 import generateAddActions from "./generateAddActions";
+import generateModifyActions from "./generateModifyActions";
+import filterByCLICommands from "./filterByCLICommands";
 import render from "./render";
+import { 
+	listAllActions,
+	writeAction,
+	readAction,
+	persistStorage,
+} from "./distributeHooks";
 
 process.on("unhandledRejection", r => console.log(r));
-
-const cacheFolder =
-	process.env.JEC_JASK_CACHE_FOLDER ||
-	`${ require("os").homedir() }/.jecJaskCache`;
-const actionFolder =
-	process.env.JEC_JASK_CACHE_FOLDER ||
-	`${ require("os").homedir() }/.jecActions`;
-
-const ensureActionFolderExists = () =>
-	new Promise((done, fail) => {
-		mkdirp(actionFolder, err => (err ? fail(err) : done()));
-	});
-
-const writeAction = action =>
-	ensureActionFolderExists().then(
-		() =>
-			new Promise((done, fail) => {
-				jsonfile.writeFile(
-					`${ actionFolder }/${ action.timestamp }_${ action.type }_${
-						action.salt
-					}`,
-					action,
-					err => (err ? fail(err) : done()),
-				);
-			}),
-	);
-
-const readAction = id =>
-	ensureActionFolderExists().then(
-		() =>
-			new Promise((done, fail) => {
-				jsonfile.readFile(
-					`${ actionFolder }/${ id }`,
-					(err, dat) => (err ? fail(err) : done(dat)),
-				);
-			}),
-	);
-
-const wrappedGetFiles = () =>
-	ensureActionFolderExists().then(
-		() =>
-			new Promise((done, fail) => {
-				fs.readdir(
-					actionFolder,
-					(err, files) => (err ? fail(err) : done(files || [])),
-				);
-			}),
-	);
-
-async function* listAllActions() {
-	const files = await wrappedGetFiles();
-	for await (const id of files) {
-		yield id;
-	}
-}
 
 const store = createJecJaskStore({
 	listAllActions,
 	writeAction,
 	readAction,
-	persistStorage: new AsyncNodeStorage(cacheFolder),
+	persistStorage,
 });
 
 let hasRunCliCommand = false;
@@ -83,10 +32,12 @@ store.subscribe(() => {
 
 			const { filter, command, modifications, } = parseCli(process.argv);
 
-			const noop = () => ({ actions: [], filterForRender: R.identity, });
+			const noop = () => ({ actions: [], filterForRender: filterByCLICommands(filter), });
+
 			const actionGenerator =
 				{
 					add: generateAddActions,
+					modify: generateModifyActions,
 				}[command] || noop;
 
 			const { actions, filterForRender, } = actionGenerator({
@@ -95,29 +46,27 @@ store.subscribe(() => {
 				state: store.getState(),
 			});
 
+			console.log(actions)
+
 			actions.forEach(store.dispatch);
 
-			try{
-				console.log(
-			render(
-				{
-					filterTask: R.identity,
-					giveScore: R.prop("i"),
-					giveColor:  () => [],
-					headers: [
-						"description",
-						"tags",
-						"project",
-						"due",
-						"wait",
-					],
-				},
-				collateAllObjects(store.getState())
-			)
+			console.log(
+				render(
+					{
+						filterTask: R.identity,
+						giveScore: R.prop("i"),
+						giveColor:  () => [],
+						headers: [
+							"description",
+							"tags",
+							"project",
+							"due",
+							"wait",
+						],
+					},
+					collateAllObjects(store.getState()).filter(filterForRender)
 				)
-			} catch (e){
-				console.error(e)
-			}
+			)
 		}
 	}
 });
