@@ -3,6 +3,9 @@
 	"version": "0.1.4",
 	"description": "serves actions over http",
 	"main": "lib/index.js",
+	"bin": {
+		"jec-http-server": "main.js"
+	},
 	"eslint": {
 		"extends": "codogo"
 	},
