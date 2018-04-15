@@ -6,10 +6,8 @@ const measureColumnWidths = config =>
 			...columnWidths,
 			...R.pipe(
 				R.toPairs,
-				R.filter(([key,]) =>
-					R.contains(key, config.headers),
-				),
-				R.map(([key, value,]) => [
+				R.filter(([ key, ]) => R.contains(key, config.headers)),
+				R.map(([ key, value, ]) => [
 					key,
 					Math.max(
 						key.length || 0,
@@ -29,7 +27,7 @@ export default config =>
 		measureColumnWidths(config),
 		R.pipe(
 			R.toPairs,
-			R.map(([label, length,]) => ({
+			R.map(([ label, length, ]) => ({
 				label,
 				length,
 			})),

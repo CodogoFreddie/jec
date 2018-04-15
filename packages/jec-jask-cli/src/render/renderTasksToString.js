@@ -17,7 +17,7 @@ const renderRow = ({ renderReadyTasks, columnWidths, }) => (row, y) => {
 			? {
 				fn: "bgHex",
 				val: "#111",
-			}
+			  }
 			: false,
 	].filter(Boolean);
 

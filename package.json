@@ -6,6 +6,7 @@
 	"babel": {
 		"presets": [
 			"stage-3",
+			"react",
 			[
 				"env",
 				{
@@ -14,6 +15,7 @@
 			]
 		],
 		"plugins": [
+"transform-class-properties",
 			[
 				"transform-runtime",
 				{
@@ -24,9 +26,10 @@
 		]
 	},
 	"devDependencies": {
+		"babel-plugin-transform-class-properties": "^6.24.1",
 		"babel-preset-codogo": "^3.0.5",
-		"lerna": "^2.7.1",
-		"eslint": "^4.18.2"
+		"eslint": "^4.18.2",
+		"lerna": "^2.7.1"
 	},
 	"scripts": {
 		"watch": "lerna run --parallel watch",
@@ -37,6 +40,7 @@
 	"dependencies": {
 		"babel-plugin-transform-runtime": "^6.23.0",
 		"babel-preset-env": "^1.6.1",
+		"babel-preset-react": "^6.24.1",
 		"babel-preset-stage-3": "^6.24.1",
 		"babel-runtime": "^6.26.0"
 	}

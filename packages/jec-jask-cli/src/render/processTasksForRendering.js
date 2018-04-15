@@ -8,12 +8,9 @@ const sigFig = sf => x => parseFloat(x.toPrecision(sf), 10);
 const filterTasks = config => R.filter(config.filterTask);
 
 const addRenderingMetaToTasks = config => {
-	const giveScore = R.pipe(
-		config.giveScore,
-		sigFig(3),
-	);
+	const giveScore = R.pipe(config.giveScore, sigFig(3));
 
-	const giveColor = config.giveColor
+	const giveColor = config.giveColor;
 
 	return map((task, i) => ({
 		...task,
@@ -30,7 +27,7 @@ const formatDateDistance = R.pipe(
 	})(new Date()),
 );
 
-const addPlusToTags = R.pipe(R.map(x => `+${x}`), R.join(" "));
+const addPlusToTags = R.pipe(R.map(x => `+${ x }`), R.join(" "));
 
 const stringfiyTasksFields = tasks =>
 	R.map(

@@ -5,15 +5,19 @@ import modifyByCLICommand from "./modifyByCLICommands";
 import filterByCLICommands from "./filterByCLICommands";
 
 const generateModifyActions = ({ state, filter, modifications, }) => {
-	const filterUUIDs = filterByCLICommands(filter)
-	const applyToUUIDs = collateAllObjects(state).filter(filterUUIDs).map(R.prop("uuid"))
+	const filterUUIDs = filterByCLICommands(filter);
+	const applyToUUIDs = collateAllObjects(state)
+		.filter(filterUUIDs)
+		.map(R.prop("uuid"));
 
 	const generateActions = R.pipe(
 		modifyByCLICommand(state),
-		R.map( action => applyToUUIDs.map( objId => ({
-			...action,
-			objId,
-		}))),
+		R.map(action =>
+			applyToUUIDs.map(objId => ({
+				...action,
+				objId,
+			})),
+		),
 		R.flatten,
 	);
 
@@ -24,4 +28,3 @@ const generateModifyActions = ({ state, filter, modifications, }) => {
 };
 
 export default generateModifyActions;
-

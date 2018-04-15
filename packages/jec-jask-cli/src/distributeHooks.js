@@ -8,8 +8,7 @@ const cacheFolder =
 	process.env.JEC_JASK_CACHE_FOLDER ||
 	`${ require("os").homedir() }/.jecJaskCache`;
 const actionFolder =
-	process.env.JEC_JASK_CACHE_FOLDER ||
-	`${ require("os").homedir() }/.jecActions`;
+	process.env.JEC_ACTIONS_FOLDER || `${ require("os").homedir() }/.jecActions`;
 
 const ensureActionFolderExists = () =>
 	new Promise((done, fail) => {
@@ -57,6 +56,6 @@ export const listAllActions = async function* listAllActions() {
 	for await (const id of files) {
 		yield id;
 	}
-}
+};
 
-	export const persistStorage = new AsyncNodeStorage(cacheFolder)
+export const persistStorage = new AsyncNodeStorage(cacheFolder);

@@ -3,39 +3,28 @@ import * as R from "ramda";
 const handlePlusTagFilter = [
 	R.prop("plusTag"),
 	({ plusTag, }) => ({ tags, }) => (tags || []).includes(plusTag),
-]
+];
 
 const handleProjectFilter = [
 	R.propEq("prop", "project"),
-	({ value, }) => ({ project, }) => (
-		(project || "").includes(value)
-	),
-]
+	({ value, }) => ({ project, }) => (project || "").includes(value),
+];
 const defaultPropValueFilter = [
 	R.T,
 	({ prop, value, }) => task => task[prop] === value,
-]
+];
 
 const handlePropValueFilter = [
 	R.both(R.prop("prop"), R.prop("value")),
-	R.cond([
-		handleProjectFilter,
-		defaultPropValueFilter,
-	]),
+	R.cond([ handleProjectFilter, defaultPropValueFilter, ]),
 ];
 
 const filterByCLICommands = R.pipe(
-	R.map(R.cond([
-		handlePlusTagFilter,
-		handlePropValueFilter,
-	])),
+	R.map(R.cond([ handlePlusTagFilter, handlePropValueFilter, ])),
 
-	R.when(
-		R.propEq("length", 0),
-		R.always([R.T]),
-	),
+	R.when(R.propEq("length", 0), R.always([ R.T, ])),
 
 	R.anyPass,
-)
+);
 
 export default filterByCLICommands;

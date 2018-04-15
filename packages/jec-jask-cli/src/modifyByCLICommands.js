@@ -81,8 +81,9 @@ const handlePlusTagModification = ({ plusTag, }) => ({
 	tag: plusTag,
 });
 
-const modifyByCLICommand = state => R.pipe(
-	R.map(
+const modifyByCLICommand = state =>
+	R.pipe(
+		R.map(
 			R.pipe(
 				R.cond([
 					[
@@ -95,7 +96,6 @@ const modifyByCLICommand = state => R.pipe(
 		),
 		R.flatten,
 		R.filter(Boolean),
-
-);
+	);
 
 export default modifyByCLICommand;

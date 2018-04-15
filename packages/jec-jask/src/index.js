@@ -47,8 +47,8 @@ const createJecJaskStore = ({
 			distributeMiddleware,
 			sagaMiddleware,
 			//store => next => action => {
-				//console.log("action", action.type);
-				//next(action);
+			//console.log("action", action.type);
+			//next(action);
 			//},
 		),
 	);

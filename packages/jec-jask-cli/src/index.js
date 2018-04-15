@@ -6,7 +6,7 @@ import generateAddActions from "./generateAddActions";
 import generateModifyActions from "./generateModifyActions";
 import filterByCLICommands from "./filterByCLICommands";
 import render from "./render";
-import { 
+import {
 	listAllActions,
 	writeAction,
 	readAction,
@@ -32,7 +32,10 @@ store.subscribe(() => {
 
 			const { filter, command, modifications, } = parseCli(process.argv);
 
-			const noop = () => ({ actions: [], filterForRender: filterByCLICommands(filter), });
+			const noop = () => ({
+				actions: [],
+				filterForRender: filterByCLICommands(filter),
+			});
 
 			const actionGenerator =
 				{
@@ -46,7 +49,7 @@ store.subscribe(() => {
 				state: store.getState(),
 			});
 
-			console.log(actions)
+			console.log(actions);
 
 			actions.forEach(store.dispatch);
 
@@ -55,7 +58,7 @@ store.subscribe(() => {
 					{
 						filterTask: R.identity,
 						giveScore: R.prop("i"),
-						giveColor:  () => [],
+						giveColor: () => [],
 						headers: [
 							"description",
 							"tags",
@@ -64,9 +67,9 @@ store.subscribe(() => {
 							"wait",
 						],
 					},
-					collateAllObjects(store.getState()).filter(filterForRender)
-				)
-			)
+					collateAllObjects(store.getState()).filter(filterForRender),
+				),
+			);
 		}
 	}
 });
