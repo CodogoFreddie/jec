@@ -1,6 +1,6 @@
 {
 	"name": "jec-http-server",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"description": "serves actions over http",
 	"main": "lib/index.js",
 	"bin": {
