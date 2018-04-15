@@ -49,6 +49,6 @@ app.get("/:id", cors(), (req, res, next) => {
 
 app.listen(port, () =>
 	console.log(
-		`jec http server listening on port ${ port } with auth key "${ authKey }", serving actions from "${ actionFolder }"`
+		`jec http server listening on port ${ port } with auth key "${ authKey }", serving actions from "${ actionFolder }"`,
 	),
 );
