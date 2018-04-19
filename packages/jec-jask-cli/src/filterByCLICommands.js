@@ -19,8 +19,16 @@ const handlePropValueFilter = [
 	R.cond([ handleProjectFilter, defaultPropValueFilter, ]),
 ];
 
+const handleIdFilter = [
+	R.prop("int"),
+	({ int, }) => ({ id, }) => int === id,
+];
+
 const filterByCLICommands = R.pipe(
-	R.map(R.cond([ handlePlusTagFilter, handlePropValueFilter, ])),
+	R.tap(console.log),
+	R.map(R.cond([ handlePlusTagFilter, handlePropValueFilter, handleIdFilter, ])),
+
+	R.filter(Boolean),
 
 	R.when(R.propEq("length", 0), R.always([ R.T, ])),
 

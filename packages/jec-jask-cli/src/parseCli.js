@@ -10,6 +10,10 @@ const parseDataInterface = R.cond([
 			value,
 		})),
 	],
+	[
+		x => parseInt(x, 10),
+		x => ({ int: parseInt(x, 10), })
+	],
 	[ R.T, plain => ({ plain, }), ],
 ]);
 

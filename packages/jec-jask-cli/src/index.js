@@ -49,17 +49,16 @@ store.subscribe(() => {
 				state: store.getState(),
 			});
 
-			console.log(actions);
-
 			actions.forEach(store.dispatch);
 
 			console.log(
 				render(
 					{
 						filterTask: R.identity,
-						giveScore: R.prop("i"),
+						giveScore: R.pipe(R.prop("id"), R.subtract(0)),
 						giveColor: () => [],
 						headers: [
+							"id",
 							"description",
 							"tags",
 							"project",
