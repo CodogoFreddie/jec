@@ -4,6 +4,7 @@ import * as R from "ramda";
 import parseCli from "./parseCli";
 import generateAddActions from "./generateAddActions";
 import generateModifyActions from "./generateModifyActions";
+import generateWorkflowEventActions from "./generateWorkflowEventActions";
 import filterByCLICommands from "./filterByCLICommands";
 import render from "./render";
 import {
@@ -37,12 +38,13 @@ store.subscribe(() => {
 				filterForRender: filterByCLICommands(filter),
 			});
 
-			console.log( modifications )
-
 			const actionGenerator =
 				{
 					add: generateAddActions,
 					modify: generateModifyActions,
+					start: generateWorkflowEventActions("start"),
+					stop: generateWorkflowEventActions("stop"),
+					done: generateWorkflowEventActions("done"),
 				}[command] || noop;
 
 			const { actions, filterForRender, } = actionGenerator({
@@ -52,6 +54,7 @@ store.subscribe(() => {
 			});
 
 			actions.forEach(store.dispatch);
+			actions.forEach(console.log);
 
 			console.log(
 				render(
@@ -66,6 +69,9 @@ store.subscribe(() => {
 							"project",
 							"due",
 							"wait",
+							"start",
+							"stop",
+							"done",
 						],
 					},
 					collateAllObjects(store.getState()).filter(filterForRender),

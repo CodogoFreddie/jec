@@ -36,6 +36,8 @@ const stringfiyTasksFields = tasks =>
 				created: formatDateDistance,
 				done: formatDateDistance,
 				due: formatDateDistance,
+				start: formatDateDistance,
+				stop: formatDateDistance,
 				tags: addPlusToTags,
 				updated: formatDateDistance,
 				wait: formatDateDistance,
