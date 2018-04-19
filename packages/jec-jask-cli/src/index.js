@@ -37,6 +37,8 @@ store.subscribe(() => {
 				filterForRender: filterByCLICommands(filter),
 			});
 
+			console.log( modifications )
+
 			const actionGenerator =
 				{
 					add: generateAddActions,

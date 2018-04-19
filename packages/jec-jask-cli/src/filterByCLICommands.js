@@ -25,7 +25,6 @@ const handleIdFilter = [
 ];
 
 const filterByCLICommands = R.pipe(
-	R.tap(console.log),
 	R.map(R.cond([ handlePlusTagFilter, handlePropValueFilter, handleIdFilter, ])),
 
 	R.filter(Boolean),
