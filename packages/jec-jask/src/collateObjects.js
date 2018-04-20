@@ -27,9 +27,22 @@ export const collateObject = state => uuid => ({
 export const collateAllObjects = state => {
 	const collateObjectFn = collateObject(state);
 
-	return state.objs.map((uuid, id) => ({
-		uuid,
-		id,
-		...collateObjectFn(uuid),
-	}));
+	return state.objs
+		.map((uuid, id) => ({
+			uuid,
+			id,
+			...collateObjectFn(uuid),
+		}))
+		.filter(
+			({ wait, done, }) =>
+				!(done || (wait && new Date().toISOString() > wait)),
+		)
+		.map(({ start, stop, ...rest }) => ({
+			...rest,
+			...(!start || (start && stop && stop > start)
+				? null
+				: {
+					start,
+				  }),
+		}));
 };

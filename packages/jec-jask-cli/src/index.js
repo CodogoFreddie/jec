@@ -54,7 +54,6 @@ store.subscribe(() => {
 			});
 
 			actions.forEach(store.dispatch);
-			actions.forEach(console.log);
 
 			console.log(
 				render(
@@ -68,9 +67,7 @@ store.subscribe(() => {
 							"tags",
 							"project",
 							"due",
-							"wait",
 							"start",
-							"stop",
 							"done",
 						],
 					},

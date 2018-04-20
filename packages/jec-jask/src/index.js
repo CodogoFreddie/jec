@@ -43,14 +43,7 @@ const createJecJaskStore = ({
 
 	const store = createStore(
 		persistedReducer,
-		applyMiddleware(
-			distributeMiddleware,
-			sagaMiddleware,
-			//store => next => action => {
-			//console.log("action", action.type);
-			//next(action);
-			//},
-		),
+		applyMiddleware(distributeMiddleware, sagaMiddleware),
 	);
 
 	sagaMiddleware.run(distributeSaga);
