@@ -1,11 +1,11 @@
 import * as R from "ramda";
 import { PERSIST, REHYDRATE, } from "redux-persist";
 
-import { createStore, applyMiddleware, combineReducers, } from "redux";
+import { applyMiddleware, combineReducers, createStore, } from "redux";
 
 import createReduxDistribute from "redux-distribute";
 import createSagaMiddleware from "redux-saga";
-import { persistStore, persistReducer, } from "redux-persist";
+import { persistReducer, persistStore, } from "redux-persist";
 
 import * as reducers from "./reducers";
 export * from "./collateObjects";

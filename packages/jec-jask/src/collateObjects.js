@@ -48,8 +48,8 @@ export const collateAllObjects = state => {
 					start,
 				  }),
 		}))
-		.map( todo => ({
+		.map(todo => ({
 			...todo,
 			score: giveScore(todo),
-		}))
+		}));
 };

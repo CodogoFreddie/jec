@@ -1,6 +1,7 @@
+import { Provider, } from "rebass";
+
 import Login from "./Login";
 import DataProvider from "./DataProvider";
-
 import { getServerDetails, } from "./serverDetails";
 
 class App extends React.Component {
@@ -22,12 +23,16 @@ class App extends React.Component {
 		const { loading, key, address, } = this.state;
 
 		console.log(this.state);
-		return loading ? (
-			<div />
-		) : key && address ? (
-			<DataProvider authKey = { key } address = { address } />
-		) : (
-			<Login />
+		return (
+			<Provider>
+				{loading ? (
+					<div />
+				) : key && address ? (
+					<DataProvider authKey = { key } address = { address } />
+				) : (
+					<Login />
+				)}
+			</Provider>
 		);
 	}
 }

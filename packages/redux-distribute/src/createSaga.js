@@ -1,6 +1,6 @@
 import * as R from "ramda";
-import { purgeStoredState, PERSIST, REHYDRATE, } from "redux-persist";
-import { put, call, select, takeEvery, take, fork, } from "redux-saga/effects";
+import { PERSIST, REHYDRATE, purgeStoredState, } from "redux-persist";
+import { call, fork, put, select, take, takeEvery, } from "redux-saga/effects";
 
 const createSaga = ({
 	persistConfig,
