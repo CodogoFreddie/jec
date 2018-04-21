@@ -1,6 +1,6 @@
 {
 	"name": "jec-http-server",
-	"version": "0.1.7",
+	"version": "0.2.0",
 	"description": "serves actions over http",
 	"main": "lib/index.js",
 	"bin": {
@@ -29,7 +29,7 @@
 		"codogo-scripts": "3.0.6",
 		"cors": "^2.8.4",
 		"express": "^4.16.3",
-		"jec-jask": "^0.1.7",
+		"jec-jask": "^0.2.0",
 		"ramda": "^0.25.0",
 		"random-access-memory": "^2.4.0",
 		"redux": "^3.7.2",
