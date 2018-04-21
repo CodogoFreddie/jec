@@ -27,6 +27,7 @@
 	"dependencies": {
 		"babel-runtime": "^6.26.0",
 		"chalk": "^2.3.2",
+		"codogo-scripts": "^3.2.14",
 		"date-fns": "next",
 		"jec-jask": "^0.2.0",
 		"jsonfile": "^4.0.0",

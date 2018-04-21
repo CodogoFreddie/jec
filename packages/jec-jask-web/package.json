@@ -22,6 +22,7 @@
 	},
 	"homepage": "https://github.com/CodogoFreddie/jec#readme",
 	"dependencies": {
+		"codogo-scripts": "^3.2.14",
 		"date-fns": "next",
 		"jec-jask": "^0.2.0",
 		"localforage": "^1.7.1",
