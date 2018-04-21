@@ -19,14 +19,13 @@ const parseRecurShortcutValues = [
 	),
 ];
 
-const parsePriorityValues  = [
+const parsePriorityValues = [
 	R.propEq("prop", "priority"),
 	R.pipe(
-		R.over(R.lensProp("value"), R.toUpper,),
+		R.over(R.lensProp("value"), R.toUpper),
 		R.over(R.lensProp("type"), R.defaultTo("SET_PROP")),
 	),
 ];
-
 
 const generateProjectActions = ({ projects, }) => [
 	R.propEq("prop", "project"),
