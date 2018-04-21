@@ -33,7 +33,7 @@
 	},
 	"scripts": {
 		"build": "lerna run build",
-		"deploy-jask": "cd packages/jask && npm i && npm run build",
+		"deploy-jask": "cd packages/jec-jask-web && npm i && npm run build",
 		"format": "lerna run format",
 		"publish": "lerna run format && lerna run build && lerna publish",
 		"watch": "lerna run --parallel watch"
