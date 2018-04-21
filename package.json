@@ -32,10 +32,11 @@
 		"lerna": "^2.7.1"
 	},
 	"scripts": {
-		"watch": "lerna run --parallel watch",
 		"build": "lerna run build",
+		"deploy-jask": "cd packages/jask && npm i && npm run build",
 		"format": "lerna run format",
-		"publish": "lerna run format && lerna run build && lerna publish"
+		"publish": "lerna run format && lerna run build && lerna publish",
+		"watch": "lerna run --parallel watch"
 	},
 	"dependencies": {
 		"babel-plugin-transform-runtime": "^6.23.0",
