@@ -1,5 +1,7 @@
 import * as R from "ramda";
 
+import giveScore from "./giveScore";
+
 const recursiveGetProject = projects => {
 	const rec = projectId => {
 		if (projectId) {
@@ -16,6 +18,7 @@ const recursiveGetProject = projects => {
 
 	return rec;
 };
+
 export const collateObject = state => uuid => ({
 	...state.props[uuid],
 
@@ -30,7 +33,7 @@ export const collateAllObjects = state => {
 	return state.objs
 		.map((uuid, id) => ({
 			uuid,
-			id,
+			id: id + 1,
 			...collateObjectFn(uuid),
 		}))
 		.filter(
@@ -44,5 +47,9 @@ export const collateAllObjects = state => {
 				: {
 					start,
 				  }),
-		}));
+		}))
+		.map( todo => ({
+			...todo,
+			score: giveScore(todo),
+		}))
 };
