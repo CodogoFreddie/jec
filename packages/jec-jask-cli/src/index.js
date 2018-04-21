@@ -7,6 +7,8 @@ import generateModifyActions from "./generateModifyActions";
 import generateWorkflowEventActions from "./generateWorkflowEventActions";
 import filterByCLICommands from "./filterByCLICommands";
 import render from "./render";
+import giveScore from "./giveScore";
+
 import {
 	listAllActions,
 	writeAction,
@@ -59,11 +61,13 @@ store.subscribe(() => {
 				render(
 					{
 						filterTask: R.identity,
-						giveScore: R.pipe(R.prop("id"), R.subtract(0)),
+						giveScore,
 						giveColor: () => [],
 						headers: [
 							"id",
+							"score",
 							"description",
+							"priority",
 							"tags",
 							"project",
 							"due",

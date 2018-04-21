@@ -19,6 +19,15 @@ const parseRecurShortcutValues = [
 	),
 ];
 
+const parsePriorityValues  = [
+	R.propEq("prop", "priority"),
+	R.pipe(
+		R.over(R.lensProp("value"), R.toUpper,),
+		R.over(R.lensProp("type"), R.defaultTo("SET_PROP")),
+	),
+];
+
+
 const generateProjectActions = ({ projects, }) => [
 	R.propEq("prop", "project"),
 	R.pipe(R.over(R.lensProp("value"), R.split(".")), ({ value, ...rest }) => {
@@ -71,6 +80,7 @@ const handlePropValueModification = state =>
 		R.cond([
 			parseTimeShortcutValues,
 			parseRecurShortcutValues,
+			parsePriorityValues,
 			generateProjectActions(state),
 			[ R.T, R.over(R.lensProp("type"), R.defaultTo("SET_PROP")), ],
 		]),
