@@ -1,6 +1,6 @@
 {
 	"name": "jec-jask-web",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"description": "the react web interface for jec-jask",
 	"main": "lib/index.js",
 	"eslint": {
@@ -24,7 +24,7 @@
 	"dependencies": {
 		"codogo-scripts": "^3.2.14",
 		"date-fns": "next",
-		"jec-jask": "^0.2.0",
+		"jec-jask": "^0.2.1",
 		"localforage": "^1.7.1",
 		"ramda": "^0.25.0",
 		"react": "^16.3.1",
@@ -32,7 +32,7 @@
 		"react-redux": "^5.0.7",
 		"rebass": "next",
 		"redux": "^3.7.2",
-		"redux-distribute": "^0.1.3",
+		"redux-distribute": "^0.2.1",
 		"redux-persist": "^5.9.1",
 		"redux-saga": "^0.16.0",
 		"semantic-ui-react": "^0.79.1"
