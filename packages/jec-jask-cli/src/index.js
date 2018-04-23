@@ -10,9 +10,9 @@ import render from "./render";
 
 import {
 	listAllActions,
-	writeAction,
-	readAction,
 	persistStorage,
+	readAction,
+	writeAction,
 } from "./distributeHooks";
 
 process.on("unhandledRejection", r => console.log(r));

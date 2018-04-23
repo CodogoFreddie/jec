@@ -25,11 +25,8 @@
 	},
 	"homepage": "https://github.com/CodogoFreddie/jec#readme",
 	"dependencies": {
-		"babel-cli": "^6.26.0",
 		"babel-runtime": "^6.26.0",
-		"codogo-scripts": "^3.2.14",
 		"cors": "^2.8.4",
-		"eslint": "^4.19.1",
 		"express": "^4.16.3",
 		"jec-jask": "^0.2.3",
 		"ramda": "^0.25.0",
@@ -44,6 +41,8 @@
 		"babel-plugin-transform-runtime": "^6.23.0",
 		"babel-preset-env": "^1.6.1",
 		"babel-preset-stage-3": "^6.24.1",
+		"codogo-scripts": "^3.2.14",
+		"eslint": "^4.19.1",
 		"prettier": "^1.11.1"
 	}
 }

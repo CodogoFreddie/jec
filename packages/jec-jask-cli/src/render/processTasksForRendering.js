@@ -1,5 +1,5 @@
 import R from "ramda";
-import { toDate, formatDistanceStrictWithOptions, } from "date-fns/fp";
+import { formatDistanceStrictWithOptions, toDate, } from "date-fns/fp";
 
 const map = R.addIndex(R.map);
 
@@ -40,13 +40,16 @@ const stringfiyTasksFields = tasks =>
 				updated: formatDateDistance,
 				wait: formatDateDistance,
 				depends: uuid =>
-				"" + R.findIndex(R.propEq("uuid", uuid), tasks),
-				recur: ({ n, period }) => n + " " + ({
-					d: "days",
-					w: "weeks",
-					m: "months",
-					y: "years",
-				})[period],
+					"" + R.findIndex(R.propEq("uuid", uuid), tasks),
+				recur: ({ n, period, }) =>
+					n +
+					" " +
+					{
+						d: "days",
+						w: "weeks",
+						m: "months",
+						y: "years",
+					}[period],
 			}),
 			({ i, color, score, ...rest }) => ({
 				i,
