@@ -1,6 +1,6 @@
 {
 	"name": "jec-jask-web",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"description": "the react web interface for jec-jask",
 	"main": "lib/index.js",
 	"eslint": {
@@ -24,7 +24,7 @@
 	"dependencies": {
 		"codogo-scripts": "^3.2.14",
 		"date-fns": "next",
-		"jec-jask": "^0.2.1",
+		"jec-jask": "^0.2.2",
 		"localforage": "^1.7.1",
 		"ramda": "^0.25.0",
 		"react": "^16.3.1",

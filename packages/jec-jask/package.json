@@ -1,6 +1,6 @@
 {
 	"name": "jec-jask",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"description": "task processor for jec",
 	"main": "lib/index.js",
 	"eslint": {
