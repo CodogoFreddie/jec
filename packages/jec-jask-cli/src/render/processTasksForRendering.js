@@ -40,7 +40,13 @@ const stringfiyTasksFields = tasks =>
 				updated: formatDateDistance,
 				wait: formatDateDistance,
 				depends: uuid =>
-					"" + R.findIndex(R.propEq("uuid", uuid), tasks),
+				"" + R.findIndex(R.propEq("uuid", uuid), tasks),
+				recur: ({ n, period }) => n + " " + ({
+					d: "days",
+					w: "weeks",
+					m: "months",
+					y: "years",
+				})[period],
 			}),
 			({ i, color, score, ...rest }) => ({
 				i,

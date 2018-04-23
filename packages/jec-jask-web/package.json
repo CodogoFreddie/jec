@@ -22,8 +22,10 @@
 	},
 	"homepage": "https://github.com/CodogoFreddie/jec#readme",
 	"dependencies": {
+		"babel-cli": "^6.26.0",
 		"codogo-scripts": "^3.2.14",
 		"date-fns": "next",
+		"eslint": "^4.19.1",
 		"jec-jask": "^0.2.2",
 		"localforage": "^1.7.1",
 		"ramda": "^0.25.0",
@@ -38,11 +40,9 @@
 		"semantic-ui-react": "^0.79.1"
 	},
 	"devDependencies": {
-		"babel-cli": "^6.26.0",
 		"babel-plugin-transform-runtime": "^6.23.0",
 		"babel-preset-env": "^1.6.1",
 		"babel-preset-stage-3": "^6.24.1",
-		"eslint": "^4.18.2",
 		"prettier": "^1.11.1"
 	}
 }
