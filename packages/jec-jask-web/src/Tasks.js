@@ -1,16 +1,16 @@
 import { collateAllObjects, } from "jec-jask";
 import { connect, } from "react-redux";
-import { toDate, formatRelative, } from "date-fns/fp";
+import { formatRelative, toDate, } from "date-fns/fp";
 import { Toolbar, } from "rebass";
 import {
 	Button,
-	Label,
-	Segment,
-	Statistic,
-	Dimmer,
-	Loader,
 	Card,
 	Container,
+	Dimmer,
+	Label,
+	Loader,
+	Segment,
+	Statistic,
 } from "semantic-ui-react";
 
 const formatDate = R.pipe(toDate, formatRelative(new Date()));
@@ -68,7 +68,9 @@ class Foo extends React.Component {
 					{R.sortBy(
 						({ score, }) => -score,
 						collateAllObjects(this.props),
-					).map(props => <Task { ...props } />)}
+					).map(
+						props => (console.log({ props, }), <Task { ...props } />),
+					)}
 				</Card.Group>
 			</Segment>
 		) : (

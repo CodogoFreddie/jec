@@ -1,4 +1,4 @@
-import { Input, Button, Header, Image, Modal, } from "semantic-ui-react";
+import { Button, Header, Image, Input, Modal, } from "semantic-ui-react";
 
 import { getServerDetails, setServerDetails, } from "./serverDetails";
 
