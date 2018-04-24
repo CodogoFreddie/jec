@@ -36,10 +36,21 @@ export const collateAllObjects = state => {
 			id: id + 1,
 			...collateObjectFn(uuid),
 		}))
-		.filter(
-			({ wait, done }) =>
-				!(done || (wait && new Date().toISOString() > wait)),
-		)
+		.filter(({ wait, done }) => {
+			if (done) {
+				return false;
+			}
+			if (wait) {
+				console.log(
+					wait,
+					new Date().toISOString(),
+					new Date().toISOString() > wait,
+				);
+				return new Date().toISOString() > wait;
+			}
+
+			return true;
+		})
 		.map(({ start, stop, ...rest }) => ({
 			...rest,
 			...(!start || (start && stop && stop > start)
