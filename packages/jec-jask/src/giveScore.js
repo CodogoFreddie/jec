@@ -10,7 +10,12 @@ const giveScore = R.pipe(
 			)(scores),
 		[
 			({ due }) =>
-				(new Date().getTime() - new Date(due).getTime()) / 86400000,
+				10 *
+				Math.pow(
+					Math.E,
+					(new Date().getTime() - new Date(due).getTime()) /
+						864000000,
+				),
 			({ tags }) => tags.length,
 			({ project }) => (project ? 3 : 0),
 			({ start }) => (start ? 5 : 0),
