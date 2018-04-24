@@ -19,26 +19,26 @@ const extractNumber = (adder, ref) =>
 
 export const parseFrom = ref =>
 	R.cond([
-		[ R.test(/\d+d/), extractNumber(addDays, ref), ],
-		[ R.test(/\d+w/), extractNumber(addWeeks, ref), ],
-		[ R.test(/\d+m/), extractNumber(addMonths, ref), ],
-		[ R.test(/\d+y/), extractNumber(addYears, ref), ],
-		[ R.test(/^eod$/), () => endOfDay(ref), ],
-		[ R.test(/^eom$/), () => endOfMonth(ref), ],
-		[ R.test(/^eow$/), () => endOfWeek(ref), ],
-		[ R.test(/^eoy$/), () => endOfYear(ref), ],
-		[ R.test(/^sod$/), () => startOfDay(ref), ],
-		[ R.test(/^som$/), () => startOfMonth(ref), ],
-		[ R.test(/^sow$/), () => startOfWeek(ref), ],
-		[ R.test(/^soy$/), () => startOfYear(ref), ],
-		[ R.test(/^now$/), () => ref, ],
+		[R.test(/\d+d/), extractNumber(addDays, ref)],
+		[R.test(/\d+w/), extractNumber(addWeeks, ref)],
+		[R.test(/\d+m/), extractNumber(addMonths, ref)],
+		[R.test(/\d+y/), extractNumber(addYears, ref)],
+		[R.test(/^eod$/), () => endOfDay(ref)],
+		[R.test(/^eom$/), () => endOfMonth(ref)],
+		[R.test(/^eow$/), () => endOfWeek(ref)],
+		[R.test(/^eoy$/), () => endOfYear(ref)],
+		[R.test(/^sod$/), () => startOfDay(ref)],
+		[R.test(/^som$/), () => startOfMonth(ref)],
+		[R.test(/^sow$/), () => startOfWeek(ref)],
+		[R.test(/^soy$/), () => startOfYear(ref)],
+		[R.test(/^now$/), () => ref],
 	]);
 
 export default parseFrom(new Date());
 
 export const parseRecur = R.pipe(
 	R.match(/(\d)+([dwmy])/),
-	([ _, n, period, ]) => ({
+	([_, n, period]) => ({
 		n: parseInt(n, 10),
 		period,
 	}),

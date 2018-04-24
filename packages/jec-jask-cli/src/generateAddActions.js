@@ -3,7 +3,7 @@ import uuid from "uuid/v4";
 
 import modifyByCLICommand from "./modifyByCLICommands";
 
-const generateAddActions = ({ state, filter, modifications, }) => {
+const generateAddActions = ({ state, filter, modifications }) => {
 	const objId = uuid();
 
 	const generateActions = R.pipe(

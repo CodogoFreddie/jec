@@ -1,9 +1,9 @@
 import * as R from "ramda";
-import { collateAllObjects, } from "jec-jask";
+import { collateAllObjects } from "jec-jask";
 
 import filterByCLICommands from "./filterByCLICommands";
 
-const generateWorkflowEventActions = eventName => ({ state, filter, }) => {
+const generateWorkflowEventActions = eventName => ({ state, filter }) => {
 	const filterUUIDs = filterByCLICommands(filter);
 	const applyToUUIDs = collateAllObjects(state)
 		.filter(filterUUIDs)

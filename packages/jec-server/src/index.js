@@ -6,7 +6,7 @@ import jsonfile from "jsonfile";
 const app = express();
 
 const actionFolder =
-	process.env.JEC_ACTIONS_FOLDER || `${ require("os").homedir() }/.jecActions`;
+	process.env.JEC_ACTIONS_FOLDER || `${require("os").homedir()}/.jecActions`;
 
 const authKey =
 	process.env.JEC_HTTP_SERVER_KEY ||
@@ -16,7 +16,7 @@ const authKey =
 
 const port = process.env.JEC_HTTP_SERVER_PORT || 9000;
 
-const isCorrectKey = ({ headers, }) => (headers.authorization = authKey);
+const isCorrectKey = ({ headers }) => (headers.authorization = authKey);
 
 app.options("*", cors());
 app.get("/", cors(), (req, res, next) => {
@@ -32,10 +32,10 @@ app.get("/", cors(), (req, res, next) => {
 });
 
 app.get("/:id", cors(), (req, res, next) => {
-	console.log(`get ${ req.params.id }`);
+	console.log(`get ${req.params.id}`);
 
 	if (isCorrectKey(req)) {
-		jsonfile.readFile(`${ actionFolder }/${ req.params.id }`, (err, dat) => {
+		jsonfile.readFile(`${actionFolder}/${req.params.id}`, (err, dat) => {
 			if (err) {
 				return res.status(500).send("no such action");
 			} else {
@@ -49,6 +49,6 @@ app.get("/:id", cors(), (req, res, next) => {
 
 app.listen(port, () =>
 	console.log(
-		`jec http server listening on port ${ port } with auth key "${ authKey }", serving actions from "${ actionFolder }"`,
+		`jec http server listening on port ${port} with auth key "${authKey}", serving actions from "${actionFolder}"`,
 	),
 );

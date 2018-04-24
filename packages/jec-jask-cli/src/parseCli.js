@@ -1,30 +1,30 @@
 import * as R from "ramda";
 
 const parseDataInterface = R.cond([
-	[ R.test(/^\+\w+/), R.pipe(R.replace("+", ""), R.objOf("plusTag")), ],
-	[ R.test(/^-\w+/), R.pipe(R.replace("-", ""), R.objOf("minusTag")), ],
+	[R.test(/^\+\w+/), R.pipe(R.replace("+", ""), R.objOf("plusTag"))],
+	[R.test(/^-\w+/), R.pipe(R.replace("-", ""), R.objOf("minusTag"))],
 	[
 		R.test(/[\w ]+:[\w ]+/),
-		R.pipe(R.split(":"), ([ prop, value, ]) => ({
+		R.pipe(R.split(":"), ([prop, value]) => ({
 			prop,
 			value,
 		})),
 	],
-	[ x => parseInt(x, 10), x => ({ int: parseInt(x, 10), }), ],
-	[ R.T, plain => ({ plain, }), ],
+	[x => parseInt(x, 10), x => ({ int: parseInt(x, 10) })],
+	[R.T, plain => ({ plain })],
 ]);
 
 const combinePlains = R.pipe(
 	R.reduce(
-		({ arr, plain, }, val) => {
+		({ arr, plain }, val) => {
 			if (val.plain) {
 				return {
 					arr,
-					plain: plain.length ? `${ plain } ${ val.plain }` : val.plain,
+					plain: plain.length ? `${plain} ${val.plain}` : val.plain,
 				};
 			} else {
 				return {
-					arr: [ ...arr, val, ],
+					arr: [...arr, val],
 					plain,
 				};
 			}
@@ -34,19 +34,19 @@ const combinePlains = R.pipe(
 			plain: "",
 		},
 	),
-	({ arr, plain, }) => [
+	({ arr, plain }) => [
 		...arr,
-		plain.length ? { prop: "description", value: plain, } : null,
+		plain.length ? { prop: "description", value: plain } : null,
 	],
 	R.filter(Boolean),
 );
 
-const commandStrings = [ "add", "modify", "delete", "start", "stop", "done", ];
+const commandStrings = ["add", "modify", "delete", "start", "stop", "done"];
 
 const parseCli = R.pipe(
 	R.slice(2, Infinity),
 	R.splitWhen(R.contains(R.__, commandStrings)),
-	([ filter, [ command, ...modifications ], ]) => ({
+	([filter, [command, ...modifications]]) => ({
 		filter,
 		command,
 		modifications,

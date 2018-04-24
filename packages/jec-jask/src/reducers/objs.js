@@ -8,7 +8,7 @@ const sanitizeObjs = R.pipe(
 
 const objs = (state = [], action) => {
 	if (action.objId) {
-		return sanitizeObjs([ ...state, action.objId, ]);
+		return sanitizeObjs([...state, action.objId]);
 	} else {
 		return state;
 	}

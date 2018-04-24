@@ -1,8 +1,8 @@
-import { Provider, } from "rebass";
+import { Provider } from "rebass";
 
 import Login from "./Login";
 import DataProvider from "./DataProvider";
-import { getServerDetails, } from "./serverDetails";
+import { getServerDetails } from "./serverDetails";
 
 class App extends React.Component {
 	state = {
@@ -10,7 +10,7 @@ class App extends React.Component {
 	};
 
 	componentWillMount() {
-		getServerDetails().then(({ key, address, }) =>
+		getServerDetails().then(({ key, address }) =>
 			this.setState({
 				key,
 				address,
@@ -20,7 +20,7 @@ class App extends React.Component {
 	}
 
 	render() {
-		const { loading, key, address, } = this.state;
+		const { loading, key, address } = this.state;
 
 		console.log(this.state);
 		return (
@@ -28,7 +28,7 @@ class App extends React.Component {
 				{loading ? (
 					<div />
 				) : key && address ? (
-					<DataProvider authKey = { key } address = { address } />
+					<DataProvider authKey={key} address={address} />
 				) : (
 					<Login />
 				)}

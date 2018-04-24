@@ -9,12 +9,12 @@ const giveScore = R.pipe(
 				R.sum,
 			)(scores),
 		[
-			({ due, }) =>
+			({ due }) =>
 				(new Date().getTime() - new Date(due).getTime()) / 86400000,
-			({ tags, }) => tags.length,
-			({ project, }) => (project ? 3 : 0),
-			({ start, }) => (start ? 5 : 0),
-			({ priority, }) =>
+			({ tags }) => tags.length,
+			({ project }) => (project ? 3 : 0),
+			({ start }) => (start ? 5 : 0),
+			({ priority }) =>
 				({
 					H: 10,
 					M: 5,

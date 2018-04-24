@@ -2,13 +2,13 @@ import * as R from "ramda";
 import jsonfile from "jsonfile";
 import mkdirp from "mkdirp";
 import fs from "fs";
-import { AsyncNodeStorage, } from "redux-persist-node-storage";
+import { AsyncNodeStorage } from "redux-persist-node-storage";
 
 const cacheFolder =
 	process.env.JEC_JASK_CACHE_FOLDER ||
-	`${ require("os").homedir() }/.jecJaskCache`;
+	`${require("os").homedir()}/.jecJaskCache`;
 const actionFolder =
-	process.env.JEC_ACTIONS_FOLDER || `${ require("os").homedir() }/.jecActions`;
+	process.env.JEC_ACTIONS_FOLDER || `${require("os").homedir()}/.jecActions`;
 
 const ensureActionFolderExists = () =>
 	new Promise((done, fail) => {
@@ -20,7 +20,7 @@ export const writeAction = action =>
 		() =>
 			new Promise((done, fail) => {
 				jsonfile.writeFile(
-					`${ actionFolder }/${ action.timestamp }_${ action.type }_${
+					`${actionFolder}/${action.timestamp}_${action.type}_${
 						action.salt
 					}`,
 					action,
@@ -34,7 +34,7 @@ export const readAction = id =>
 		() =>
 			new Promise((done, fail) => {
 				jsonfile.readFile(
-					`${ actionFolder }/${ id }`,
+					`${actionFolder}/${id}`,
 					(err, dat) => (err ? fail(err) : done(dat)),
 				);
 			}),

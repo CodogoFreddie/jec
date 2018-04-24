@@ -1,7 +1,7 @@
-import { collateAllObjects, } from "jec-jask";
-import { connect, } from "react-redux";
-import { formatRelative, toDate, } from "date-fns/fp";
-import { Toolbar, } from "rebass";
+import { collateAllObjects } from "jec-jask";
+import { connect } from "react-redux";
+import { formatRelative, toDate } from "date-fns/fp";
+import { Toolbar } from "rebass";
 import {
 	Button,
 	Card,
@@ -18,10 +18,10 @@ const formatDate = R.pipe(toDate, formatRelative(new Date()));
 const Task = ({ description, tags, due, wait, project, ...rest }) => (
 	<Card>
 		<Card.Content>
-			<Card.Header disabled = { !!description }>
+			<Card.Header disabled={!!description}>
 				{description || "No Description..."}
 			</Card.Header>
-			<Card.Meta textAlign = "right">{project}</Card.Meta>
+			<Card.Meta textAlign="right">{project}</Card.Meta>
 		</Card.Content>
 		<Card.Content>
 			<Card.Description>
@@ -34,7 +34,7 @@ const Task = ({ description, tags, due, wait, project, ...rest }) => (
 				{wait && "wait " + formatDate(wait)}
 			</Card.Description>
 
-			{R.toPairs(rest).map(([ key, val, ]) => (
+			{R.toPairs(rest).map(([key, val]) => (
 				<Card.Description>
 					{key}: {JSON.stringify(val)}
 				</Card.Description>
@@ -42,14 +42,14 @@ const Task = ({ description, tags, due, wait, project, ...rest }) => (
 		</Card.Content>
 
 		<Card.Content>
-			<div className = "ui three buttons">
-				<Button basic color = "red">
+			<div className="ui three buttons">
+				<Button basic color="red">
 					Delete
 				</Button>
-				<Button basic color = "yellow">
+				<Button basic color="yellow">
 					Start
 				</Button>
-				<Button basic color = "green">
+				<Button basic color="green">
 					Done
 				</Button>
 			</div>
@@ -64,12 +64,12 @@ class Foo extends React.Component {
 			<Segment>
 				<Toolbar>jask</Toolbar>
 
-				<Card.Group centered stackable itemsPerRow = { 1 }>
+				<Card.Group centered stackable itemsPerRow={1}>
 					{R.sortBy(
-						({ score, }) => -score,
+						({ score }) => -score,
 						collateAllObjects(this.props),
 					).map(
-						props => (console.log({ props, }), <Task { ...props } />),
+						props => (console.log({ props }), <Task {...props} />),
 					)}
 				</Card.Group>
 			</Segment>

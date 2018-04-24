@@ -1,5 +1,5 @@
 import R from "ramda";
-import { formatDistanceStrictWithOptions, toDate, } from "date-fns/fp";
+import { formatDistanceStrictWithOptions, toDate } from "date-fns/fp";
 
 const map = R.addIndex(R.map);
 
@@ -25,7 +25,7 @@ const formatDateDistance = R.pipe(
 	})(new Date()),
 );
 
-const addPlusToTags = R.pipe(R.map(x => `+${ x }`), R.join(" "));
+const addPlusToTags = R.pipe(R.map(x => `+${x}`), R.join(" "));
 
 const stringfiyTasksFields = tasks =>
 	R.map(
@@ -41,7 +41,7 @@ const stringfiyTasksFields = tasks =>
 				wait: formatDateDistance,
 				depends: uuid =>
 					"" + R.findIndex(R.propEq("uuid", uuid), tasks),
-				recur: ({ n, period, }) =>
+				recur: ({ n, period }) =>
 					n +
 					" " +
 					{
@@ -60,7 +60,7 @@ const stringfiyTasksFields = tasks =>
 		),
 	)(tasks);
 
-export default ({ config, height, }) =>
+export default ({ config, height }) =>
 	R.pipe(
 		filterTasks(config),
 		R.slice(0, height - 4),

@@ -1,10 +1,10 @@
 import * as R from "ramda";
-import { collateAllObjects, } from "jec-jask";
+import { collateAllObjects } from "jec-jask";
 
 import modifyByCLICommand from "./modifyByCLICommands";
 import filterByCLICommands from "./filterByCLICommands";
 
-const generateModifyActions = ({ state, filter, modifications, }) => {
+const generateModifyActions = ({ state, filter, modifications }) => {
 	const filterUUIDs = filterByCLICommands(filter);
 	const applyToUUIDs = collateAllObjects(state)
 		.filter(filterUUIDs)

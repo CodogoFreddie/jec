@@ -1,4 +1,4 @@
-import createJecJaskStore, { collateAllObjects, } from "jec-jask";
+import createJecJaskStore, { collateAllObjects } from "jec-jask";
 import * as R from "ramda";
 
 import parseCli from "./parseCli";
@@ -27,12 +27,12 @@ const store = createJecJaskStore({
 let hasRunCliCommand = false;
 store.subscribe(() => {
 	if (!hasRunCliCommand) {
-		const { __distributeStatus, } = store.getState();
+		const { __distributeStatus } = store.getState();
 
 		if (__distributeStatus === "READY") {
 			hasRunCliCommand = true;
 
-			const { filter, command, modifications, } = parseCli(process.argv);
+			const { filter, command, modifications } = parseCli(process.argv);
 
 			const noop = () => ({
 				actions: [],
@@ -48,7 +48,7 @@ store.subscribe(() => {
 					done: generateWorkflowEventActions("done"),
 				}[command] || noop;
 
-			const { actions, filterForRender, } = actionGenerator({
+			const { actions, filterForRender } = actionGenerator({
 				filter,
 				modifications,
 				state: store.getState(),

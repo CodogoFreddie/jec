@@ -25,7 +25,7 @@ const createRecurenceActionsMiddleware = store => next => action => {
 			}[recur.period](recur.n),
 		);
 
-		for (const prop of [ "wait", "due", "start", "stop"]) {
+		for (const prop of ["wait", "due", "start", "stop"]) {
 			if (store.getState().props[action.objId][prop]) {
 				store.dispatch({
 					objId: action.objId,

@@ -1,6 +1,6 @@
 import * as R from "ramda";
 
-const SET_PROJECT = (state, { projectId, name, parent, }) =>
+const SET_PROJECT = (state, { projectId, name, parent }) =>
 	R.over(
 		R.lensProp(projectId),
 		R.merge({

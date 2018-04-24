@@ -1,5 +1,5 @@
-import createJecJaskStore, { collateAllObjects, } from "jec-jask";
-import { Provider, } from "react-redux";
+import createJecJaskStore, { collateAllObjects } from "jec-jask";
+import { Provider } from "react-redux";
 import storage from "redux-persist/lib/storage";
 
 import Routing from "./Routing";
@@ -8,7 +8,7 @@ class DataProvider extends React.Component {
 	constructor(props) {
 		super(props);
 
-		const { authKey, address, } = props;
+		const { authKey, address } = props;
 
 		async function* listAllActions() {
 			const resp = await fetch(address, {
@@ -47,7 +47,7 @@ class DataProvider extends React.Component {
 
 	render() {
 		return (
-			<Provider store = { this.store }>
+			<Provider store={this.store}>
 				<Routing />
 			</Provider>
 		);

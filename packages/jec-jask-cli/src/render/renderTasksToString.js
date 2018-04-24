@@ -3,20 +3,20 @@ import chalk from "chalk";
 
 const getFullRenderedWidth = columnWidths =>
 	columnWidths.length +
-	R.reduce((x, { length, }) => x + length, 0, columnWidths);
+	R.reduce((x, { length }) => x + length, 0, columnWidths);
 
 const padString = (string = "", length) =>
 	string + R.times(R.always(""), length - ("" + string).length + 1).join(" ");
 
-const renderRow = ({ renderReadyTasks, columnWidths, }) => (row, y) => {
-	const { color, } = renderReadyTasks[y];
+const renderRow = ({ renderReadyTasks, columnWidths }) => (row, y) => {
+	const { color } = renderReadyTasks[y];
 
 	const colors = [
 		...color,
 		y % 2
 			? {
-				fn: "bgHex",
-				val: "#111",
+					fn: "bgHex",
+					val: "#111",
 			  }
 			: false,
 	].filter(Boolean);
@@ -24,7 +24,7 @@ const renderRow = ({ renderReadyTasks, columnWidths, }) => (row, y) => {
 	return row
 		.map((cell, x) =>
 			R.reduce(
-				(string, { fn, val, }) => chalk[fn](val)(string),
+				(string, { fn, val }) => chalk[fn](val)(string),
 				padString(cell, columnWidths[x].length) + " ",
 				colors,
 			),
@@ -32,10 +32,10 @@ const renderRow = ({ renderReadyTasks, columnWidths, }) => (row, y) => {
 		.join("");
 };
 
-const blockTableData = ({ renderReadyTasks, columnWidths, tabledData, }) =>
+const blockTableData = ({ renderReadyTasks, columnWidths, tabledData }) =>
 	[
 		columnWidths
-			.map(({ label, length, }) =>
+			.map(({ label, length }) =>
 				chalk.underline(padString(label, length)),
 			)
 			.join(" "),
@@ -48,9 +48,9 @@ const blockTableData = ({ renderReadyTasks, columnWidths, tabledData, }) =>
 		),
 	].join("\n");
 
-export default ({ renderReadyTasks, columnWidths, }) => {
+export default ({ renderReadyTasks, columnWidths }) => {
 	const tabledData = R.pipe(
-		R.map(({ label, }) => R.pluck(label, renderReadyTasks)),
+		R.map(({ label }) => R.pluck(label, renderReadyTasks)),
 		R.transpose,
 	)(columnWidths);
 

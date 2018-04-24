@@ -37,7 +37,7 @@ export const collateAllObjects = state => {
 			...collateObjectFn(uuid),
 		}))
 		.filter(
-			({ wait, done, }) =>
+			({ wait, done }) =>
 				!(done || (wait && new Date().toISOString() > wait)),
 		)
 		.map(({ start, stop, ...rest }) => ({
@@ -45,7 +45,7 @@ export const collateAllObjects = state => {
 			...(!start || (start && stop && stop > start)
 				? null
 				: {
-					start,
+						start,
 				  }),
 		}))
 		.map(todo => ({

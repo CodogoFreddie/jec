@@ -1,10 +1,10 @@
 import * as R from "ramda";
 import uuid from "uuid/v4";
 
-import parseDateTime, { parseRecur, } from "./parseDateTime";
+import parseDateTime, { parseRecur } from "./parseDateTime";
 
 const parseTimeShortcutValues = [
-	R.pipe(R.prop("prop"), R.contains(R.__, [ "due", "wait", "stop", "start", ])),
+	R.pipe(R.prop("prop"), R.contains(R.__, ["due", "wait", "stop", "start"])),
 	R.pipe(
 		R.over(R.lensProp("value"), parseDateTime),
 		R.over(R.lensProp("type"), R.defaultTo("SET_PROP")),
@@ -27,7 +27,7 @@ const parsePriorityValues = [
 	),
 ];
 
-const generateProjectActions = ({ projects, }) => [
+const generateProjectActions = ({ projects }) => [
 	R.propEq("prop", "project"),
 	R.pipe(R.over(R.lensProp("value"), R.split(".")), ({ value, ...rest }) => {
 		const keyValuePairs = R.toPairs(projects);
@@ -43,7 +43,7 @@ const generateProjectActions = ({ projects, }) => [
 				} = {},
 			] =
 				R.find(
-					([ id, { name, parent, }, ]) =>
+					([id, { name, parent }]) =>
 						name === subProjectName && parent === prevSubProjectId,
 					keyValuePairs,
 				) || [];
@@ -81,11 +81,11 @@ const handlePropValueModification = state =>
 			parseRecurShortcutValues,
 			parsePriorityValues,
 			generateProjectActions(state),
-			[ R.T, R.over(R.lensProp("type"), R.defaultTo("SET_PROP")), ],
+			[R.T, R.over(R.lensProp("type"), R.defaultTo("SET_PROP"))],
 		]),
 	);
 
-const handlePlusTagModification = ({ plusTag, }) => ({
+const handlePlusTagModification = ({ plusTag }) => ({
 	type: "ADD_TAG_TO_OBJ",
 	tag: plusTag,
 });
@@ -99,7 +99,7 @@ const modifyByCLICommand = state =>
 						R.both(R.prop("prop"), R.prop("value")),
 						handlePropValueModification(state),
 					],
-					[ R.prop("plusTag"), handlePlusTagModification, ],
+					[R.prop("plusTag"), handlePlusTagModification],
 				]),
 			),
 		),

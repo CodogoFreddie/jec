@@ -1,6 +1,6 @@
-import { Button, Header, Image, Input, Modal, } from "semantic-ui-react";
+import { Button, Header, Image, Input, Modal } from "semantic-ui-react";
 
-import { getServerDetails, setServerDetails, } from "./serverDetails";
+import { getServerDetails, setServerDetails } from "./serverDetails";
 
 class Login extends React.Component {
 	state = {
@@ -9,7 +9,7 @@ class Login extends React.Component {
 	};
 
 	componentWillMount() {
-		getServerDetails().then(({ key, address, }) =>
+		getServerDetails().then(({ key, address }) =>
 			this.setState({
 				key,
 				address,
@@ -17,12 +17,12 @@ class Login extends React.Component {
 		);
 	}
 
-	onChangeKey = ({ target: { value, }, }) =>
+	onChangeKey = ({ target: { value } }) =>
 		this.setState({
 			key: value,
 		});
 
-	onChangeAddress = ({ target: { value, }, }) =>
+	onChangeAddress = ({ target: { value } }) =>
 		this.setState({
 			address: value,
 		});
@@ -43,19 +43,19 @@ class Login extends React.Component {
 				<Modal.Header>Enter HTTP Server Details</Modal.Header>
 				Key
 				<Input
-					placeholder = "auth key"
-					onChange = { this.onChangeKey }
-					value = { this.state.key }
+					placeholder="auth key"
+					onChange={this.onChangeKey}
+					value={this.state.key}
 				/>
 				<br />
 				Address
 				<Input
-					placeholder = "https://foobar.com:8080"
-					onChange = { this.onChangeAddress }
-					value = { this.state.address }
+					placeholder="https://foobar.com:8080"
+					onChange={this.onChangeAddress}
+					value={this.state.address}
 				/>
 				<Modal.Actions>
-					<Button color = "green" onClick = { this.onClick }>
+					<Button color="green" onClick={this.onClick}>
 						Done
 					</Button>
 				</Modal.Actions>
