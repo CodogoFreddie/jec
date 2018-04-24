@@ -1,7 +1,12 @@
 {
 	"private": true,
 	"eslintConfig": {
-		"extends": "codogo"
+		"extends": "react-app"
+	},
+	"prettier": {
+		"useTabs": true,
+		"tabWidth": 4,
+		"trailingComma": "all"
 	},
 	"babel": {
 		"presets": [

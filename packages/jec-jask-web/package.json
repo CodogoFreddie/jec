@@ -7,9 +7,9 @@
 		"extends": "codogo"
 	},
 	"scripts": {
-		"watch": "NODE_ENV=production codogo-scripts start",
+		"start": "NODE_ENV=production codogo-scripts start",
 		"format": "NODE_ENV=production codogo-scripts format",
-		"build": "NODE_ENV=production codogo-scripts pack"
+		"pack": "NODE_ENV=production codogo-scripts pack"
 	},
 	"repository": {
 		"type": "git",
@@ -37,6 +37,7 @@
 		"semantic-ui-react": "^0.79.1"
 	},
 	"devDependencies": {
+		"babel-cli": "^6.26.0",
 		"babel-plugin-transform-runtime": "^6.23.0",
 		"babel-preset-env": "^1.6.1",
 		"babel-preset-stage-3": "^6.24.1",
