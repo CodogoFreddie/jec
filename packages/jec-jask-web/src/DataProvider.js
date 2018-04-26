@@ -1,6 +1,7 @@
 import createJecJaskStore, { collateAllObjects } from "jec-jask";
 import { Provider } from "react-redux";
 import storage from "redux-persist/lib/storage";
+import localForage from "localforage";
 
 import Routing from "./Routing";
 
@@ -26,6 +27,12 @@ class DataProvider extends React.Component {
 		const writeAction = console.log;
 
 		const readAction = async id => {
+			const cached = await localForage.getItem(`action::${id}`)
+
+			if(cached){
+				return cached
+			}
+
 			const resp = await fetch(address + "/" + id, {
 				headers: {
 					Authorization: authKey,
@@ -33,6 +40,8 @@ class DataProvider extends React.Component {
 			});
 
 			const action = await resp.json();
+
+			localForage.setItem(`action::${id}`, action)
 
 			return action;
 		};
