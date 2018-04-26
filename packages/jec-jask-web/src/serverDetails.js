@@ -1,3 +1,5 @@
+import * as R from "ramda";
+import React from "react";
 import localForage from "localforage";
 
 export const getServerDetails = () =>

@@ -1,3 +1,5 @@
+import * as R from "ramda";
+import React from "react";
 import createJecJaskStore, { collateAllObjects } from "jec-jask";
 import { Provider } from "react-redux";
 import storage from "redux-persist/lib/storage";

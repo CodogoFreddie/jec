@@ -1,3 +1,5 @@
+import * as R from "ramda";
+import React from "react";
 import { Button, Header, Image, Input, Modal } from "semantic-ui-react";
 
 import { getServerDetails, setServerDetails } from "./serverDetails";
