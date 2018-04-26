@@ -1,17 +1,17 @@
 {
 	"presets": [
 		"stage-3",
-		"react"
+		"react",
 	],
-	"plugins": [
+	plugins: [
 		"transform-class-properties",
 		"transform-decorators-legacy",
 		[
 			"transform-runtime",
 			{
-				"polyfill": false,
-				"regenerator": true
-			}
-		]
-	]
+				polyfill: false,
+				regenerator: true,
+			},
+		],
+	],
 }

@@ -8,7 +8,7 @@
 	},
 	"scripts": {
 		"watch": "NODE_ENV=production codogo-scripts watch",
-		"format": "NODE_ENV=production codogo-scripts format",
+		"format": "prettier --write src/**/*",
 		"build": "NODE_ENV=production codogo-scripts build"
 	},
 	"repository": {
