@@ -10,44 +10,21 @@
 	},
 	"babel": {
 		"presets": [
-			"stage-3",
-			"react",
-			[
-				"env",
-				{
-					"modules": "commonjs"
-				}
-			]
-		],
-		"plugins": [
-			"transform-class-properties",
-			[
-				"transform-runtime",
-				{
-					"polyfill": false,
-					"regenerator": true
-				}
-			]
+			"freddie-ridell"
 		]
 	},
 	"devDependencies": {
-		"babel-plugin-transform-class-properties": "^6.24.1",
-		"babel-preset-codogo": "^3.0.5",
-		"eslint": "^4.18.2",
-		"lerna": "^2.7.1"
+		"eslint": "^4.19.1",
+		"lerna": "^2.11.0"
 	},
 	"scripts": {
 		"build": "lerna run build",
-		"deploy-jask": "cd packages/jec-jask-web && npm i && npm run build",
-		"format": "lerna run format",
+		"deploy-jask": "cd packages/jec-jask-web && npm i && npm run pack",
 		"publish": "lerna run format && lerna run build && lerna publish",
 		"watch": "lerna run --parallel watch"
 	},
 	"dependencies": {
-		"babel-plugin-transform-runtime": "^6.23.0",
-		"babel-preset-env": "^1.6.1",
-		"babel-preset-react": "^6.24.1",
-		"babel-preset-stage-3": "^6.24.1",
+		"babel-preset-freddie-ridell": "0.0.5",
 		"babel-runtime": "^6.26.0"
 	}
 }

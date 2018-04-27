@@ -7,9 +7,9 @@
 		"extends": "codogo"
 	},
 	"scripts": {
-		"start": "NODE_ENV=production codogo-scripts start",
-		"format": "NODE_ENV=production codogo-scripts format",
-		"pack": "NODE_ENV=production codogo-scripts pack"
+		"start": "BABEL_OPTIONS=webpack parcel public/index.html",
+		"pack": "parcel build public/index.html",
+		"format": "prettier --write src/**/*"
 	},
 	"repository": {
 		"type": "git",
@@ -26,8 +26,8 @@
 		"jec-jask": "^0.2.5",
 		"localforage": "^1.7.1",
 		"ramda": "^0.25.0",
-		"react": "^16.3.1",
-		"react-dom": "^16.3.1",
+		"react": "^16.3.2",
+		"react-dom": "^16.3.2",
 		"react-redux": "^5.0.7",
 		"rebass": "next",
 		"redux": "^3.7.2",
@@ -37,12 +37,10 @@
 		"semantic-ui-react": "^0.79.1"
 	},
 	"devDependencies": {
-		"babel-cli": "^6.26.0",
-		"babel-plugin-transform-runtime": "^6.23.0",
-		"babel-preset-env": "^1.6.1",
-		"babel-preset-stage-3": "^6.24.1",
-		"codogo-scripts": "^3.2.14",
+		"babel-preset-freddie-ridell": "0.0.5",
+		"codogo-scripts": "^3.2.15",
 		"eslint": "^4.19.1",
-		"prettier": "^1.11.1"
+		"parcel-bundler": "^1.7.1",
+		"prettier": "^1.12.1"
 	}
 }
