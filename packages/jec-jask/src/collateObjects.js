@@ -41,11 +41,6 @@ export const collateAllObjects = state => {
 				return false;
 			}
 			if (wait) {
-				console.log(
-					wait,
-					new Date().toISOString(),
-					new Date().toISOString() > wait,
-				);
 				return new Date().toISOString() > wait;
 			}
 
