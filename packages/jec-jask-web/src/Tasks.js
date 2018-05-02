@@ -3,59 +3,54 @@ import React from "react";
 import { collateAllObjects } from "jec-jask";
 import { connect } from "react-redux";
 import { formatRelative, toDate } from "date-fns/fp";
-import { Toolbar } from "rebass";
 import {
-	Button,
+	Small,
+	Divider,
 	Card,
+	Heading,
 	Container,
-	Dimmer,
-	Label,
-	Loader,
-	Segment,
-	Statistic,
-} from "semantic-ui-react";
+	Toolbar,
+	Group,
+	Button,
+	Badge,
+	Text,
+	Lead,
+	Fixed,
+} from "rebass";
 
 const formatDate = R.pipe(toDate, formatRelative(new Date()));
 
-const Task = ({ description, tags, due, wait, project, ...rest }) => (
-	<Card>
-		<Card.Content>
-			<Card.Header disabled={!!description}>
-				{description || "No Description..."}
-			</Card.Header>
-			<Card.Meta textAlign="right">{project}</Card.Meta>
-		</Card.Content>
-		<Card.Content>
-			<Card.Description>
-				{tags.map(tag => <Label>{tag}</Label>)}
-			</Card.Description>
-			<Card.Description>
-				{due && "due " + formatDate(due)}
-			</Card.Description>
-			<Card.Description>
-				{wait && "wait " + formatDate(wait)}
-			</Card.Description>
+const Task = ({ description, tags, due, wait, project, score, ...rest }) => (
+	<Card m={2} p={3}>
+		<Heading disabled={!!description}>
+			{description || "No Description..."}
+		</Heading>
+		<Lead>
+			{score.toPrecision(3)}
+			{" | "}
+			{tags.map(tag => <Badge>{tag}</Badge>)}
+			{" | "}
+			{project}
+		</Lead>
+		<Divider />
 
-			{R.toPairs(rest).map(([key, val]) => (
-				<Card.Description>
+		<Text>{due && "due " + formatDate(due)}</Text>
+		<Text>{wait && "wait " + formatDate(wait)}</Text>
+
+		{R.toPairs(rest).map(([key, val]) => (
+			<Text>
+				<Small>
 					{key}: {JSON.stringify(val)}
-				</Card.Description>
-			))}
-		</Card.Content>
+				</Small>
+			</Text>
+		))}
 
-		<Card.Content>
-			<div className="ui three buttons">
-				<Button basic color="red">
-					Delete
-				</Button>
-				<Button basic color="yellow">
-					Start
-				</Button>
-				<Button basic color="green">
-					Done
-				</Button>
-			</div>
-		</Card.Content>
+		<Divider />
+		<Group>
+			<Button bg="red">Delete</Button>
+			<Button bg="yellow">Start</Button>
+			<Button bg="green">Done</Button>
+		</Group>
 	</Card>
 );
 
@@ -63,22 +58,24 @@ const Task = ({ description, tags, due, wait, project, ...rest }) => (
 class Foo extends React.Component {
 	render() {
 		return this.props.__distributeStatus === "READY" ? (
-			<Segment>
-				<Toolbar>jask</Toolbar>
+			<div>
+				<Toolbar>jec::jask::web</Toolbar>
 
-				<Card.Group centered stackable itemsPerRow={1}>
+				<Container>
 					{R.sortBy(
 						({ score }) => -score,
 						collateAllObjects(this.props),
-					).map(
-						props => (console.log({ props }), <Task {...props} />),
-					)}
-				</Card.Group>
-			</Segment>
+					).map(props => <Task key={props.uuid} {...props} />)}
+				</Container>
+
+				<Fixed m={4} bottom={0} right={0}>
+					<Button fontSize={3}>+ New</Button>
+				</Fixed>
+			</div>
 		) : (
-			<Dimmer active>
-				<Loader>Loading Actions</Loader>
-			</Dimmer>
+			<div>
+				<div>Loading Actions</div>
+			</div>
 		);
 	}
 }

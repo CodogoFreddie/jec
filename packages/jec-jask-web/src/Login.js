@@ -1,6 +1,6 @@
 import * as R from "ramda";
 import React from "react";
-import { Button, Header, Image, Input, Modal } from "semantic-ui-react";
+import { Label, Divider, Modal, Heading, Button, Input } from "rebass";
 
 import { getServerDetails, setServerDetails } from "./serverDetails";
 
@@ -30,37 +30,30 @@ class Login extends React.Component {
 		});
 
 	onClick = () => {
-		console.log("onClick");
-
-		setServerDetails(this.state)
-			.then(console.log("wew, lad"))
-			.then(() => window.location.reload());
+		setServerDetails(this.state).then(() => window.location.reload());
 	};
 
 	render() {
-		console.log(this.state);
-
 		return (
-			<Modal open defaultOpen>
-				<Modal.Header>Enter HTTP Server Details</Modal.Header>
-				Key
+			<Modal>
+				<Heading>Enter HTTP Server Details</Heading>
+				<Divider />
+				<Label>Key</Label>
 				<Input
 					placeholder="auth key"
 					onChange={this.onChangeKey}
 					value={this.state.key}
 				/>
-				<br />
-				Address
+				<Label>Address</Label>
 				<Input
 					placeholder="https://foobar.com:8080"
 					onChange={this.onChangeAddress}
 					value={this.state.address}
 				/>
-				<Modal.Actions>
-					<Button color="green" onClick={this.onClick}>
-						Done
-					</Button>
-				</Modal.Actions>
+				<Divider />
+				<Button color="green" onClick={this.onClick}>
+					Done
+				</Button>
 			</Modal>
 		);
 	}
