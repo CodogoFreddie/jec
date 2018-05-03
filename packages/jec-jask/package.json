@@ -1,15 +1,15 @@
 {
 	"name": "jec-jask",
-	"version": "0.2.8",
+	"version": "0.2.9",
 	"description": "task processor for jec",
 	"main": "lib/index.js",
 	"eslint": {
 		"extends": "codogo"
 	},
 	"scripts": {
-		"watch": "NODE_ENV=production codogo-scripts watch",
+		"build": "babel src --out-dir lib",
 		"format": "prettier --write src/**/*",
-		"build": "NODE_ENV=production codogo-scripts build"
+		"watch": "babel src --out-dir lib --watch"
 	},
 	"repository": {
 		"type": "git",
@@ -27,7 +27,7 @@
 		"ramda": "^0.25.0",
 		"random-access-memory": "^2.4.0",
 		"redux": "^3.7.2",
-		"redux-distribute": "^0.2.8",
+		"redux-distribute": "^0.2.9",
 		"redux-persist": "^5.9.1",
 		"redux-persist-node-storage": "^2.0.0",
 		"redux-saga": "^0.16.0"
