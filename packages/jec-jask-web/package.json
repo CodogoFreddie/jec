@@ -1,6 +1,6 @@
 {
 	"name": "jec-jask-web",
-	"version": "0.2.6",
+	"version": "0.2.7",
 	"description": "the react web interface for jec-jask",
 	"main": "lib/index.js",
 	"eslint": {
