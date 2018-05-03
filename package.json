@@ -19,8 +19,9 @@
 	},
 	"scripts": {
 		"build": "lerna run build",
+		"vimEach": "lerna exec vim",
 		"deploy-jask": "cd packages/jec-jask-web && npm i && npm run pack",
-		"publish": "lerna run format && lerna run build && lerna publish",
+		"publish": "lerna run format && lerna run build && lerna publish --force-publish=*",
 		"watch": "lerna run --parallel watch"
 	},
 	"dependencies": {
