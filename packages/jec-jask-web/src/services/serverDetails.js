@@ -4,15 +4,15 @@ import localForage from "localforage";
 
 export const getServerDetails = () =>
 	Promise.all([
-		localForage.getItem("serverKey"),
+		localForage.getItem("serverauthKey"),
 		localForage.getItem("serverAddress"),
-	]).then(([key, address]) => ({
-		key,
+	]).then(([authKey, address]) => ({
+		authKey,
 		address,
 	}));
 
-export const setServerDetails = ({ key, address }) =>
+export const setServerDetails = ({ authKey, address }) =>
 	Promise.all([
-		localForage.setItem("serverKey", key),
+		localForage.setItem("serverauthKey", authKey),
 		localForage.setItem("serverAddress", address),
 	]);

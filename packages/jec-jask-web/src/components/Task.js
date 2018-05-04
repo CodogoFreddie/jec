@@ -1,27 +1,40 @@
 import * as R from "ramda";
 import React from "react";
-import { collateAllObjects } from "jec-jask";
-import { connect } from "react-redux";
 import { formatRelative, toDate } from "date-fns/fp";
 import {
 	Small,
 	Divider,
 	Card,
 	Heading,
-	Container,
-	Toolbar,
 	Group,
 	Button,
 	Badge,
 	Text,
 	Lead,
-	Fixed,
 } from "rebass";
 
 const formatDate = R.pipe(toDate, formatRelative(new Date()));
+const formatRecur = ({ n, period }) =>
+	({
+		d: n => `${n} day`,
+		w: n => `${n} week`,
+		m: n => `${n} month`,
+		y: n => `${n} year`,
+	}[period](n) + (n > 1 ? "s" : ""));
 
-const Task = ({ description, tags, due, wait, project, score, ...rest }) => (
-	<Card m={2} p={3}>
+const Task = ({
+	description,
+	due,
+	id,
+	project,
+	recur,
+	score,
+	tags,
+	uuid,
+	wait,
+	...rest
+}) => (
+	<Card m={[3, 2]} p={3}>
 		<Heading disabled={!!description}>
 			{description || "No Description..."}
 		</Heading>
@@ -36,6 +49,7 @@ const Task = ({ description, tags, due, wait, project, score, ...rest }) => (
 
 		<Text>{due && "due " + formatDate(due)}</Text>
 		<Text>{wait && "wait " + formatDate(wait)}</Text>
+		<Text>{recur && "recurs every " + formatRecur(recur)}</Text>
 
 		{R.toPairs(rest).map(([key, val]) => (
 			<Text>
@@ -54,30 +68,4 @@ const Task = ({ description, tags, due, wait, project, score, ...rest }) => (
 	</Card>
 );
 
-@connect(R.identity)
-class Foo extends React.Component {
-	render() {
-		return this.props.__distributeStatus === "READY" ? (
-			<div>
-				<Toolbar>jec::jask::web</Toolbar>
-
-				<Container>
-					{R.sortBy(
-						({ score }) => -score,
-						collateAllObjects(this.props),
-					).map(props => <Task key={props.uuid} {...props} />)}
-				</Container>
-
-				<Fixed m={4} bottom={0} right={0}>
-					<Button fontSize={3}>+ New</Button>
-				</Fixed>
-			</div>
-		) : (
-			<div>
-				<div>Loading Actions</div>
-			</div>
-		);
-	}
-}
-
-export default Foo;
+export default Task;

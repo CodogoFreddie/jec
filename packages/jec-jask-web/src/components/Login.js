@@ -1,27 +1,26 @@
-import * as R from "ramda";
 import React from "react";
 import { Label, Divider, Modal, Heading, Button, Input } from "rebass";
 
-import { getServerDetails, setServerDetails } from "./serverDetails";
+import { getServerDetails, setServerDetails } from "../services/serverDetails";
 
 class Login extends React.Component {
 	state = {
-		key: "",
+		authKey: "",
 		address: "",
 	};
 
 	componentWillMount() {
-		getServerDetails().then(({ key, address }) =>
+		getServerDetails().then(({ authKey, address }) =>
 			this.setState({
-				key,
+				authKey,
 				address,
 			}),
 		);
 	}
 
-	onChangeKey = ({ target: { value } }) =>
+	onChangeauthKey = ({ target: { value } }) =>
 		this.setState({
-			key: value,
+			authKey: value,
 		});
 
 	onChangeAddress = ({ target: { value } }) =>
@@ -41,8 +40,8 @@ class Login extends React.Component {
 				<Label>Key</Label>
 				<Input
 					placeholder="auth key"
-					onChange={this.onChangeKey}
-					value={this.state.key}
+					onChange={this.onChangeauthKey}
+					value={this.state.authKey}
 				/>
 				<Label>Address</Label>
 				<Input

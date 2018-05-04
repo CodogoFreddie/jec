@@ -1,10 +1,9 @@
 import React from "react";
-import * as R from "ramda";
 import { Provider } from "rebass";
 
-import Login from "./Login";
-import DataProvider from "./DataProvider";
-import { getServerDetails } from "./serverDetails";
+import Login from "./components/Login";
+import DataProvider from "./components/DataProvider";
+import { getServerDetails } from "./services/serverDetails";
 
 class App extends React.Component {
 	state = {
@@ -12,9 +11,9 @@ class App extends React.Component {
 	};
 
 	componentWillMount() {
-		getServerDetails().then(({ key, address }) =>
+		getServerDetails().then(({ authKey, address }) =>
 			this.setState({
-				key,
+				authKey,
 				address,
 				loading: false,
 			}),
@@ -22,15 +21,15 @@ class App extends React.Component {
 	}
 
 	render() {
-		const { loading, key, address } = this.state;
+		const { loading, authKey, address } = this.state;
 
 		console.log(this.state);
 		return (
 			<Provider>
 				{loading ? (
 					<div />
-				) : key && address ? (
-					<DataProvider authKey={key} address={address} />
+				) : authKey && address ? (
+					<DataProvider {...this.state} />
 				) : (
 					<Login />
 				)}
