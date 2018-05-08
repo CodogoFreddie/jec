@@ -1,0 +1,27 @@
+{
+	"background_color": "purple",
+	"description": "jec::jask::web",
+	"display": "standalone",
+	"name": "jec::jask::web",
+	"short_name": "jask",
+	"start_url": "/",
+	"theme_color": "aliceblue",
+	"icons": [
+		{
+			"src": "./img/icon@256.png",
+			"sizes": "256x256"
+		},
+		{
+			"src": "./img/icon@128.png",
+			"sizes": "128x128"
+		},
+		{
+			"src": "./img/icon@64.png",
+			"sizes": "64x64"
+		},
+		{
+			"src": "./img/icon@32.png",
+			"sizes": "32x32"
+		}
+	]
+}

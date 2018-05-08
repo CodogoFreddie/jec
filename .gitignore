@@ -63,3 +63,4 @@ yarn-error.log
 lerna-debug.log
 yarn-error.log
 packages/*/lib
+*.blend1
