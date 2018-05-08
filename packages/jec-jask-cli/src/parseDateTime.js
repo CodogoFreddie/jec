@@ -1,4 +1,5 @@
 import * as R from "ramda";
+import chrono from "chrono-node";
 import {
 	addDays,
 	addMonths,
@@ -32,6 +33,7 @@ export const parseFrom = ref =>
 		[R.test(/^sow$/), () => startOfWeek(ref)],
 		[R.test(/^soy$/), () => startOfYear(ref)],
 		[R.test(/^now$/), () => ref],
+		[R.T, chrono.parseDate],
 	]);
 
 export default parseFrom(new Date());
