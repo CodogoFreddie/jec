@@ -7,7 +7,7 @@ const hash = x =>
 		.update(JSON.stringify(x))
 		.digest("base64");
 
-const merkel = arr => {
+const merkel = (arr, length) => {
 	if (Math.round(Math.log2(arr.length)) !== Math.log2(arr.length)) {
 		return merkel(
 			arr.concat(
@@ -16,28 +16,27 @@ const merkel = arr => {
 					Math.pow(2, Math.ceil(Math.log2(arr.length))) - arr.length,
 				),
 			),
+			arr.length,
 		);
 	}
 
 	const recursive = arr => {
 		if (arr.length === 1) {
-			return {
-				start: arr[0],
-				root: hash(arr[0]),
-				end: arr[arr.length - 1],
-			};
+			return hash(arr[0]);
 		}
 
 		const [left, right] = R.splitAt(arr.length / 2, arr).map(recursive);
 
-		return {
-			start: arr[0],
-			left: left.root,
-			root: hash(left.root + right.root),
-			right: right.root,
-			end: arr[arr.length - 1],
-		};
+		return hash(left + right);
 	};
 
-	return recursive(arr);
+	const [left, right] = R.splitAt(arr.length / 2, arr).map(recursive);
+
+	return {
+		left,
+		root: hash(left + right),
+		right,
+		length: length || arr.length,
+		height: Math.log2(arr.length),
+	};
 };
