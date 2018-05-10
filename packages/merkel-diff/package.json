@@ -1,0 +1,40 @@
+{
+	"name": "merkel-diff",
+	"version": "0.2.10",
+	"description": "libray for finding changes between two lists using merkel trees",
+	"main": "lib/index.js",
+	"eslint": {
+		"extends": "codogo"
+	},
+	"scripts": {
+		"build": "babel src --out-dir lib",
+		"format": "prettier --write src/**/*",
+		"watch": "babel src --out-dir lib --watch"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/CodogoFreddie/jec.git"
+	},
+	"keywords": [
+		"jec",
+		"merkel"
+	],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/CodogoFreddie/jec/issues"
+	},
+	"homepage": "https://github.com/CodogoFreddie/jec#readme",
+	"devDependencies": {
+		"babel-cli": "^6.26.0",
+		"babel-plugin-transform-runtime": "^6.23.0",
+		"babel-preset-env": "^1.6.1",
+		"babel-preset-stage-3": "^6.24.1",
+		"codogo-scripts": "^3.2.14",
+		"eslint": "^4.19.1",
+		"prettier": "^1.11.1"
+	},
+	"dependencies": {
+		"ramda": "^0.25.0"
+	}
+}
