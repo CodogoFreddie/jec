@@ -1,4 +1,4 @@
-# jec-server
+jec-server
 
 ## API v2 sketch:
 
