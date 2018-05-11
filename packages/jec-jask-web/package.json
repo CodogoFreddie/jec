@@ -29,6 +29,7 @@
 		"react": "^16.3.2",
 		"react-dom": "^16.3.2",
 		"react-redux": "^5.0.7",
+		"react-virtualized": "^9.18.5",
 		"rebass": "next",
 		"redux": "^3.7.2",
 		"redux-distribute": "^0.2.10",
