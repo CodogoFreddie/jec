@@ -20,7 +20,7 @@ const ListContainer = styled.div`
 `;
 
 @connect(R.identity)
-class Foo extends React.Component {
+class Tasks extends React.Component {
 	render() {
 		const tasks = R.sortBy(
 			({ score }) => -score,
@@ -56,11 +56,13 @@ class Foo extends React.Component {
 				</ListContainerContainer>
 
 				<Fixed top={0} left={0} right={0}>
-					<Toolbar>jec::jask::web</Toolbar>
+					<Toolbar bg="black">jec::jask::web</Toolbar>
 				</Fixed>
 
 				<Fixed m={4} bottom={0} right={0}>
-					<Button fontSize={[5, 3]}>+ New</Button>
+					<Button bg="blue" fontSize={[5, 3]}>
+						+ New
+					</Button>
 				</Fixed>
 			</div>
 		) : (
@@ -71,4 +73,4 @@ class Foo extends React.Component {
 	}
 }
 
-export default Foo;
+export default Tasks;

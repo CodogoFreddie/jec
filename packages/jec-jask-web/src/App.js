@@ -5,6 +5,7 @@ import "react-virtualized/styles.css";
 import Login from "./components/Login";
 import DataProvider from "./components/DataProvider";
 import { getServerDetails } from "./services/serverDetails";
+import theme from "./theme";
 
 class App extends React.Component {
 	state = {
@@ -26,7 +27,7 @@ class App extends React.Component {
 
 		console.log(this.state);
 		return (
-			<Provider>
+			<Provider theme={theme}>
 				{loading ? (
 					<div />
 				) : authKey && address ? (
