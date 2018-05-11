@@ -1,6 +1,5 @@
 import React from "react";
 import { Provider } from "rebass";
-import "react-virtualized/styles.css";
 
 import Login from "./components/Login";
 import DataProvider from "./components/DataProvider";
