@@ -1,7 +1,6 @@
 {
 	"background_color": "purple",
 	"description": "jec::jask::web",
-	"display": "standalone",
 	"name": "jec::jask::web",
 	"short_name": "jask",
 	"start_url": "/",
