@@ -25,7 +25,6 @@ class App extends React.Component {
 	render() {
 		const { loading, authKey, address } = this.state;
 
-		console.log(this.state);
 		return (
 			<Provider theme={theme}>
 				{loading ? (

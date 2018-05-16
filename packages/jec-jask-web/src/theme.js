@@ -15,7 +15,7 @@ const rotateSixth = adjustHue(60);
 const lowlight = x => R.pipe(darken(x), saturate(x / 2));
 const highlight = x => R.pipe(lighten(x), desaturate(x / 2));
 
-const red = hsl(0, 0.8, 0.6);
+const red = hsl(0, 0.8, 0.5);
 const yellow = rotateSixth(red);
 const green = rotateSixth(yellow);
 const cyan = rotateSixth(green);
@@ -39,13 +39,22 @@ const alter = (label, fn) =>
 	);
 
 const colors = {
-	...alter("Light", highlight(0.2))(pallete),
-	...pallete,
-	...alter("Dark", lowlight(0.35))(pallete),
-	black: shade(0.2, blue),
+	...alter("", highlight(0.25))(pallete),
+	...alter("Bright", R.identity)(pallete),
+	...alter("Dark", lowlight(0.25))(pallete),
 	white: tint(0.03, blue),
+	grayLight: hsl(0, 0, 0.66666),
+	gray: hsl(0, 0, 0.5),
+	grayDark: hsl(0, 0, 0.33333),
+	black: shade(0.2, blue),
+};
+
+const fonts = {
+	sans: "Montserrat, sans-serif",
+	mono: "Menlo, monospace",
 };
 
 export default {
 	colors,
+	fonts,
 };
