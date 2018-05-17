@@ -29,7 +29,7 @@ class Login extends React.Component {
 		});
 
 	onClick = () => {
-		setServerDetails(this.state).then(() => window.location.reload());
+		setServerDetails(this.state).then(() => window.location.reload()).catch( e => window.alert(e.toString()));
 	};
 
 	render() {
@@ -50,7 +50,7 @@ class Login extends React.Component {
 					value={this.state.address}
 				/>
 				<Divider />
-				<Button color="green" onClick={this.onClick}>
+				<Button bg="green" onClick={this.onClick}>
 					Done
 				</Button>
 			</Modal>
