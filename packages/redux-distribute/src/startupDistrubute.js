@@ -6,109 +6,120 @@ const {
 	DISTRUBUTE_ROLL_BACK_TO_SNAPSHOT,
 } = actions;
 
-const startupDistrubute = store => async ({
+const saveSnapshot = async ({ setSnapshot, state }) => {
+	//const [mostRecentAction, previousAction] = state.actionChain;
+	//if (
+	//previousAction &&
+	//mostRecentAction.id.slice(0, 10) !== previousAction.id.slice(0, 10)
+	//) {
+	await setSnapshot(state.actionChain[0].id.split("_")[0], state);
+	//}
+};
+
+const rebuildFromScratch = async ({
+	listActionIdsAfter,
+	store,
+	setSnapshot,
+	getAction,
+}) => {
+	for await (const { id } of listActionIdsAfter()) {
+		const action = await getAction(id);
+		store.dispatch({
+			type: DISTRIBUTE_REPLAY_ACTION,
+			action,
+		});
+
+		saveSnapshot({
+			setSnapshot,
+			state: store.getState(),
+		});
+	}
+
+	store.dispatch({
+		type: DISTRIBUTE_UP_TO_DATE,
+	});
+};
+
+const rebuildFromSnapshot = ({
 	getAction,
 	getSnapshot,
-	integrityCheck,
 	listActionIdsAfter,
-	listAllSnapshotIds,
 	removeSnapshot,
 	setSnapshot,
+	snapshotIds,
+	store,
 }) => {
-	const snapshotIds = await listAllSnapshotIds();
+	const recursive = async ([headSnapshotId, ...snapshotIds]) => {
+		console.log({ headSnapshotId });
+		//fallback procedure
+		if (!headSnapshotId) {
+			await rebuildFromScratch({
+				listActionIdsAfter,
+				store,
+				setSnapshot,
+				getAction,
+			});
+			return;
+		}
 
-	if (snapshotIds.length === 0) {
-		for await (const { id } of listActionIdsAfter()) {
+		const headSnapshot = await getSnapshot(headSnapshotId);
+
+		store.dispatch({
+			type: DISTRUBUTE_ROLL_BACK_TO_SNAPSHOT,
+			snapshot: headSnapshot,
+		});
+
+		const [
+			{ id: headActionId, integrity: headActionIntegrity },
+		] = store.getState().actionChain;
+
+		let firstAction = true;
+		let couldRebuild;
+		for await (const { id, integrity } of listActionIdsAfter(
+			headActionId,
+		)) {
+			if (firstAction) {
+				firstAction = false;
+				couldRebuild =
+					id === headActionId && integrity === headActionIntegrity;
+				if (!couldRebuild) {
+					break;
+				} else {
+					continue;
+				}
+			}
+
+			//apply the action
 			const action = await getAction(id);
 			store.dispatch({
 				type: DISTRIBUTE_REPLAY_ACTION,
 				action,
 			});
 
-			const [
-				mostRecentAction,
-				previousAction,
-			] = store.getState().actionChain;
-			if (
-				previousAction &&
-				mostRecentAction.id.slice(0, 10) !==
-					previousAction.id.slice(0, 10)
-			) {
-				await setSnapshot(
-					store.getState().actionChain[0].id.split("_")[0],
-					store.getState(),
-				);
-			}
-		}
-
-		store.dispatch({
-			type: DISTRIBUTE_UP_TO_DATE,
-		});
-	} else {
-		let foundCommonRoot = false;
-		for (const mostRecentSnapshotId of snapshotIds) {
-			if (foundCommonRoot) {
-				break;
-			}
-
-			const mostRecentSnapshot = await getSnapshot(mostRecentSnapshotId);
-
-			store.dispatch({
-				type: DISTRUBUTE_ROLL_BACK_TO_SNAPSHOT,
-				snapshot: mostRecentSnapshot,
+			saveSnapshot({
+				setSnapshot,
+				state: store.getState(),
 			});
 
-			const [mostRecentActionSnapshotted] = store.getState().actionChain;
-
-			let checkingFirstAction = true;
-			//calculate to see if we can replay from this point?
-			for await (const { id, integrity } of listActionIdsAfter(
-				mostRecentActionSnapshotted.id,
-			)) {
-				if (checkingFirstAction) {
-					checkingFirstAction = false;
-					if (integrity !== mostRecentActionSnapshotted.integrity) {
-						console.log(
-							"NEED TO ROLL BACK!!!",
-							mostRecentSnapshotId,
-						);
-
-						await removeSnapshot(mostRecentSnapshotId);
-
-						break;
-					} else {
-						foundCommonRoot = true;
-					}
-				}
-
-				const action = await getAction(id);
-				store.dispatch({
-					type: DISTRIBUTE_REPLAY_ACTION,
-					action,
-				});
-
-				const [
-					mostRecentAction,
-					previousAction,
-				] = store.getState().actionChain;
-				if (
-					previousAction &&
-					mostRecentAction.id.slice(0, 10) !==
-						previousAction.id.slice(0, 10)
-				) {
-					await setSnapshot(
-						store.getState().actionChain[0].id.split("_")[0],
-						store.getState(),
-					);
-				}
-			}
+			console.log({ id });
 		}
-	}
 
-	await setSnapshot(
-		store.getState().actionChain[0].id.split("_")[0],
-		store.getState(),
-	);
+		console.log({ couldRebuild });
+	};
+
+	return recursive;
+};
+
+const startupDistrubute = store => async handlers => {
+	const snapshotIds = await handlers.listAllSnapshotIds();
+
+	const rebuilder = rebuildFromSnapshot({ ...handlers, store });
+	await rebuilder(snapshotIds);
+
+	//await setSnapshot(
+	//store.getState().actionChain[0].id.split("_")[0],
+	//store.getState(),
+	//);
 };
 
 export default startupDistrubute;

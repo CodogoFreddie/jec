@@ -18,7 +18,7 @@ const enhanceReducer = (integrityCheck, baseReducer) => (state, action) => {
 	} = state;
 
 	if (action.type === DISTRIBUTE_REPLAY_ACTION) {
-		const [previousAction = { id: "", integrity: "" }] = actionChain;
+		const [previousAction] = actionChain;
 		return {
 			actionChain: [
 				{

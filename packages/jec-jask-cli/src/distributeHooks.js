@@ -85,23 +85,28 @@ const wrappedGetFiles = () =>
 	);
 
 export const listActionIdsAfter = async function* listActionIdsAfter(afterId) {
-	const files = await wrappedGetFiles();
+	const filenames = await wrappedGetFiles();
 
-	let previousAction = { id: "", integrity: "" };
-	for await (const id of files) {
+	const actions = filenames.reduce(
+		(acc, id) => [
+			...acc,
+			{
+				id,
+				integrity: integrityCheck(acc.slice(-1)[0], id),
+			},
+		],
+		[],
+	);
+
+	for await (const { id, integrity } of actions) {
 		if (!afterId || afterId <= id) {
 			yield {
 				id,
-				integrity: integrityCheck(previousAction, id),
+				integrity,
 			};
 		}
-
-		previousAction = {
-			id,
-			integrity: integrityCheck(previousAction, id),
-		};
 	}
 };
 
-export const integrityCheck = ({ id, integrity }, newAction) =>
+export const integrityCheck = ({ id = "", integrity = "" } = {}, newAction) =>
 	hashString(id + integrity + newAction);
