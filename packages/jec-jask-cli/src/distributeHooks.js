@@ -1,8 +1,8 @@
 import * as R from "ramda";
+import crypto from "crypto";
 import jsonfile from "jsonfile";
 import mkdirp from "mkdirp";
 import fs from "fs";
-import { AsyncNodeStorage } from "redux-persist-node-storage";
 
 const cacheFolder =
 	process.env.JEC_JASK_CACHE_FOLDER ||
@@ -15,21 +15,54 @@ const ensureActionFolderExists = () =>
 		mkdirp(actionFolder, err => (err ? fail(err) : done()));
 	});
 
-export const writeAction = action =>
+const hashString = str =>
+	crypto
+		.createHash("md5")
+		.update(str)
+		.digest("hex");
+
+//------------------------------
+//          snapshots
+//------------------------------
+
+export const listAllSnapshotIds = () =>
+	new Promise((done, fail) => {
+		fs.readdir(
+			cacheFolder,
+			(err, files) => (err ? fail(err) : done(R.reverse(files) || [])),
+		);
+	});
+
+export const getSnapshot = id =>
 	ensureActionFolderExists().then(
 		() =>
-			new Promise((done, fail) => {
-				jsonfile.writeFile(
-					`${actionFolder}/${action.timestamp}_${action.type}_${
-						action.salt
-					}`,
-					action,
-					err => (err ? fail(err) : done()),
-				);
-			}),
+			new Promise((done, fail) =>
+				jsonfile.readFile(
+					`${cacheFolder}/${id}`,
+					(err, data) => (err ? fail(err) : done(data)),
+				),
+			),
 	);
 
-export const readAction = id =>
+export const setSnapshot = (id, snapshot) =>
+	new Promise((done, fail) => {
+		jsonfile.writeFile(
+			`${cacheFolder}/${id}`,
+			snapshot,
+			err => (err ? fail(err) : done()),
+		);
+	});
+
+export const removeSnapshot = id =>
+	new Promise((done, fail) =>
+		fs.unlink(`${cacheFolder}/${id}`, err => (err ? fail(err) : done())),
+	);
+
+//------------------------------
+//           actions
+//------------------------------
+
+export const getAction = id =>
 	ensureActionFolderExists().then(
 		() =>
 			new Promise((done, fail) => {
@@ -51,11 +84,24 @@ const wrappedGetFiles = () =>
 			}),
 	);
 
-export const listAllActions = async function* listAllActions() {
+export const listActionIdsAfter = async function* listActionIdsAfter(afterId) {
 	const files = await wrappedGetFiles();
+
+	let previousAction = { id: "", integrity: "" };
 	for await (const id of files) {
-		yield id;
+		if (!afterId || afterId <= id) {
+			yield {
+				id,
+				integrity: integrityCheck(previousAction, id),
+			};
+		}
+
+		previousAction = {
+			id,
+			integrity: integrityCheck(previousAction, id),
+		};
 	}
 };
 
-export const persistStorage = new AsyncNodeStorage(cacheFolder);
+export const integrityCheck = ({ id, integrity }, newAction) =>
+	hashString(id + integrity + newAction);

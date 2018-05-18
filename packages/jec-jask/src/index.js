@@ -3,7 +3,7 @@ import { PERSIST, REHYDRATE } from "redux-persist";
 
 import { applyMiddleware, combineReducers, createStore } from "redux";
 
-import createReduxDistribute from "redux-distribute";
+import createReduxDistributeStoreEnhancer from "redux-distribute";
 import createSagaMiddleware from "redux-saga";
 import { persistReducer, persistStore } from "redux-persist";
 import createRecurenceActionsMiddleware from "./createRecurenceActionsMiddleware";
@@ -11,49 +11,20 @@ import createRecurenceActionsMiddleware from "./createRecurenceActionsMiddleware
 import * as reducers from "./reducers";
 export * from "./collateObjects";
 
-const createJecJaskStore = ({
-	listAllActions,
-	writeAction,
-	readAction,
-	persistStorage,
-}) => {
-	const persistConfig = {
-		key: "root",
-		storage: persistStorage,
-		//blacklist: [ "__distributeStatus", ],
-	};
-
-	const {
-		distributeSaga,
-		distributeReducers,
-		distributeMiddleware,
-	} = createReduxDistribute({
-		listAllActions,
-		writeAction,
-		readAction,
-		persistConfig,
-	});
-
+const createJecJaskStore = handlers => {
 	const reducer = combineReducers({
 		...reducers,
-		...distributeReducers,
 	});
 
-	const persistedReducer = persistReducer(persistConfig, reducer);
-	const sagaMiddleware = createSagaMiddleware();
+	const reduxDistrubteEnhancer = createReduxDistributeStoreEnhancer(handlers);
 
 	const store = createStore(
-		persistedReducer,
-		applyMiddleware(
-			distributeMiddleware,
-			createRecurenceActionsMiddleware,
-			sagaMiddleware,
+		reducer,
+		R.compose(
+			applyMiddleware(createRecurenceActionsMiddleware),
+			reduxDistrubteEnhancer,
 		),
 	);
-
-	sagaMiddleware.run(distributeSaga);
-
-	persistStore(store);
 
 	return store;
 };
