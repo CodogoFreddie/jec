@@ -8,6 +8,10 @@
 	"theme_color": "aliceblue",
 	"icons": [
 		{
+			"src": "./img/icon@512.png",
+			"sizes": "512x512"
+		},
+		{
 			"src": "./img/icon@256.png",
 			"sizes": "256x256"
 		},
