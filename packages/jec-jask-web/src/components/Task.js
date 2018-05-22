@@ -1,6 +1,7 @@
 import * as R from "ramda";
 import React, { Fragment } from "react";
-import { formatRelative, toDate } from "date-fns/fp";
+import formatRelative from "date-fns/fp/formatRelative";
+import toDate from "date-fns/fp/toDate";
 import { ellipsis } from "polished";
 import {
 	Badge,
