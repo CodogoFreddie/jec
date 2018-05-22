@@ -1,5 +1,8 @@
+import * as R from "ramda";
+
 import startupDistrubute from "./startupDistrubute";
 import enhanceReducer from "./enhanceReducer";
+import wrapDispatch from "./wrapDispatch";
 
 const createStoreEnhancer = handlers => {
 	const storeEnhancer = createStore => (baseReducer, initialState = {}) => {
@@ -9,7 +12,9 @@ const createStoreEnhancer = handlers => {
 
 		startupDistrubute(store)(handlers);
 
-		return store;
+		return R.evolve({
+			dispatch: wrapDispatch(handlers),
+		})(store);
 	};
 
 	return storeEnhancer;

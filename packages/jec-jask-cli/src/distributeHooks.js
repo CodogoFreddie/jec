@@ -73,6 +73,20 @@ export const getAction = id =>
 			}),
 	);
 
+export const setAction = action =>
+	ensureActionFolderExists().then(
+		() =>
+			new Promise((done, fail) => {
+				jsonfile.writeFile(
+					`${actionFolder}/${action.timestamp}_${action.type}_${
+						action.salt
+					}`,
+					action,
+					err => (err ? fail(err) : done()),
+				);
+			}),
+	);
+
 const wrappedGetFiles = () =>
 	ensureActionFolderExists().then(
 		() =>

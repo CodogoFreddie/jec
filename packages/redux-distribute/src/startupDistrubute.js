@@ -100,11 +100,15 @@ const rebuildFromSnapshot = ({
 				setSnapshot,
 				state: store.getState(),
 			});
-
-			console.log({ id });
 		}
 
-		console.log({ couldRebuild });
+		if (!couldRebuild) {
+			await recursive(snapshotIds);
+		} else {
+			store.dispatch({
+				type: DISTRIBUTE_UP_TO_DATE,
+			});
+		}
 	};
 
 	return recursive;
@@ -115,11 +119,6 @@ const startupDistrubute = store => async handlers => {
 
 	const rebuilder = rebuildFromSnapshot({ ...handlers, store });
 	await rebuilder(snapshotIds);
-
-	//await setSnapshot(
-	//store.getState().actionChain[0].id.split("_")[0],
-	//store.getState(),
-	//);
 };
 
 export default startupDistrubute;
