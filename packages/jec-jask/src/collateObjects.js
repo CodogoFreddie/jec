@@ -24,7 +24,10 @@ export const collateObject = state => uuid => ({
 
 	tags: state.tagPairs.filter(R.propEq("objId", uuid)).map(R.prop("tag")),
 
-	project: recursiveGetProject(state.projects)(state.props[uuid].project),
+	project:
+		state.props[uuid] &&
+		state.props[uuid].project &&
+		recursiveGetProject(state.projects)(state.props[uuid].project),
 });
 
 export const collateAllObjects = state => {

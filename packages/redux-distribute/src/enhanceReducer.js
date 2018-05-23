@@ -13,7 +13,7 @@ const enhanceReducer = (integrityCheck, baseReducer) => (state, action) => {
 	console.log(action.type);
 	const {
 		actionChain = [],
-		distrubuteStatus = STARTING_UP,
+		distributeStatus = STARTING_UP,
 		...otherState
 	} = state;
 
@@ -30,7 +30,7 @@ const enhanceReducer = (integrityCheck, baseReducer) => (state, action) => {
 				},
 				...actionChain,
 			],
-			distrubuteStatus: REPLAYING_ACTIONS,
+			distributeStatus: REPLAYING_ACTIONS,
 			...baseReducer(otherState, action.action),
 		};
 	}
@@ -38,7 +38,7 @@ const enhanceReducer = (integrityCheck, baseReducer) => (state, action) => {
 	if (action.type === DISTRIBUTE_UP_TO_DATE) {
 		return {
 			actionChain,
-			distrubuteStatus: UP_TO_DATE,
+			distributeStatus: UP_TO_DATE,
 			...otherState,
 		};
 	}
@@ -46,13 +46,13 @@ const enhanceReducer = (integrityCheck, baseReducer) => (state, action) => {
 	if (action.type === DISTRIBUTE_ROLL_BACK_TO_SNAPSHOT) {
 		return {
 			...action.snapshot,
-			distrubuteStatus: ROLLED_BACK,
+			distributeStatus: ROLLED_BACK,
 		};
 	}
 
 	return {
 		actionChain,
-		distrubuteStatus,
+		distributeStatus,
 		...baseReducer(otherState, action),
 	};
 };

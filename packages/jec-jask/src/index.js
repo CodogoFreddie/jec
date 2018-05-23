@@ -1,11 +1,8 @@
 import * as R from "ramda";
-import { PERSIST, REHYDRATE } from "redux-persist";
 
 import { applyMiddleware, combineReducers, createStore } from "redux";
 
 import createReduxDistributeStoreEnhancer from "redux-distribute";
-import createSagaMiddleware from "redux-saga";
-import { persistReducer, persistStore } from "redux-persist";
 import createRecurenceActionsMiddleware from "./createRecurenceActionsMiddleware";
 
 import * as reducers from "./reducers";
@@ -18,9 +15,12 @@ const createJecJaskStore = handlers => {
 
 	const reduxDistrubteEnhancer = createReduxDistributeStoreEnhancer(handlers);
 
+	const composeEnhancers =
+		window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || R.compose;
+
 	const store = createStore(
 		reducer,
-		R.compose(
+		composeEnhancers(
 			applyMiddleware(createRecurenceActionsMiddleware),
 			reduxDistrubteEnhancer,
 		),

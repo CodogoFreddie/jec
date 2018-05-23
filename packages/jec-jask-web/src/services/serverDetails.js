@@ -1,11 +1,13 @@
-import * as R from "ramda";
-import React from "react";
 import localForage from "localforage";
+
+const serverDetailsStorage = localForage.createInstance({
+	name: "serverDetails",
+});
 
 export const getServerDetails = () =>
 	Promise.all([
-		localForage.getItem("serverauthKey"),
-		localForage.getItem("serverAddress"),
+		serverDetailsStorage.getItem("serverauthKey"),
+		serverDetailsStorage.getItem("serverAddress"),
 	]).then(([authKey, address]) => ({
 		authKey,
 		address,
@@ -13,6 +15,6 @@ export const getServerDetails = () =>
 
 export const setServerDetails = ({ authKey, address }) =>
 	Promise.all([
-		localForage.setItem("serverauthKey", authKey),
-		localForage.setItem("serverAddress", address),
+		serverDetailsStorage.setItem("serverauthKey", authKey),
+		serverDetailsStorage.setItem("serverAddress", address),
 	]);

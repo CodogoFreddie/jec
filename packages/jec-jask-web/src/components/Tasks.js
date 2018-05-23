@@ -2,7 +2,16 @@ import * as R from "ramda";
 import React from "react";
 import { collateAllObjects } from "jec-jask";
 import { connect } from "react-redux";
-import { Box, Flex, Toolbar, Button, Fixed } from "rebass";
+import {
+	Box,
+	Heading,
+	Divider,
+	Flex,
+	Modal,
+	Toolbar,
+	Button,
+	Fixed,
+} from "rebass";
 
 import Task from "./Task";
 
@@ -21,8 +30,19 @@ class Tasks extends React.Component {
 			collateAllObjects(this.props),
 		);
 
-		return this.props.__distributeStatus === "READY" ? (
-			<div>
+		return (
+			<React.Fragment>
+				{this.props.distributeStatus !== "UP_TO_DATE" && (
+					<Modal>
+						<Heading>Loading Action</Heading>
+						<Divider />
+						{R.pipe(
+							R.pathOr("", ["actionChain", 0, "id"]),
+							R.split("_"),
+							R.nth(0),
+						)(this.props)}
+					</Modal>
+				)}
 				<ListContainerContainer>
 					<Box flex="0 0 64px" />
 
@@ -34,17 +54,7 @@ class Tasks extends React.Component {
 				<Fixed top={0} left={0} right={0}>
 					<Toolbar bg="black">jec::jask::web</Toolbar>
 				</Fixed>
-
-				<Fixed m={4} bottom={0} right={0}>
-					<Button bg="blue" fontSize={[5, 3]}>
-						+ New
-					</Button>
-				</Fixed>
-			</div>
-		) : (
-			<div>
-				<div>Loading Actions</div>
-			</div>
+			</React.Fragment>
 		);
 	}
 }

@@ -67,6 +67,8 @@ const rebuildFromSnapshot = ({
 
 		const headSnapshot = await getSnapshot(headSnapshotId);
 
+		console.log({ headSnapshot });
+
 		store.dispatch({
 			type: DISTRIBUTE_ROLL_BACK_TO_SNAPSHOT,
 			snapshot: headSnapshot,
