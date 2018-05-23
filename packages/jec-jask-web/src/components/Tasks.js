@@ -3,6 +3,7 @@ import React from "react";
 import { collateAllObjects } from "jec-jask";
 import { connect } from "react-redux";
 import {
+	Pre,
 	Box,
 	Heading,
 	Divider,
@@ -36,11 +37,13 @@ class Tasks extends React.Component {
 					<Modal>
 						<Heading>Loading Action</Heading>
 						<Divider />
+						<Pre>
 						{R.pipe(
 							R.pathOr("", ["actionChain", 0, "id"]),
 							R.split("_"),
 							R.nth(0),
 						)(this.props)}
+					</Pre>
 					</Modal>
 				)}
 				<ListContainerContainer>
