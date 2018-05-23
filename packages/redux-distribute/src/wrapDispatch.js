@@ -7,11 +7,13 @@ const getSalt = () =>
 const wrapDispatch = handlers => dispatch => action => {
 	const newAction = {
 		...action,
-		timestamp: new Date.toISOString(),
+		timestamp: new Date().toISOString(),
 		salt: getSalt(),
 	};
 
 	dispatch(newAction);
 
-	handlers.setAction(action);
+	handlers.setAction(newAction);
 };
+
+export default wrapDispatch;

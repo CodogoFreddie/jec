@@ -44,14 +44,16 @@ export const getSnapshot = id =>
 			),
 	);
 
-export const setSnapshot = (id, snapshot) =>
+export const setSnapshot = (id, snapshot) => (
+	console.log({ id }),
 	new Promise((done, fail) => {
 		jsonfile.writeFile(
 			`${cacheFolder}/${id}`,
 			snapshot,
 			err => (err ? fail(err) : done()),
 		);
-	});
+	})
+);
 
 export const removeSnapshot = id =>
 	new Promise((done, fail) =>

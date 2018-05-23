@@ -3,17 +3,21 @@ import { actions } from "./consts";
 const {
 	DISTRIBUTE_REPLAY_ACTION,
 	DISTRIBUTE_UP_TO_DATE,
-	DISTRUBUTE_ROLL_BACK_TO_SNAPSHOT,
+	DISTRIBUTE_ROLL_BACK_TO_SNAPSHOT,
 } = actions;
 
-const saveSnapshot = async ({ setSnapshot, state }) => {
-	//const [mostRecentAction, previousAction] = state.actionChain;
-	//if (
-	//previousAction &&
-	//mostRecentAction.id.slice(0, 10) !== previousAction.id.slice(0, 10)
-	//) {
-	await setSnapshot(state.actionChain[0].id.split("_")[0], state);
-	//}
+const saveSnapshot = async ({ setSnapshot, state, force }) => {
+	const [mostRecentAction, previousAction] = state.actionChain;
+	if (
+		force ||
+		(previousAction &&
+			mostRecentAction.id.slice(0, 10) !== previousAction.id.slice(0, 10))
+	) {
+		const id = state.actionChain[0].id.split("_")[0];
+		if (id) {
+			await setSnapshot(id, state);
+		}
+	}
 };
 
 const rebuildFromScratch = async ({
@@ -50,7 +54,6 @@ const rebuildFromSnapshot = ({
 	store,
 }) => {
 	const recursive = async ([headSnapshotId, ...snapshotIds]) => {
-		console.log({ headSnapshotId });
 		//fallback procedure
 		if (!headSnapshotId) {
 			await rebuildFromScratch({
@@ -65,7 +68,7 @@ const rebuildFromSnapshot = ({
 		const headSnapshot = await getSnapshot(headSnapshotId);
 
 		store.dispatch({
-			type: DISTRUBUTE_ROLL_BACK_TO_SNAPSHOT,
+			type: DISTRIBUTE_ROLL_BACK_TO_SNAPSHOT,
 			snapshot: headSnapshot,
 		});
 

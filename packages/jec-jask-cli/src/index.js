@@ -16,66 +16,58 @@ const store = createJecJaskStore({
 	...distributeHooks,
 });
 
+let hasRunCliCommand = false;
 store.subscribe(() => {
-	const { distrubuteStatus } = store.getState();
+	if (!hasRunCliCommand) {
+		const { distrubuteStatus } = store.getState();
 
-	if (distrubuteStatus === "UP_TO_DATE") {
-		//console.log(JSON.stringify(store.getState(), null, 2));
+		if (distrubuteStatus === "UP_TO_DATE") {
+			hasRunCliCommand = true;
+
+			const { filter, command, modifications } = parseCli(process.argv);
+
+			const noop = () => ({
+				actions: [],
+				filterForRender: filterByCLICommands(filter),
+			});
+
+			const actionGenerator =
+				{
+					add: generateAddActions,
+					modify: generateModifyActions,
+					start: generateWorkflowEventActions("start"),
+					stop: generateWorkflowEventActions("stop"),
+					done: generateWorkflowEventActions("done"),
+				}[command] || noop;
+
+			const { actions, filterForRender } = actionGenerator({
+				filter,
+				modifications,
+				state: store.getState(),
+			});
+
+			actions.forEach(store.dispatch);
+
+			console.log(
+				render(
+					{
+						filterTask: R.identity,
+						giveColor: () => [],
+						headers: [
+							"id",
+							"score",
+							"description",
+							"due",
+							"project",
+							"start",
+							"priority",
+							"tags",
+							"recur",
+						],
+					},
+					collateAllObjects(store.getState()).filter(filterForRender),
+				),
+			);
+		}
 	}
 });
-
-//let hasRunCliCommand = false;
-//store.subscribe(() => {
-//if (!hasRunCliCommand) {
-//const { __distributeStatus } = store.getState();
-
-//if (__distributeStatus === "READY") {
-//hasRunCliCommand = true;
-
-//const { filter, command, modifications } = parseCli(process.argv);
-
-//const noop = () => ({
-//actions: [],
-//filterForRender: filterByCLICommands(filter),
-//});
-
-//const actionGenerator =
-//{
-//add: generateAddActions,
-//modify: generateModifyActions,
-//start: generateWorkflowEventActions("start"),
-//stop: generateWorkflowEventActions("stop"),
-//done: generateWorkflowEventActions("done"),
-//}[command] || noop;
-
-//const { actions, filterForRender } = actionGenerator({
-//filter,
-//modifications,
-//state: store.getState(),
-//});
-
-//actions.forEach(store.dispatch);
-
-//console.log(
-//render(
-//{
-//filterTask: R.identity,
-//giveColor: () => [],
-//headers: [
-//"id",
-//"score",
-//"description",
-//"due",
-//"project",
-//"start",
-//"priority",
-//"tags",
-//"recur",
-//],
-//},
-//collateAllObjects(store.getState()).filter(filterForRender),
-//),
-//);
-//}
-//}
-//});
