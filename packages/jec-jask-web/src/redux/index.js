@@ -4,6 +4,10 @@ import createJecJaskStore from "jec-jask";
 
 import { getServerDetails } from "../services/serverDetails";
 
+//------------------------------
+//          snapshots
+//------------------------------
+
 const snapshotStorage = localForage.createInstance({
 	name: "snapshots",
 });
@@ -27,7 +31,31 @@ const removeSnapshot = async id => {
 	return await snapshotStorage.removeItem(id);
 };
 
+//------------------------------
+//           actions
+//------------------------------
+
+const actions = {};
+const getManyActions = ids => {
+	let [imediate, queued] = R.splitAt(20, ids);
+
+	const requestThenAnother = async id => {
+		await getAction(id);
+
+		const [nextId, ...rest] = queued;
+		queued = rest;
+
+		requestThenAnother(nextId);
+	};
+
+	imediate.forEach(requestThenAnother);
+};
+
 const getAction = async id => {
+	if (actions[id]) {
+		return actions[id];
+	}
+
 	const { authKey, address } = await getServerDetails();
 
 	const resp = await fetch(address + "/" + id, {
@@ -37,6 +65,8 @@ const getAction = async id => {
 	});
 
 	const action = await resp.json();
+
+	actions[id] = action;
 
 	return action;
 };
@@ -65,6 +95,10 @@ const listActionIdsAfter = async function*(afterId) {
 		[],
 	);
 
+	getManyActions(
+		actions.map(R.prop("id")).filter(id => afterId || afterId <= id),
+	);
+
 	for await (const { id, integrity } of actions) {
 		if (!afterId || afterId <= id) {
 			yield {
@@ -86,6 +120,10 @@ const integrityCheck = ({ id = "", integrity = "" } = {}, newAction) => {
 	}
 	return hash;
 };
+
+//------------------------------
+//           store
+//------------------------------
 
 const store = createJecJaskStore({
 	listAllSnapshotIds,
