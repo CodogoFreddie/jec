@@ -20,12 +20,12 @@
 	"scripts": {
 		"build": "lerna run build",
 		"vimEach": "lerna exec vim",
-		"deploy-jask": "cd packages/jec-jask-web && npm i && npm run pack",
+		"deploy-jask": "lerna bootstrap && lerna run build && cd packages/jec-jask-web && npm run pack",
 		"publish": "lerna run format && lerna run build && lerna publish --force-publish=*",
 		"watch": "lerna run --parallel watch"
 	},
 	"dependencies": {
-		"babel-preset-freddie-ridell": "0.0.5",
+		"babel-preset-freddie-ridell": "0.0.7",
 		"babel-runtime": "^6.26.0"
 	}
 }

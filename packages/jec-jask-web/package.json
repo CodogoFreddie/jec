@@ -22,6 +22,7 @@
 	},
 	"homepage": "https://github.com/CodogoFreddie/jec#readme",
 	"dependencies": {
+		"babel-preset-freddie-ridell": "0.0.7",
 		"date-fns": "next",
 		"jec-jask": "^0.2.10",
 		"localforage": "^1.7.1",
@@ -39,7 +40,6 @@
 		"redux-saga": "^0.16.0"
 	},
 	"devDependencies": {
-		"babel-preset-freddie-ridell": "0.0.5",
 		"codogo-scripts": "^3.2.15",
 		"eslint": "^4.19.1",
 		"parcel-bundler": "^1.8.1",

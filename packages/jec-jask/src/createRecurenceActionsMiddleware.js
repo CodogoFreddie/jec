@@ -1,6 +1,10 @@
 import * as R from "ramda";
 
-import { toDate, addDays, addWeeks, addMonths, addYears } from "date-fns/fp";
+import toDate from "date-fns/fp/toDate";
+import addDays from "date-fns/fp/addDays";
+import addWeeks from "date-fns/fp/addWeeks";
+import addMonths from "date-fns/fp/addMonths";
+import addYears from "date-fns/fp/addYears";
 
 const createRecurenceActionsMiddleware = store => next => action => {
 	if (action.fromReduxDistributedInitialLoad) {
