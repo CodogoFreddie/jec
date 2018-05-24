@@ -10,7 +10,6 @@ import {
 	Flex,
 	Modal,
 	Toolbar,
-	Button,
 	Fixed,
 } from "rebass";
 
@@ -26,10 +25,10 @@ const ListContainerContainer = Flex.extend`
 @connect(R.identity)
 class Tasks extends React.Component {
 	render() {
-		const tasks = R.sortBy(
-			({ score }) => -score,
-			collateAllObjects(this.props),
-		);
+		const tasks =
+			this.props.distributeStatus === "UP_TO_DATE"
+				? R.sortBy(({ score }) => -score, collateAllObjects(this.props))
+				: [];
 
 		return (
 			<React.Fragment>
@@ -38,12 +37,12 @@ class Tasks extends React.Component {
 						<Heading>Loading Action</Heading>
 						<Divider />
 						<Pre>
-						{R.pipe(
-							R.pathOr("", ["actionChain", 0, "id"]),
-							R.split("_"),
-							R.nth(0),
-						)(this.props)}
-					</Pre>
+							{R.pipe(
+								R.pathOr("", ["actionChain", 0, "id"]),
+								R.split("_"),
+								R.nth(0),
+							)(this.props)}
+						</Pre>
 					</Modal>
 				)}
 				<ListContainerContainer>
