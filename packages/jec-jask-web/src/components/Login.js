@@ -29,7 +29,9 @@ class Login extends React.Component {
 		});
 
 	onClick = () => {
-		setServerDetails(this.state).then(() => window.location.reload()).catch( e => window.alert(e.toString()));
+		setServerDetails(this.state)
+			.then(() => window.location.reload())
+			.catch(e => window.alert(e.toString()));
 	};
 
 	render() {
