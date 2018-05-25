@@ -19,9 +19,9 @@ const store = createJecJaskStore({
 let hasRunCliCommand = false;
 store.subscribe(() => {
 	if (!hasRunCliCommand) {
-		const { distrubuteStatus } = store.getState();
+		const { distributeStatus } = store.getState();
 
-		if (distrubuteStatus === "UP_TO_DATE") {
+		if (distributeStatus === "UP_TO_DATE") {
 			hasRunCliCommand = true;
 
 			const { filter, command, modifications } = parseCli(process.argv);
