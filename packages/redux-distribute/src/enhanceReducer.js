@@ -10,7 +10,6 @@ const {
 const { ROLLED_BACK, STARTING_UP, UP_TO_DATE, REPLAYING_ACTIONS } = states;
 
 const enhanceReducer = (integrityCheck, baseReducer) => (state, action) => {
-	console.log(action.type);
 	const {
 		actionChain = [],
 		distributeStatus = STARTING_UP,

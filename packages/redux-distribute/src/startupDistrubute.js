@@ -67,8 +67,6 @@ const rebuildFromSnapshot = ({
 
 		const headSnapshot = await getSnapshot(headSnapshotId);
 
-		console.log({ headSnapshot });
-
 		store.dispatch({
 			type: DISTRIBUTE_ROLL_BACK_TO_SNAPSHOT,
 			snapshot: headSnapshot,
@@ -124,6 +122,8 @@ const startupDistrubute = store => async handlers => {
 
 	const rebuilder = rebuildFromSnapshot({ ...handlers, store });
 	await rebuilder(snapshotIds);
+
+	await saveSnapshot({ ...handlers, state: store.getState() });
 };
 
 export default startupDistrubute;

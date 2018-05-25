@@ -15,6 +15,8 @@ const createJecJaskStore = handlers => {
 
 	const reduxDistrubteEnhancer = createReduxDistributeStoreEnhancer(handlers);
 
+	const window = window || {}; //eslint-disable-line no-use-before-define
+
 	const composeEnhancers =
 		window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || R.compose;
 
