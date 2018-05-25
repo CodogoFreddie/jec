@@ -16,7 +16,7 @@ const createJecJaskStore = handlers => {
 	const reduxDistrubteEnhancer = createReduxDistributeStoreEnhancer(handlers);
 
 	const composeEnhancers =
-		window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || R.compose;
+		(window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || R.compose;
 
 	const store = createStore(
 		reducer,
