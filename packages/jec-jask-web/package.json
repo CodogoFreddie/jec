@@ -1,6 +1,6 @@
 {
 	"name": "jec-jask-web",
-	"version": "0.3.2",
+	"version": "0.3.3",
 	"description": "the react web interface for jec-jask",
 	"main": "lib/index.js",
 	"eslint": {
@@ -24,7 +24,7 @@
 	"dependencies": {
 		"babel-preset-freddie-ridell": "0.0.7",
 		"date-fns": "next",
-		"jec-jask": "^0.3.2",
+		"jec-jask": "^0.3.3",
 		"localforage": "^1.7.1",
 		"polished": "^1.9.2",
 		"ramda": "^0.25.0",
@@ -35,7 +35,7 @@
 		"react-router-dom": "^4.2.2",
 		"rebass": "next",
 		"redux": "^3.7.2",
-		"redux-distribute": "^0.3.2",
+		"redux-distribute": "^0.3.3",
 		"redux-persist": "^5.9.1",
 		"redux-saga": "^0.16.0"
 	},
