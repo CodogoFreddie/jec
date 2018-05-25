@@ -9,7 +9,9 @@
 		"trailingComma": "all"
 	},
 	"babel": {
-		"presets": ["freddie-ridell"]
+		"presets": [
+			"freddie-ridell"
+		]
 	},
 	"devDependencies": {
 		"eslint": "^4.19.1",
@@ -18,10 +20,8 @@
 	"scripts": {
 		"build": "lerna run build",
 		"vimEach": "lerna exec vim",
-		"deploy-jask":
-			"lerna bootstrap && lerna run build && cd packages/jec-jask-web && npm run pack",
-		"publish":
-			"lerna run format && lerna run build && lerna publish --force-publish=*",
+		"deploy-jask": "lerna bootstrap && lerna run build && cd packages/jec-jask-web && npm run pack",
+		"publish": "lerna run format && lerna run build && lerna publish --force-publish=*",
 		"watch": "lerna run --parallel watch"
 	},
 	"dependencies": {

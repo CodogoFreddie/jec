@@ -2,16 +2,21 @@ import * as R from "ramda";
 import React from "react";
 import { collateAllObjects } from "jec-jask";
 import { connect } from "react-redux";
+import toDate from "date-fns/fp/toDate";
+import startOfDay from "date-fns/fp/startOfDay";
+import format from "date-fns/fp/format";
 import {
-	Pre,
 	Box,
-	Heading,
 	Divider,
-	Flex,
-	Modal,
-	Toolbar,
 	Fixed,
+	Flex,
+	Heading,
+	Modal,
+	Pre,
+	Progress,
+	Toolbar,
 } from "rebass";
+import packageJSON from "../../package.json";
 
 import Task from "./Task";
 
@@ -22,27 +27,39 @@ const ListContainerContainer = Flex.extend`
 	height: 100vh;
 `;
 
+const formatActionTimestamp = format("YYYY-MM-dd hh:mm:ss aaaa");
+const actionTimestampDayProgress = date => {
+	return (date.getTime() - startOfDay(date).getTime()) / 86400000;
+};
+
 @connect(R.identity)
 class Tasks extends React.Component {
 	render() {
 		const tasks =
-			this.props.distributeStatus === "UP_TO_DATE"
-				? R.sortBy(({ score }) => -score, collateAllObjects(this.props))
-				: [];
+			//this.props.distributeStatus === "UP_TO_DATE"
+			//?
+			R.sortBy(({ score }) => -score, collateAllObjects(this.props));
+		//: [];
+
+		const currentActionTime = R.pipe(
+			R.pathOr("", ["actionChain", 0, "id"]),
+			R.split("_"),
+			R.nth(0),
+			toDate,
+		)(this.props);
 
 		return (
 			<React.Fragment>
 				{this.props.distributeStatus !== "UP_TO_DATE" && (
 					<Modal>
-						<Heading>Loading Action</Heading>
+						<Heading textAlign="center">Loading Actions</Heading>
 						<Divider />
-						<Pre>
-							{R.pipe(
-								R.pathOr("", ["actionChain", 0, "id"]),
-								R.split("_"),
-								R.nth(0),
-							)(this.props)}
-						</Pre>
+						<Pre>{formatActionTimestamp(currentActionTime)}</Pre>
+						<Progress
+							value={actionTimestampDayProgress(
+								currentActionTime,
+							)}
+						/>
 					</Modal>
 				)}
 				<ListContainerContainer>
@@ -54,7 +71,13 @@ class Tasks extends React.Component {
 				</ListContainerContainer>
 
 				<Fixed top={0} left={0} right={0}>
-					<Toolbar bg="black">jec::jask::web</Toolbar>
+					<Toolbar bg="black">
+						<Flex direction="row" width="100%">
+							<Box flex={1}>jec::jask::web</Box>
+							<Box>{packageJSON.version}</Box>
+							<Box>{process.env.BRANCH}</Box>
+						</Flex>
+					</Toolbar>
 				</Fixed>
 			</React.Fragment>
 		);

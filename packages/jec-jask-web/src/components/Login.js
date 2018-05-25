@@ -42,17 +42,20 @@ class Login extends React.Component {
 				<Label>Key</Label>
 				<Input
 					placeholder="auth key"
+					defaultValue=""
 					onChange={this.onChangeauthKey}
 					value={this.state.authKey}
 				/>
 				<Label>Address</Label>
 				<Input
 					placeholder="https://foobar.com:8080"
+					defaultValue=""
+					type="url"
 					onChange={this.onChangeAddress}
 					value={this.state.address}
 				/>
 				<Divider />
-				<Button bg="green" onClick={this.onClick}>
+				<Button bg="greenBright" onClick={this.onClick}>
 					Done
 				</Button>
 			</Modal>
