@@ -63,9 +63,9 @@ const stringfiyTasksFields = tasks =>
 export default ({ config, height }) =>
 	R.pipe(
 		filterTasks(config),
-		R.slice(0, height - 4),
 		addRenderingMetaToTasks(config),
 		stringfiyTasksFields,
 		R.sortBy(R.prop("score")),
 		R.reverse,
+		R.slice(0, height - 4),
 	);
