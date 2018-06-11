@@ -1,6 +1,7 @@
 import * as R from "ramda";
 import chrono from "chrono-node";
 import {
+	addHours,
 	addDays,
 	addMonths,
 	addWeeks,
@@ -16,10 +17,16 @@ import {
 } from "date-fns";
 
 const extractNumber = (adder, ref) =>
-	R.pipe(R.match(/\d+/), R.head, x => parseInt(x, 10), x => adder(ref, x));
+	R.pipe(
+		R.match(/\d+/),
+		R.head,
+		x => parseInt(x, 10),
+		x => adder(ref, x),
+	);
 
 export const parseFrom = ref =>
 	R.cond([
+		[R.test(/\d+h/), extractNumber(addHours, ref)],
 		[R.test(/\d+d/), extractNumber(addDays, ref)],
 		[R.test(/\d+w/), extractNumber(addWeeks, ref)],
 		[R.test(/\d+m/), extractNumber(addMonths, ref)],
@@ -39,7 +46,7 @@ export const parseFrom = ref =>
 export default parseFrom(new Date());
 
 export const parseRecur = R.pipe(
-	R.match(/(\d+)([dwmy])/),
+	R.match(/(\d+)([hdwmy])/),
 	([_, n, period]) => ({
 		n: parseInt(n, 10),
 		period,
